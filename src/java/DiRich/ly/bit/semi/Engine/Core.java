@@ -6,7 +6,7 @@ import DiRich.ly.bit.semi.Engine.openGL.DisplayRenderer;
 
 public class Core{
 	
-	private static DisplayRenderer oGL = new DisplayRenderer(new Dimension(240, 360));
+	private static DisplayRenderer oGL = new DisplayRenderer(new Dimension(1200, 900));
 	
 	public static void main(String[] args) {
 		for(int i = 0; i < args.length; i++){
