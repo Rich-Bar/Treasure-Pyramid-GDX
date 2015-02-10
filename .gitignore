@@ -1,5 +1,4 @@
-bin/*
+bin/**
 .classpath
 .project
-*.prefs
 *.prefs
