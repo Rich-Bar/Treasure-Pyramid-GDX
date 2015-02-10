@@ -1,4 +1,9 @@
-**bin/
+bin/DiRich/ly/bit/semi/Engine/
+bin/DiRich/ly/bit/semi/
+bin/DiRich/ly/bit/
+bin/DiRich/ly/
+bin/DiRich/
+bin/
 .classpath
 .project
 *.prefs
