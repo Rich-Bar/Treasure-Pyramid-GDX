@@ -1,9 +1,6 @@
-bin/DiRich/ly/bit/semi/Engine/
-bin/DiRich/ly/bit/semi/
-bin/DiRich/ly/bit/
-bin/DiRich/ly/
-bin/DiRich/
+src -BlueJ/
 bin/
 .classpath
 .project
 *.prefs
+*.log

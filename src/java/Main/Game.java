@@ -1,21 +1,31 @@
 package Main;
 
+import static org.lwjgl.opengl.GL11.GL_NO_ERROR;
+import static org.lwjgl.opengl.GL11.glGetError;
+
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.nio.FloatBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.GL33;
+import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Main.Shaders.ShaderProgram;
 import Main.States.*;
 
+@SuppressWarnings("unused")
 public class Game extends StateBasedGame{
 	
 	public static enum Screens{
@@ -42,12 +52,14 @@ public class Game extends StateBasedGame{
 	private static Dimension nativeResolution;
 	private static int offsetX = 0;
 	private static int offsetY = 0;
-	
+
+	private ShaderProgram shader = new ShaderProgram();
+	private Dimension internalResolution;
 	
 	public double factor;
-	public TrueTypeFont fontText;
-	public TrueTypeFont fontMenu;
-	private Dimension internalResolution;
+	public boolean vsync = false;
+	public int maxFps= 120;
+	
 	
 	public Game() {
 		super(TITLE + " [" + VERSION + "]");
@@ -91,6 +103,8 @@ public class Game extends StateBasedGame{
 		internalResolution = newResolution;
 		////Handle GameContainer
 		gc.setShowFPS(true);
+		gc.setTargetFrameRate(maxFps -1);	//-1 Fixes the 1 more FPS bug
+		gc.setVSync(vsync);
 		////Handle Canvas and Bounds
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -111,15 +125,36 @@ public class Game extends StateBasedGame{
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+		 
+		/*_________________
+		|-- - SHADER - --|
+		|________________|
+		shader.init("src/assets/Shaders/base.vsh", "src/assets/Shaders/passthrough.fsh");
+		 
+		
+		int shaderid = shader.getProgramId();
+		float[] f = {1f,1f,1f};
+		
+		GL20.glUseProgram(shaderid);
+		
+		int samplerloc = GL20.glGetUniformLocation(shaderid, "u_sampler2D");
+		int transloc = GL20.glGetUniformLocation(shaderid, "u_projTrans");
+		
+		System.out.println(samplerloc + " - " + transloc);
+		
+		GL30.glBindVertexArray(shader.constructVertexArrayObject());
+		GL20.glEnableVertexAttribArray(0);
+		GL20.glEnableVertexAttribArray(1);
+		
+		
+		if( glGetError() != GL_NO_ERROR )
+		{
+			throw new RuntimeException("OpenGL error: "+GLU.gluErrorString(glGetError()));
+		}*/
 	}
-
+	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		Font awt = new Font("Consolas", Font.PLAIN, 8);
-		fontMenu = new TrueTypeFont(awt, false);
-		awt = new Font("Consolas", Font.PLAIN, 8);
-		fontText = new TrueTypeFont(awt, false);
-		
 		this.getState(Screens.INTRO.getID()).init(gc, this);
 		this.getState(Screens.MAIN.getID()).init(gc, this);
 		this.getState(Screens.OPTIONS.getID()).init(gc, this);
