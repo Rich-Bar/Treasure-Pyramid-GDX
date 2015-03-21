@@ -2,156 +2,32 @@ package Main.States;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class CreditsMenu implements GameState{
+import Main.Game;
+import Main.Sound;
+import Main.Game.Screens;
+
+public class CreditsMenu extends BaseState{
 	
 	private int ID;
+	private boolean isPaused;
+	private Image credits;
+	private Image creditsOverlay;
+	private float musicPos;
+	private Sound music;
+	private float creditsPos;
 	
-	public CreditsMenu(int ID){
+	public CreditsMenu(int ID, Game game){
+		super(game);
 		this.ID = ID;
 	}
 
 	@Override
-	public void mouseClicked(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseWheelMoved(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void inputEnded() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void inputStarted() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean isAcceptingInput() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setInput(Input arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(int arg0, char arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(int arg0, char arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerButtonPressed(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerButtonReleased(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerDownPressed(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerDownReleased(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerLeftPressed(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerLeftReleased(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerRightPressed(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerRightReleased(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerUpPressed(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void controllerUpReleased(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void enter(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
@@ -160,31 +36,72 @@ public class CreditsMenu implements GameState{
 	}
 
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
-		// TODO Auto-generated method stub
-		
+	public void keyPressed(int arg0, char arg1) {
+		mainGame.keyManager.keyPressed(arg0, this);
 	}
 
 	@Override
-	public void leave(GameContainer arg0, StateBasedGame arg1)
+	public void keyReleased(int arg0, char arg1) {
+		mainGame.keyManager.keyReleased(arg0);
+	}
+
+	@Override
+	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		music = new Sound("src/assets/Sound/This Will Destroy You - The Mighty Rio Grande.ogg");
+		credits = new Image("src/assets/Textures/Credits.png");
+		creditsOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
+		credits.setFilter(Image.FILTER_NEAREST);
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		if(creditsPos < credits.getHeight() - 240){
+			creditsPos = music.getSound().getPosition() * 10; // 10px/s
+		}
+		credits.draw(0, 0, 360 * Game.scale, 240 * Game.scale, 0, creditsPos, 360, creditsPos + 240);
+		creditsOverlay.draw(0, 0, Game.scale);
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 			throws SlickException {
-		// TODO Auto-generated method stub
 		
+		if(!arg0.hasFocus() && !isPaused){
+			isPaused = true;
+			pause();
+		}else if(arg0.hasFocus() && isPaused){
+			unpause();
+			isPaused = false;
+		}
 	}
 
+	@Override
+	public void pause(){
+		musicPos = music.getSound().getPosition();
+		music.stop();
+	}
+	
+	@Override
+	public void unpause(){
+		music.playAt(musicPos);
+	}
+
+	@Override
+	public void enter(GameContainer arg0, StateBasedGame arg1)
+			throws SlickException {
+		if(arg1.getCurrentState() instanceof CreditsMenu) unpause();
+	}
+
+	@Override
+	public void leave(GameContainer arg0, StateBasedGame arg1)
+			throws SlickException {
+		if(arg1.getCurrentState() instanceof CreditsMenu) pause();
+	}
+
+	public void switchScreen(){
+		mainGame.enterState(Screens.MAIN.getID());
+		music.stop();
+	}
 }

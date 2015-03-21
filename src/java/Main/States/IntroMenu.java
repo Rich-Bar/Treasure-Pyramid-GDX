@@ -1,159 +1,68 @@
 package Main.States;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class IntroMenu implements GameState {
+import Main.Game;
+import Main.Game.Screens;
+import Main.MenuButton;
+import Main.Sound;
+
+public class IntroMenu extends BaseState {
 	
 	private int ID;
+	private float fadeoutSpeed = 2000;
+	private Sound music;
+	private Image logo;
+	private MenuButton skipProlog;
+	private float timer = 0;
+	private float greyscale = 0;
+	private boolean skipable = false;
+	private Color fadeFilter;
+	private float musicPos = 0;
+	private boolean isPaused;
 	
-	public IntroMenu(int ID){
+	public IntroMenu(int ID,Game game){
+		super(game);
 		this.ID = ID;
 	}
 
-	@Override
-	public void mouseClicked(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseWheelMoved(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void inputEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void inputStarted() {
-		// TODO Auto-generated method stub
-
+	public void switchScreen(){
+		music.stop();
+		mainGame.enterState(Screens.MAIN.getID());
 	}
 
 	@Override
 	public boolean isAcceptingInput() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setInput(Input arg0) {
-		// TODO Auto-generated method stub
-
+		return skipable;
 	}
 
 	@Override
 	public void keyPressed(int arg0, char arg1) {
-		// TODO Auto-generated method stub
-
+		mainGame.keyManager.keyPressed(arg0, this);
 	}
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerButtonPressed(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerButtonReleased(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerDownPressed(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerDownReleased(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerLeftPressed(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerLeftReleased(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerRightPressed(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerRightReleased(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerUpPressed(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void controllerUpReleased(int arg0) {
-		// TODO Auto-generated method stub
-
+		mainGame.keyManager.keyReleased(arg0);
 	}
 
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		// TODO Auto-generated method stub
-
+		if(arg1.getCurrentState() instanceof IntroMenu) unpause();
 	}
 
+	@Override
+	public void leave(GameContainer arg0, StateBasedGame arg1)
+			throws SlickException {
+		if(arg1.getCurrentState() instanceof IntroMenu) pause();
+	}
+	
 	@Override
 	public int getID() {
 		return ID;
@@ -162,29 +71,52 @@ public class IntroMenu implements GameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void leave(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
-		// TODO Auto-generated method stub
-
+		fadeFilter = Color.black;
+		logo = new Image("src/assets/Textures/RichyEntertainment_LowRes.png");
+		skipProlog = new MenuButton("src/assets/Textures/PrologSkip.png", 1);
+		
+		logo.setFilter(Image.FILTER_NEAREST);
+		
+		music = new Sound("src/assets/Sound/SeminararbeitProlog-Intro.ogg");
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
-		// TODO Auto-generated method stub
-
+		if(timer > 10000)skipProlog.draw(skipProlog.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 200 * Game.scale);
+		logo.draw(0, 0, Game.scale * 2, fadeFilter);
 	}
 
 	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
+	public void update(GameContainer arg0, StateBasedGame arg1, int delta)
 			throws SlickException {
-		// TODO Auto-generated method stub
-
+		timer += delta;
+		if (greyscale < 1 && timer < 13000 && timer > 2000){
+			greyscale +=  delta * 1 / (fadeoutSpeed);
+		}else if(timer >13000){
+			greyscale  -=  delta * 1 / (fadeoutSpeed);
+			if(!skipable) skipable = true;
+		}
+		fadeFilter = new Color(greyscale,greyscale,greyscale,greyscale);
+		
+		if(!arg0.hasFocus() && !isPaused){
+			isPaused = true;
+			pause();
+		}else if(arg0.hasFocus() && isPaused){
+			unpause();
+			isPaused = false;
+		}
+	}
+	
+	@Override
+	public void pause(){
+		musicPos = music.getSound().getPosition();
+		music.stop();
+	}
+	
+	@Override
+	public void unpause(){
+		music.playAt(musicPos);
 	}
 
 }

@@ -3,14 +3,17 @@ package Main;
 import static org.lwjgl.opengl.GL11.GL_NO_ERROR;
 import static org.lwjgl.opengl.GL11.glGetError;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.net.URL;
 import java.nio.FloatBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.lwjgl.input.Cursor;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
@@ -20,6 +23,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Main.Shaders.ShaderProgram;
@@ -56,6 +60,7 @@ public class Game extends StateBasedGame{
 	private ShaderProgram shader = new ShaderProgram();
 	private Dimension internalResolution;
 	
+	public KeyManager keyManager = new KeyManager(this);
 	public double factor;
 	public boolean vsync = false;
 	public int maxFps= 120;
@@ -66,11 +71,11 @@ public class Game extends StateBasedGame{
 		
 		this.internalResolution = new Dimension(pixelartResolution.width * scale, pixelartResolution.height * scale);
 		
-		this.addState(new IntroMenu(Screens.INTRO.getID()));
+		this.addState(new IntroMenu(Screens.INTRO.getID(), this));
 		this.addState(new TitleMenu(Screens.MAIN.getID(), this));
-		this.addState(new OptionsMenu(Screens.OPTIONS.getID()));
-		this.addState(new CreditsMenu(Screens.CREDITS.getID()));
-		this.addState(new GameScreen(Screens.GAME.getID()));
+		this.addState(new OptionsMenu(Screens.OPTIONS.getID(), this));
+		this.addState(new CreditsMenu(Screens.CREDITS.getID(), this));
+		this.addState(new GameScreen(Screens.GAME.getID(), this));
 		
 	}
 	
@@ -81,6 +86,9 @@ public class Game extends StateBasedGame{
 		{
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new Game());
+			appgc.setMaximumLogicUpdateInterval(240);
+			appgc.setUpdateOnlyWhenVisible(false);
+			appgc.setTitle("Treasure Pyramid");
 			appgc.setDisplayMode(pixelartResolution.width * scale, pixelartResolution.height * scale, false);
 			DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 			appgc.setDisplayMode(dm.getWidth(), dm.getHeight(), true);
@@ -160,7 +168,23 @@ public class Game extends StateBasedGame{
 		this.getState(Screens.OPTIONS.getID()).init(gc, this);
 		this.getState(Screens.CREDITS.getID()).init(gc, this);
 		this.getState(Screens.GAME.getID()).init(gc, this);
-		this.enterState(Screens.MAIN.getID());
+		this.enterState(Screens.INTRO.getID());
+	}
+	
+	public GameState getState(){
+		return this.getCurrentState();
+	}
+	
+	public void donate(){
+		try {
+			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+		    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+	
+		            desktop.browse(new URL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5RQ9AMFVA8CQL").toURI());
+		    }
 		
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 }
