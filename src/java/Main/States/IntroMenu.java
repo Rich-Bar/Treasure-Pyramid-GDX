@@ -1,6 +1,5 @@
 package Main.States;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,16 +14,16 @@ import Main.Sound;
 public class IntroMenu extends BaseState {
 	
 	private int ID;
-	private float fadeoutSpeed = 2000;
 	private Sound music;
 	private Image logo;
 	private MenuButton skipProlog;
-	private float timer = 0;
-	private float greyscale = 0;
 	private boolean skipable = false;
-	private Color fadeFilter;
 	private float musicPos = 0;
+	private float musicLength = 200f;
 	private boolean isPaused;
+	private float scrollPos;
+	private Image scroll;
+	private Image scrollOverlay;
 	
 	public IntroMenu(int ID,Game game){
 		super(game);
@@ -71,11 +70,16 @@ public class IntroMenu extends BaseState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		fadeFilter = Color.black;
+		
 		logo = new Image("src/assets/Textures/RichyEntertainment_LowRes.png");
 		skipProlog = new MenuButton("src/assets/Textures/PrologSkip.png", 1);
+		scroll = new Image("src/assets/Textures/PrologScroll.png");
+		scrollOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
+		
+		logo.setAlpha(0f);
 		
 		logo.setFilter(Image.FILTER_NEAREST);
+		scroll.setFilter(Image.FILTER_NEAREST);
 		
 		music = new Sound("src/assets/Sound/SeminararbeitProlog-Intro.ogg");
 	}
@@ -83,21 +87,32 @@ public class IntroMenu extends BaseState {
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
-		if(timer > 10000)skipProlog.draw(skipProlog.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 200 * Game.scale);
-		logo.draw(0, 0, Game.scale * 2, fadeFilter);
+		
+		if(music.getSound().getPosition() > 2f){
+			if(scrollPos < scroll.getHeight() + 100){
+				scrollPos = (float)((Math.pow((double)music.getSound().getPosition() * 0.05, 2.301029995665)) / musicLength * scroll.getHeight());
+			}
+			scroll.draw(0, 0, 360 * Game.scale, 240 * Game.scale, 0, scrollPos, 360, scrollPos + 240);
+			scrollOverlay.draw(0, 0, Game.scale);
+			skipProlog.draw(skipProlog.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 200 * Game.scale);
+		}else{
+			switchScreen();
+		}
+		logo.draw(0, 0, Game.scale * 2);
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta)
 			throws SlickException {
-		timer += delta;
-		if (greyscale < 1 && timer < 13000 && timer > 2000){
-			greyscale +=  delta * 1 / (fadeoutSpeed);
-		}else if(timer >13000){
-			greyscale  -=  delta * 1 / (fadeoutSpeed);
+		float musicPos =  music.getSound().getPosition();
+		if(musicPos > 0.3f && musicPos < 4f){
+			logo.setAlpha((music.getSound().getPosition()-0.3f));
+		}else if(musicPos >= 4f && musicPos < 8f){
 			if(!skipable) skipable = true;
+			logo.setAlpha((8f-music.getSound().getPosition()) * 0.65f );
+		}else{
+			logo.setAlpha(0f);
 		}
-		fadeFilter = new Color(greyscale,greyscale,greyscale,greyscale);
 		
 		if(!arg0.hasFocus() && !isPaused){
 			isPaused = true;

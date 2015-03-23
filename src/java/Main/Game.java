@@ -1,35 +1,22 @@
 package Main;
 
-import static org.lwjgl.opengl.GL11.GL_NO_ERROR;
-import static org.lwjgl.opengl.GL11.glGetError;
-
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
-import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.net.URL;
-import java.nio.FloatBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.lwjgl.input.Cursor;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.opengl.GL33;
-import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Main.Shaders.ShaderProgram;
 import Main.States.*;
 
-@SuppressWarnings("unused")
 public class Game extends StateBasedGame{
 	
 	public static enum Screens{
@@ -57,7 +44,6 @@ public class Game extends StateBasedGame{
 	private static int offsetX = 0;
 	private static int offsetY = 0;
 
-	private ShaderProgram shader = new ShaderProgram();
 	private Dimension internalResolution;
 	
 	public KeyManager keyManager = new KeyManager(this);
@@ -134,31 +120,12 @@ public class Game extends StateBasedGame{
 		
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		 
-		/*_________________
-		|-- - SHADER - --|
-		|________________|
-		shader.init("src/assets/Shaders/base.vsh", "src/assets/Shaders/passthrough.fsh");
-		 
+		/*
+		___________________
+		|-- - SHADERS - --|
+		|_________________|
+		*/
 		
-		int shaderid = shader.getProgramId();
-		float[] f = {1f,1f,1f};
-		
-		GL20.glUseProgram(shaderid);
-		
-		int samplerloc = GL20.glGetUniformLocation(shaderid, "u_sampler2D");
-		int transloc = GL20.glGetUniformLocation(shaderid, "u_projTrans");
-		
-		System.out.println(samplerloc + " - " + transloc);
-		
-		GL30.glBindVertexArray(shader.constructVertexArrayObject());
-		GL20.glEnableVertexAttribArray(0);
-		GL20.glEnableVertexAttribArray(1);
-		
-		
-		if( glGetError() != GL_NO_ERROR )
-		{
-			throw new RuntimeException("OpenGL error: "+GLU.gluErrorString(glGetError()));
-		}*/
 	}
 	
 	@Override
