@@ -1,4 +1,4 @@
-package Main;
+package Main.Types;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -14,7 +14,7 @@ import org.newdawn.slick.util.Log;
  *
  * @author kevin
  */
-public class Sound {
+public class Sound{
 	/** The internal sound effect represent this sound */
 	private Audio sound;
 
@@ -173,6 +173,13 @@ public class Sound {
 	public void stop() {
 		sound.stop();
 	}
+	
+	
+	/**
+	 * Modifications to extend functionallity
+	 * 
+	 * @author Marco
+	 */
 	
 	public void playAt(float pos){
 		playAt(1f, 1f, pos);

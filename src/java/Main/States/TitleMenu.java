@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Main.Game;
 import Main.Game.Screens;
-import Main.MenuButton;
+import Main.Types.MenuButton;
 
 public class TitleMenu extends BaseState{
 
@@ -52,8 +52,6 @@ public class TitleMenu extends BaseState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1)
 			throws SlickException {
-		mainGame.resetResolution(gc);
-		
 		newGameButton = new MenuButton("src/assets/Textures/NewGameButton.png", 2, 1); 
 		OptionsButton = new MenuButton("src/assets/Textures/OptionsButton.png", 2, 2); 
 		CreditsButton = new MenuButton("src/assets/Textures/CreditsButton.png", 2, 2); 

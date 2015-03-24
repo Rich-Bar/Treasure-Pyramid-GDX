@@ -8,8 +8,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Main.Game;
 import Main.Game.Screens;
-import Main.MenuButton;
-import Main.Sound;
+import Main.Types.MenuButton;
+import Main.Types.Sound;
 
 public class IntroMenu extends BaseState {
 	
@@ -95,7 +95,7 @@ public class IntroMenu extends BaseState {
 			scroll.draw(0, 0, 360 * Game.scale, 240 * Game.scale, 0, scrollPos, 360, scrollPos + 240);
 			scrollOverlay.draw(0, 0, Game.scale);
 			skipProlog.draw(skipProlog.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 200 * Game.scale);
-		}else{
+		}else if(music.getSound().getPosition() > 198){
 			switchScreen();
 		}
 		logo.draw(0, 0, Game.scale * 2);

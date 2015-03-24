@@ -1,7 +1,9 @@
-package Main;
+package Main.Types;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import Main.Game;
 
 public class MenuButton extends Image{
 	

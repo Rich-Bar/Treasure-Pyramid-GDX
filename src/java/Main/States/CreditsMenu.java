@@ -7,8 +7,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Main.Game;
-import Main.Sound;
 import Main.Game.Screens;
+import Main.Types.Sound;
 
 public class CreditsMenu extends BaseState{
 	

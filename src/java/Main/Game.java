@@ -15,6 +15,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Main.Managers.ConfigManager;
+import Main.Managers.KeyManager;
 import Main.States.*;
 
 public class Game extends StateBasedGame{
@@ -48,8 +50,7 @@ public class Game extends StateBasedGame{
 	
 	public KeyManager keyManager = new KeyManager(this);
 	public double factor;
-	public boolean vsync = false;
-	public int maxFps= 120;
+	public ConfigManager config;
 	
 	
 	public Game() {
@@ -63,6 +64,7 @@ public class Game extends StateBasedGame{
 		this.addState(new CreditsMenu(Screens.CREDITS.getID(), this));
 		this.addState(new GameScreen(Screens.GAME.getID(), this));
 		
+		config = new ConfigManager(this);
 	}
 	
 	public static void main(String[] args)
@@ -82,6 +84,7 @@ public class Game extends StateBasedGame{
 			nativeResolution = new Dimension(dm.getWidth(), dm.getHeight());
 			
 			appgc.start();
+			
 		}
 		catch (SlickException ex)
 		{
@@ -96,9 +99,9 @@ public class Game extends StateBasedGame{
 	public void resetResolution(GameContainer gc, Dimension newResolution){
 		internalResolution = newResolution;
 		////Handle GameContainer
-		gc.setShowFPS(true);
-		gc.setTargetFrameRate(maxFps -1);	//-1 Fixes the 1 more FPS bug
-		gc.setVSync(vsync);
+		gc.setShowFPS(config.settings.isDebug());
+		gc.setTargetFrameRate(config.maxFPS -1);	//-1 Fixes the 1 more FPS bug
+		gc.setVSync(config.settings.isvSync());
 		////Handle Canvas and Bounds
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -130,6 +133,7 @@ public class Game extends StateBasedGame{
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
+		config.read();
 		this.getState(Screens.INTRO.getID()).init(gc, this);
 		this.getState(Screens.MAIN.getID()).init(gc, this);
 		this.getState(Screens.OPTIONS.getID()).init(gc, this);

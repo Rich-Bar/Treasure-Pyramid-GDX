@@ -1,10 +1,11 @@
-package Main;
+package Main.Managers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.state.GameState;
 
+import Main.Game;
 import Main.States.*;
 
 public class KeyManager {
