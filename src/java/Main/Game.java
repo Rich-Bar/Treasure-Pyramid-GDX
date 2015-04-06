@@ -18,6 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import Main.Managers.ConfigManager;
 import Main.Managers.KeyManager;
 import Main.States.*;
+import Main.Types.SheetFont;
 
 public class Game extends StateBasedGame{
 	
@@ -40,6 +41,7 @@ public class Game extends StateBasedGame{
 	private static final String TITLE = "Treasure Pyramide";
 	private static final String VERSION = "Day2";
 	public static final int scale = 4;
+	public SheetFont font;
 	
 	public static Dimension pixelartResolution = new Dimension(360, 240);
 	private static Dimension nativeResolution;
@@ -129,17 +131,25 @@ public class Game extends StateBasedGame{
 		|_________________|
 		*/
 		
+		/*
+		_________________
+		|-- - FONTS - --|
+		|_______________|
+		*/
+		font = new SheetFont();
 	}
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
+		
 		config.read();
+		
 		this.getState(Screens.INTRO.getID()).init(gc, this);
 		this.getState(Screens.MAIN.getID()).init(gc, this);
 		this.getState(Screens.OPTIONS.getID()).init(gc, this);
 		this.getState(Screens.CREDITS.getID()).init(gc, this);
 		this.getState(Screens.GAME.getID()).init(gc, this);
-		this.enterState(Screens.INTRO.getID());
+		this.enterState(Screens.OPTIONS.getID());
 	}
 	
 	public GameState getState(){
