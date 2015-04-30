@@ -15,12 +15,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Main.Managers.ConfigManager;
-import Main.Managers.KeyManager;
+import Main.Events.StateEvents;
+import Main.Managers.*;
 import Main.States.*;
 import Main.Types.SheetFont;
 
-public class Game extends StateBasedGame{
+public class Game extends StateBasedGame implements StateEvents{
 	
 	public static enum Screens{
 		INTRO(0),
@@ -39,7 +39,7 @@ public class Game extends StateBasedGame{
 
 	
 	private static final String TITLE = "Treasure Pyramide";
-	private static final String VERSION = "Day2";
+	private static final String VERSION = "Day9";
 	public static final int scale = 4;
 	public SheetFont font;
 	
@@ -49,7 +49,9 @@ public class Game extends StateBasedGame{
 	private static int offsetY = 0;
 
 	private Dimension internalResolution;
+	private boolean firstLoad = true;
 	
+	public EventHandler eventHandler = new EventHandler();
 	public KeyManager keyManager = new KeyManager(this);
 	public double factor;
 	public ConfigManager config;
@@ -67,6 +69,8 @@ public class Game extends StateBasedGame{
 		this.addState(new GameScreen(Screens.GAME.getID(), this));
 		
 		config = new ConfigManager(this);
+		
+		eventHandler.addListener(this);
 	}
 	
 	public static void main(String[] args)
@@ -125,6 +129,8 @@ public class Game extends StateBasedGame{
 		
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		 
+		gc.setMouseGrabbed(true);
+		
 		/*
 		___________________
 		|-- - SHADERS - --|
@@ -142,14 +148,14 @@ public class Game extends StateBasedGame{
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		
-		config.read();
-		
 		this.getState(Screens.INTRO.getID()).init(gc, this);
-		this.getState(Screens.MAIN.getID()).init(gc, this);
-		this.getState(Screens.OPTIONS.getID()).init(gc, this);
 		this.getState(Screens.CREDITS.getID()).init(gc, this);
 		this.getState(Screens.GAME.getID()).init(gc, this);
-		this.enterState(Screens.OPTIONS.getID());
+		this.getState(Screens.MAIN.getID()).init(gc, this);
+		this.getState(Screens.OPTIONS.getID()).init(gc, this);
+		
+		config.read();
+		eventHandler.loadState(this.getState(Screens.INTRO.getID()));
 	}
 	
 	public GameState getState(){
@@ -167,5 +173,25 @@ public class Game extends StateBasedGame{
         } catch (Exception e) {
             e.printStackTrace();
         }
+	}
+
+	@Override
+	public void loadedState(GameState S) {
+		System.out.println("LOADED!" + S.getID());
+		BaseState oldState = (BaseState) this.getCurrentState();
+		this.enterState(S.getID());	
+		if(firstLoad == false){
+			eventHandler.unloadState(oldState);
+		}else{
+			firstLoad = false;
+		}
+	}
+
+	@Override
+	public void unloadState(GameState S) {
+	}
+	
+	@Override
+	public void loadState(GameState S) {
 	}
 }

@@ -8,13 +8,16 @@ import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Main.Game;
+import Main.Events.StateEvents;
 
-public abstract class BaseState implements GameState{
+public abstract class BaseState implements GameState, StateEvents{
 
 	protected Game mainGame;
+	protected boolean unloadRequest = false;
 	
 	public BaseState(Game mainGame) {
 		this.mainGame = mainGame;
+		this.mainGame.eventHandler.addListener(this);
 	}
 	
 	@Override
@@ -125,6 +128,16 @@ public abstract class BaseState implements GameState{
 		
 	}
 	
+	@Override
+	public void loadedState(GameState S) {
+	}
+	
+	public void pause(){}
+	
+	public void unpause(){}
+	
+	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException{}
+	
 	public abstract boolean isAcceptingInput();
 	
 	public abstract int getID();
@@ -133,14 +146,7 @@ public abstract class BaseState implements GameState{
 
 	public abstract void keyReleased(int arg0, char arg1);
 	
-	public abstract void init(GameContainer arg0, StateBasedGame arg1) throws SlickException;
-	
 	public abstract void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException;
 
 	public abstract void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException;
-
-	public abstract void pause();
-	
-	public abstract void unpause();
-	
 }

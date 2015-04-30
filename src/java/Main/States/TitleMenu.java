@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Main.Game;
@@ -48,19 +49,6 @@ public class TitleMenu extends BaseState{
 			throws SlickException {
 		mainGame.keyManager.update(this, delta);
 	}
-	
-	@Override
-	public void init(GameContainer gc, StateBasedGame arg1)
-			throws SlickException {
-		newGameButton = new MenuButton("src/assets/Textures/NewGameButton.png", 2, 1); 
-		OptionsButton = new MenuButton("src/assets/Textures/OptionsButton.png", 2, 2); 
-		CreditsButton = new MenuButton("src/assets/Textures/CreditsButton.png", 2, 2); 
-		ExitButton = new MenuButton("src/assets/Textures/ExitButton.png", 2, 2); 
-		
-		background = new Image("src/assets/Textures/TitleScreen.png");
-		background.setFilter(Image.FILTER_NEAREST);
-		
-	}
 
 	public void pressedEnter(){
 		switch(selectedButton){
@@ -69,7 +57,12 @@ public class TitleMenu extends BaseState{
 				break;
 			}
 			case 3:{
-				mainGame.enterState(Screens.CREDITS.getID());
+				mainGame.eventHandler.loadState(mainGame.getState(Screens.CREDITS.getID()));
+				break;
+			}
+			case 2:{
+				mainGame.eventHandler.loadState(mainGame.getState(Screens.OPTIONS.getID()));
+				break;
 			}
 			default:{
 				break;
@@ -133,23 +126,45 @@ public class TitleMenu extends BaseState{
 	public void keyReleased(int arg0, char arg1) {
 		mainGame.keyManager.keyReleased(arg0);
 	}
-
-	@Override
-	public void pause() {
-		
-	}
-
-
-	@Override
-	public void unpause() {
-		
-	}
 	
 	@Override
 	public void leave(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
 		if(arg1.getCurrentState() instanceof CreditsMenu){
 			selectedButton = 1;
+		}
+	}
+
+
+	@Override
+	public void loadState(GameState State) {
+		if(State instanceof TitleMenu){
+			try {
+				newGameButton = new MenuButton("src/assets/Textures/NewGameButton.png", 2, 1); 
+				OptionsButton = new MenuButton("src/assets/Textures/OptionsButton.png", 2, 2); 
+				CreditsButton = new MenuButton("src/assets/Textures/CreditsButton.png", 2, 2); 
+				ExitButton = new MenuButton("src/assets/Textures/ExitButton.png", 2, 2); 
+		
+				background = new Image("src/assets/Textures/TitleScreen.png");
+				background.setFilter(Image.FILTER_NEAREST);		
+				mainGame.eventHandler.loadedState(State);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	@Override
+	public void unloadState(GameState State) {
+		if(State instanceof TitleMenu){		
+			unloadRequest = true;
+			newGameButton = null;
+			OptionsButton = null;
+			CreditsButton = null;
+			ExitButton = null;
+			background = null;
+			loadedState(State);
 		}
 	}
 }

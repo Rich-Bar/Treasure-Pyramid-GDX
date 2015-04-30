@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Main.Game;
@@ -32,7 +33,7 @@ public class IntroMenu extends BaseState {
 
 	public void switchScreen(){
 		music.stop();
-		mainGame.enterState(Screens.MAIN.getID());
+		mainGame.eventHandler.loadState(mainGame.getState(Screens.MAIN.getID()));
 	}
 
 	@Override
@@ -59,31 +60,14 @@ public class IntroMenu extends BaseState {
 	@Override
 	public void leave(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		if(arg1.getCurrentState() instanceof IntroMenu) pause();
+		if(arg1.getCurrentState() instanceof IntroMenu && !unloadRequest) pause();
 	}
 	
 	@Override
 	public int getID() {
 		return ID;
 	}
-
-	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
-		
-		logo = new Image("src/assets/Textures/RichyEntertainment_LowRes.png");
-		skipProlog = new MenuButton("src/assets/Textures/PrologSkip.png", 1);
-		scroll = new Image("src/assets/Textures/PrologScroll.png");
-		scrollOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
-		
-		logo.setAlpha(0f);
-		
-		logo.setFilter(Image.FILTER_NEAREST);
-		scroll.setFilter(Image.FILTER_NEAREST);
-		
-		music = new Sound("src/assets/Sound/SeminararbeitProlog-Intro.ogg");
-	}
-
+	
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
@@ -134,4 +118,37 @@ public class IntroMenu extends BaseState {
 		music.playAt(musicPos);
 	}
 
+	@Override
+	public void loadState(GameState S) {
+		if(S instanceof IntroMenu){	
+			try {
+				logo = new Image("src/assets/Textures/RichyEntertainment_LowRes.png");
+				skipProlog = new MenuButton("src/assets/Textures/PrologSkip.png", 1);
+				scroll = new Image("src/assets/Textures/PrologScroll.png");
+				scrollOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
+				
+				logo.setAlpha(0f);
+				
+				logo.setFilter(Image.FILTER_NEAREST);
+				scroll.setFilter(Image.FILTER_NEAREST);
+				
+				music = new Sound("src/assets/Sound/SeminararbeitProlog-Intro.ogg");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			mainGame.eventHandler.loadedState(this);
+		}
+	}
+
+	@Override
+	public void unloadState(GameState S) {
+		if(S instanceof IntroMenu){		
+			unloadRequest = true;
+			music = null;
+			logo = null;
+			skipProlog = null;
+			scroll = null;
+			scrollOverlay = null;
+		}
+	}
 }

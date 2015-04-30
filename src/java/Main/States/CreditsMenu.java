@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Main.Game;
@@ -43,15 +44,6 @@ public class CreditsMenu extends BaseState{
 	@Override
 	public void keyReleased(int arg0, char arg1) {
 		mainGame.keyManager.keyReleased(arg0);
-	}
-
-	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
-		music = new Sound("src/assets/Sound/This Will Destroy You - The Mighty Rio Grande.ogg");
-		credits = new Image("src/assets/Textures/Credits.png");
-		creditsOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
-		credits.setFilter(Image.FILTER_NEAREST);
 	}
 
 	@Override
@@ -97,11 +89,35 @@ public class CreditsMenu extends BaseState{
 	@Override
 	public void leave(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		if(arg1.getCurrentState() instanceof CreditsMenu) pause();
+		if(arg1.getCurrentState() instanceof CreditsMenu && !unloadRequest) pause();
 	}
 
 	public void switchScreen(){
-		mainGame.enterState(Screens.MAIN.getID());
-		music.stop();
+		mainGame.eventHandler.loadState(mainGame.getState(Screens.MAIN.getID()));
+	}
+
+	@Override
+	public void loadState(GameState S) {
+		if(S instanceof CreditsMenu){			
+			try {
+				music = new Sound("src/assets/Sound/This Will Destroy You - The Mighty Rio Grande.ogg");
+				credits = new Image("src/assets/Textures/Credits.png");
+				creditsOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
+				credits.setFilter(Image.FILTER_NEAREST);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			mainGame.eventHandler.loadedState(S);
+		}
+	}
+
+	@Override
+	public void unloadState(GameState S) {
+		if(S instanceof CreditsMenu){			
+			unloadRequest = true;	
+			music = null;
+			credits = null;
+			creditsOverlay = null;
+		}
 	}
 }
