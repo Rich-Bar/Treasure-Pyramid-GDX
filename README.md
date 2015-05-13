@@ -47,20 +47,33 @@ Anmeldung und Vorgeschichte --- [\[Download\]](https://github.com/Mariomarco/Tre
 Gliederungsentwurf --- [\[Download\]](https://github.com/Mariomarco/Treasure-Pyramide-Seminararbeit/blob/master/art/Gliederungsentwurf.docx?raw=true)
 ------------------------------------------------------------------------
 
-> 1   Einleitung 
-> 2	Das Spiel
-> 2.1	Ideenmanagement
-> 2.1.1	Einflüsse
-> 2.1.2	Verarbeitung 
-> 2.2	Zielsetzung
-> 2.3	Programmierumgebung
-> 2.3.1	IDE (integrierte Entwicklungsumgebung)
-> 2.3.2	Verwendete Engines
-> 2.4	Umsetzung komplexer Prozesse
-> 2.4.1	Methode xY
-> 2.4.2	Methode Yx ….
-> 2.5	Verbesserungsmöglichkeiten
->  3	Resümee
+>  1   Einleitung     
+>
+>  2 Das Spiel
+>  
+>  2.1	Ideenmanagement
+>  
+>  2.1.1	Einflüsse
+> 
+>  2.1.2	Verarbeitung 
+> 
+>  2.2	Zielsetzung
+> 
+>  2.3	Programmierumgebung
+> 
+>  2.3.1	IDE (integrierte Entwicklungsumgebung)
+> 
+>  2.3.2	Verwendete Engines
+> 
+>  2.4	Umsetzung komplexer Prozesse
+> 
+>  2.4.1	Methode xY
+> 
+>  2.4.2	Methode Yx ….
+> 
+>  2.5	Verbesserungsmöglichkeiten
+> 
+>   3	Resümee
 
 ***
 Expose --- [\[Download\]](https://github.com/Mariomarco/Treasure-Pyramide-Seminararbeit/blob/master/art/Expos%C3%A9.docx?raw=true)
