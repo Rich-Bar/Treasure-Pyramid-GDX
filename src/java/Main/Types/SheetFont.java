@@ -1,13 +1,13 @@
-package Main.Types;
+package main.types;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Game;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-
-import Main.Game;
 
 
 public class SheetFont{
@@ -16,7 +16,7 @@ public class SheetFont{
 	private SpriteSheet fontSheetSmall;
 	private int tilesX = 0;
 	
-	private char[] charList = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-()[]{}^°\"§$%&/=?!.:,;_<>|#äÄüÜöÖ\\~'�µ™®©@¶ðΨ¿æß ").toCharArray();
+	private char[] charList = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-()[]{}^°\"§$%&/=?!.:,;_<>|#äÄüÜöÖ\\~‘�µ™®©@¶ðΨ¿æß").toCharArray();
 	private List<Character> charSet = new ArrayList<Character>();
 	
 	public SheetFont() {
@@ -62,13 +62,18 @@ if(fontSheetHuge == null || fontSheetSmall == null) return;
 		char[] charText = text.toUpperCase().toCharArray();
 		
 		for(char c : charText){
-			if(charSet.contains(c)){
-				int index = charSet.indexOf(c);
-				int posX = (index % tilesX);
-				int posY = (index / tilesX);
-				font.getSprite(posX, posY).draw(startX , y, scale, col);
+			if(c == '\n'){
+				y += (34 * (size / 100f)) * Game.scale;
+				startX = x;
+			}else{
+				if(charSet.contains(c)){
+					int index = charSet.indexOf(c);
+					int posX = (index % tilesX);
+					int posY = (index / tilesX);
+					font.getSprite(posX, posY).draw(startX , y, scale, col);
+				}
+				startX += 18 * scale;
 			}
-			startX += 18 * scale;
 		}
 	}
 	

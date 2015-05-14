@@ -1,4 +1,9 @@
-package Main.States;
+package main.states;
+
+import java.awt.Dimension;
+
+import main.Game;
+import main.Game.Screens;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -7,9 +12,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Main.Game;
-import Main.Types.Slider;
-import Main.Types.Toggle;
+import main.managers.ConfigManager;
+import main.managers.ConfigManager.Settings;
+import main.types.Popup;
+import main.types.Slider;
+import main.types.Toggle;
 
 public class OptionsMenu extends BaseState{
 	
@@ -24,6 +31,8 @@ public class OptionsMenu extends BaseState{
 	private Toggle vSync;
 	private Toggle debug;
 	private Toggle keyAxis;
+	private Popup confirm;
+	private boolean popup;
 	
 	
 	public OptionsMenu(int ID, Game game){
@@ -104,6 +113,8 @@ public class OptionsMenu extends BaseState{
 			debug.draw(300 * Game.scale, 140  * Game.scale, 50);
 			mainGame.font.drawString(20, 140, "Debug:", 35);
 		}
+		
+		if(popup)confirm.render(new Dimension(160, 72), 100, 100);
 	}
 
 	@Override
@@ -117,8 +128,8 @@ public class OptionsMenu extends BaseState{
 	}
 
 	public void setSelected(int selected) {
-		if(selected > 5) selected = 0;
-		else if (selected < 0) selected = 5;
+		if(selected > 6) selected = 0;
+		else if (selected < 0) selected = 6;
 		this.selected = selected;
 	}
 	
@@ -129,6 +140,33 @@ public class OptionsMenu extends BaseState{
 			keyAxis.value =! keyAxis.value;
 		}else if(selected == 5){
 			debug.value =! debug.value;
+		}else if(selected == 6){
+			if(popup){
+
+				ConfigManager conf = mainGame.config;
+				Settings newSet = mainGame.config.settings;
+				newSet.setMasterVol(mainVolume.getValue());
+				newSet.setMusicVol(musicVolume.getValue());
+				newSet.setSoundVol(soundVolume.getValue());
+				newSet.setvSync(vSync.value);
+				newSet.setKeyAxis(keyAxis.value);
+				newSet.setDebug(debug.value);
+				conf.write(newSet);
+				
+				mainGame.resetResolution(mainGame.getContainer());
+				popup = false;
+				mainGame.eventHandler.loadState(mainGame.getState(Screens.MAIN.getID()));
+			}else{
+				popup = true;
+			}
+		}
+	}
+	
+	public void pressedEscape(){
+		if(popup){
+			popup = false;
+		}else{
+			mainGame.eventHandler.loadState(mainGame.getState(Screens.MAIN.getID()));
 		}
 	}
 	
@@ -151,6 +189,7 @@ public class OptionsMenu extends BaseState{
 			vSync = new Toggle(mainGame.config.settings.isvSync());
 			debug = new Toggle(mainGame.config.settings.isDebug());
 			keyAxis = new Toggle(mainGame.config.settings.getKeyAxis());
+			confirm = new Popup("Confirm?", "to confirm your changes press\n[ENTER] or [SPACE]\n\nTo abort press anything...", mainGame);
 			mainGame.eventHandler.loadedState(S);
 		}
 	}
@@ -165,6 +204,7 @@ public class OptionsMenu extends BaseState{
 			vSync = null;
 			debug = null;
 			keyAxis = null;
+			mainGame.eventHandler.unloadedState(S);
 		}
 	}
 }

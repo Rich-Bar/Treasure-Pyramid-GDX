@@ -1,4 +1,4 @@
-package Main.Types;
+package main.types;
 
 import java.io.InputStream;
 import java.net.URL;

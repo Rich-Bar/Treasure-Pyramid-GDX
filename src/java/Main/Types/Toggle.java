@@ -1,10 +1,10 @@
-package Main.Types;
+package main.types;
+
+import main.Game;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-
-import Main.Game;
 
 	public class Toggle{
 		

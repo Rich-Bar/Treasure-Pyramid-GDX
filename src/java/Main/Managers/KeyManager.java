@@ -1,14 +1,14 @@
-package Main.Managers;
+package main.managers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Game;
+
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.Input;
 
-import Main.Game;
-import Main.Game.Screens;
-import Main.States.*;
+import main.states.*;
 
 public class KeyManager {
 
@@ -22,6 +22,8 @@ public class KeyManager {
 	}
 	
 	public void keyAction(int keyCode, GameState gs){
+		
+		if(keyCode == Input.KEY_H) mainGame.donate();
 		
 		if(gs instanceof TitleMenu){
 			TitleMenu screen = (TitleMenu) gs;
@@ -46,8 +48,7 @@ public class KeyManager {
 			}else if(keyCode == Input.KEY_DOWN || keyCode == Input.KEY_S){
 				screen.setSelected(screen.getSelected() + 1);
 			}else if(keyCode == Input.KEY_BACK || keyCode == Input.KEY_ESCAPE || keyCode == Input.KEY_BACKSLASH){
-				mainGame.eventHandler.loadState(mainGame.getState(Screens.MAIN.getID()));
-				System.out.println("Back to title menu!");
+				screen.pressedEscape();
 			}else if(keyCode == Input.KEY_ENTER || keyCode == Input.KEY_SPACE){
 				screen.pressedEnter();
 			}else if(keyCode == Input.KEY_A || keyCode == Input.KEY_LEFT || keyCode == Input.KEY_MINUS){
@@ -68,8 +69,7 @@ public class KeyManager {
 			
 		}else if(gs instanceof CreditsMenu){
 			CreditsMenu screen = (CreditsMenu) gs;
-			if(keyCode == Input.KEY_H) mainGame.donate();
-			else screen.switchScreen();
+			if(keyCode != Input.KEY_H) screen.switchScreen();
 			
 			
 		}else if(gs instanceof GameScreen){
@@ -101,4 +101,9 @@ public class KeyManager {
 		timeIntervalls[keyCode] = 0;
 		if(keysPressed.contains(keyCode))keysPressed.remove(keysPressed.indexOf(keyCode));
 	}	
+	
+	public void clearKeys(){
+		keysPressed.clear();
+		timeIntervalls = new long[1024];
+	}
 }

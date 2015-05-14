@@ -1,4 +1,7 @@
-package Main.States;
+package main.states;
+
+import main.Game;
+import main.Game.Screens;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,10 +10,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Main.Game;
-import Main.Game.Screens;
-import Main.Types.MenuButton;
-import Main.Types.Sound;
+import main.types.MenuButton;
+import main.types.Sound;
 
 public class IntroMenu extends BaseState {
 	
@@ -54,13 +55,17 @@ public class IntroMenu extends BaseState {
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		if(arg1.getCurrentState() instanceof IntroMenu) unpause();
+		if(arg1.getCurrentStateID() == Screens.INTRO.getID()){
+			unpause();
+		}
 	}
 
 	@Override
 	public void leave(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
-		if(arg1.getCurrentState() instanceof IntroMenu && !unloadRequest) pause();
+		if(arg1.getCurrentStateID() == Screens.INTRO.getID() && !unloadRequest){
+			pause();
+		}
 	}
 	
 	@Override
@@ -149,6 +154,7 @@ public class IntroMenu extends BaseState {
 			skipProlog = null;
 			scroll = null;
 			scrollOverlay = null;
+			mainGame.eventHandler.unloadedState(S);
 		}
 	}
 }

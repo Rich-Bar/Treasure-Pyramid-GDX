@@ -1,9 +1,9 @@
-package Main.Managers;
+package main.managers;
 
 import java.io.*;
 import java.awt.GraphicsDevice;
 
-import Main.Game;
+import main.Game;
 
 public class ConfigManager {
 
@@ -52,17 +52,18 @@ public class ConfigManager {
 	}
 	
 	public void write(Settings settings){
-		if(this.settings == settings) return;
+		//if(this.settings. == settings) return;
 		this.settings = settings; 
-		String settingscomp = settings.masterVol + "\n" + settings.masterVol+ "\n" + settings.musicVol+ "\n" + settings.soundVol+ "\n" + settings.keyAxis+ "\n" + settings.vSync+ "\n" + settings.debug;
+		String settingscomp = settings.masterVol+ "\n" + settings.musicVol+ "\n" + settings.soundVol+ "\n" + settings.keyAxis+ "\n" + settings.vSync+ "\n" + settings.debug;
+		
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(config));
-			writer.write(settingscomp);
-			writer.close();
-			
-		} catch (IOException e) {
-			System.err.println("Configfile not found!");
-		}
+            FileWriter f2 = new FileWriter(config, false);
+            f2.write(settingscomp);
+            f2.close();
+            System.out.println("Wrote:\n" + settingscomp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
 	}
 
 	public void read(){

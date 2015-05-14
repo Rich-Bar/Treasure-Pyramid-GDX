@@ -1,4 +1,7 @@
-package Main.States;
+package main.states;
+
+import main.Game;
+import main.Game.Screens;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,9 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Main.Game;
-import Main.Game.Screens;
-import Main.Types.MenuButton;
+import main.types.MenuButton;
 
 public class TitleMenu extends BaseState{
 
@@ -37,11 +38,11 @@ public class TitleMenu extends BaseState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr)
 			throws SlickException {
-		background.draw(0, 0, Game.scale);
-		newGameButton.draw(newGameButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 100 * Game.scale);
-		OptionsButton.draw(OptionsButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 120 * Game.scale);
-		CreditsButton.draw(CreditsButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 140 * Game.scale);
-		ExitButton.draw(ExitButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 160 * Game.scale);
+			background.draw(0, 0, Game.scale);
+			newGameButton.draw(newGameButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 100 * Game.scale);
+			OptionsButton.draw(OptionsButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 120 * Game.scale);
+			CreditsButton.draw(CreditsButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 140 * Game.scale);
+			ExitButton.draw(ExitButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 160 * Game.scale);
 	}
 
 	@Override
@@ -164,7 +165,7 @@ public class TitleMenu extends BaseState{
 			CreditsButton = null;
 			ExitButton = null;
 			background = null;
-			loadedState(State);
+			mainGame.eventHandler.unloadedState(State);
 		}
 	}
 }

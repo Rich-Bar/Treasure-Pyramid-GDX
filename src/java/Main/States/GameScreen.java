@@ -1,12 +1,12 @@
-package Main.States;
+package main.states;
+
+import main.Game;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import Main.Game;
 
 public class GameScreen extends BaseState {
 	
@@ -55,13 +55,13 @@ public class GameScreen extends BaseState {
 
 	@Override
 	public void loadState(GameState S) {
-		// TODO Auto-generated method stub
+		mainGame.eventHandler.loadedState(S);
 		
 	}
 
 	@Override
 	public void unloadState(GameState S) {
-		// TODO Auto-generated method stub
+		mainGame.eventHandler.unloadedState(S);
 		
 	}
 

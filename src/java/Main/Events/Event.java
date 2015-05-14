@@ -1,4 +1,4 @@
-package Main.Events;
+package main.events;
 
 public interface Event {
 

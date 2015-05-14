@@ -1,4 +1,7 @@
-package Main.States;
+package main.states;
+
+import main.Game;
+import main.Game.Screens;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,9 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Main.Game;
-import Main.Game.Screens;
-import Main.Types.Sound;
+import main.types.Sound;
 
 public class CreditsMenu extends BaseState{
 	
@@ -104,6 +105,8 @@ public class CreditsMenu extends BaseState{
 				credits = new Image("src/assets/Textures/Credits.png");
 				creditsOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
 				credits.setFilter(Image.FILTER_NEAREST);
+				creditsPos = 0;
+				musicPos = 0;
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
@@ -118,6 +121,7 @@ public class CreditsMenu extends BaseState{
 			music = null;
 			credits = null;
 			creditsOverlay = null;
+			mainGame.eventHandler.unloadedState(S);
 		}
 	}
 }

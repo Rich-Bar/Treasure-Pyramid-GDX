@@ -1,4 +1,6 @@
-package Main.States;
+package main.states;
+
+import main.Game;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,8 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Main.Game;
-import Main.Events.StateEvents;
+import main.events.StateEvents;
 
 public abstract class BaseState implements GameState, StateEvents{
 
@@ -130,6 +131,10 @@ public abstract class BaseState implements GameState, StateEvents{
 	
 	@Override
 	public void loadedState(GameState S) {
+	}
+	
+	@Override
+	public void unloadedState(GameState S) {
 	}
 	
 	public void pause(){}

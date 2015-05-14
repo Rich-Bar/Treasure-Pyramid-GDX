@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -15,19 +15,19 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Main.Events.StateEvents;
-import Main.Managers.*;
-import Main.States.*;
-import Main.Types.SheetFont;
+import main.managers.*;
+import main.states.*;
+import main.types.SheetFont;
 
-public class Game extends StateBasedGame implements StateEvents{
+public class Game extends StateBasedGame{
 	
 	public static enum Screens{
-		INTRO(0),
-		MAIN(1),
-		OPTIONS(2),
-		CREDITS(3),
-		GAME(4);
+		LOADING(0),
+		INTRO(1),
+		MAIN(2),
+		OPTIONS(3),
+		CREDITS(4),
+		GAME(5);
 		
 		private int ID;   
 	    Screens(int ID) {
@@ -49,16 +49,17 @@ public class Game extends StateBasedGame implements StateEvents{
 	private static int offsetY = 0;
 
 	private Dimension internalResolution;
-	private boolean firstLoad = true;
 	
-	public EventHandler eventHandler = new EventHandler();
+	public EventHandler eventHandler;
 	public KeyManager keyManager = new KeyManager(this);
 	public double factor;
 	public ConfigManager config;
 	
-	
 	public Game() {
 		super(TITLE + " [" + VERSION + "]");
+		
+		eventHandler = new EventHandler(this);
+		config = new ConfigManager(this);
 		
 		this.internalResolution = new Dimension(pixelartResolution.width * scale, pixelartResolution.height * scale);
 		
@@ -67,10 +68,6 @@ public class Game extends StateBasedGame implements StateEvents{
 		this.addState(new OptionsMenu(Screens.OPTIONS.getID(), this));
 		this.addState(new CreditsMenu(Screens.CREDITS.getID(), this));
 		this.addState(new GameScreen(Screens.GAME.getID(), this));
-		
-		config = new ConfigManager(this);
-		
-		eventHandler.addListener(this);
 	}
 	
 	public static void main(String[] args)
@@ -143,10 +140,13 @@ public class Game extends StateBasedGame implements StateEvents{
 		|_______________|
 		*/
 		font = new SheetFont();
+		
 	}
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
+		
+		eventHandler.init();
 		
 		this.getState(Screens.INTRO.getID()).init(gc, this);
 		this.getState(Screens.CREDITS.getID()).init(gc, this);
@@ -166,32 +166,11 @@ public class Game extends StateBasedGame implements StateEvents{
 		try {
 			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-	
 		            desktop.browse(new URL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5RQ9AMFVA8CQL").toURI());
 		    }
 		
         } catch (Exception e) {
             e.printStackTrace();
         }
-	}
-
-	@Override
-	public void loadedState(GameState S) {
-		System.out.println("LOADED!" + S.getID());
-		BaseState oldState = (BaseState) this.getCurrentState();
-		this.enterState(S.getID());	
-		if(firstLoad == false){
-			eventHandler.unloadState(oldState);
-		}else{
-			firstLoad = false;
-		}
-	}
-
-	@Override
-	public void unloadState(GameState S) {
-	}
-	
-	@Override
-	public void loadState(GameState S) {
 	}
 }
