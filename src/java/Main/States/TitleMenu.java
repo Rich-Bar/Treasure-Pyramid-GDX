@@ -24,8 +24,8 @@ public class TitleMenu extends BaseState{
 	protected int totalDelta = 0;
 	
 	
-	public TitleMenu(int ID, Game sbg){
-		super(sbg);
+	public TitleMenu(int ID){
+		super();
 		this.ID = ID;
 	}
 	
@@ -48,21 +48,21 @@ public class TitleMenu extends BaseState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		mainGame.keyManager.update(this, delta);
+		Game.getInstance().keyManager.update(this, delta);
 	}
 
 	public void pressedEnter(){
 		switch(selectedButton){
 			case 4:{
-				mainGame.getContainer().exit();
+				Game.getInstance().getContainer().exit();
 				break;
 			}
 			case 3:{
-				mainGame.eventHandler.loadState(mainGame.getState(Screens.CREDITS.getID()));
+				Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.CREDITS.getID()));
 				break;
 			}
 			case 2:{
-				mainGame.eventHandler.loadState(mainGame.getState(Screens.OPTIONS.getID()));
+				Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.OPTIONS.getID()));
 				break;
 			}
 			default:{
@@ -119,21 +119,13 @@ public class TitleMenu extends BaseState{
 
 	@Override
 	public void keyPressed(int arg0, char arg1) {
-		mainGame.keyManager.keyPressed(arg0, this);
+		Game.getInstance().keyManager.keyPressed(arg0, this);
 	}
 
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
-		mainGame.keyManager.keyReleased(arg0);
-	}
-	
-	@Override
-	public void leave(GameContainer arg0, StateBasedGame arg1)
-			throws SlickException {
-		if(arg1.getCurrentState() instanceof CreditsMenu){
-			selectedButton = 1;
-		}
+		Game.getInstance().keyManager.keyReleased(arg0);
 	}
 
 
@@ -148,10 +140,11 @@ public class TitleMenu extends BaseState{
 		
 				background = new Image("src/assets/Textures/TitleScreen.png");
 				background.setFilter(Image.FILTER_NEAREST);		
-				mainGame.eventHandler.loadedState(State);
+				Game.getInstance().eventHandler.loadedState(State);
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
+			selectedButton = 1;
 		}
 	}
 
@@ -165,7 +158,7 @@ public class TitleMenu extends BaseState{
 			CreditsButton = null;
 			ExitButton = null;
 			background = null;
-			mainGame.eventHandler.unloadedState(State);
+			Game.getInstance().eventHandler.unloadedState(State);
 		}
 	}
 }

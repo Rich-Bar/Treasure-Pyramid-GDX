@@ -13,12 +13,10 @@ import main.events.StateEvents;
 
 public abstract class BaseState implements GameState, StateEvents{
 
-	protected Game mainGame;
 	protected boolean unloadRequest = false;
 	
-	public BaseState(Game mainGame) {
-		this.mainGame = mainGame;
-		this.mainGame.eventHandler.addListener(this);
+	public BaseState() {
+		Game.getInstance().eventHandler.addListener(this);
 	}
 	
 	@Override

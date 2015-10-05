@@ -14,14 +14,12 @@ import org.newdawn.slick.state.StateBasedGame;
 public class LoadingScreen implements GameState, StateEvents{
 
 	private Image screen;
-	private Game mainGame;
 	private int newTarget;
 	private int oldTarget;
 	private boolean rendered = false;
 	private boolean notified = false;
 	
-	public LoadingScreen(Game game) {
-		mainGame = game;
+	public LoadingScreen() {
 	}
 	
 	@Override
@@ -152,8 +150,8 @@ public class LoadingScreen implements GameState, StateEvents{
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)throws SlickException {
 		if(rendered && !notified){
 			notified = true;
-			mainGame.keyManager.clearKeys();
-			mainGame.eventHandler.notifyLoad(mainGame.getState(newTarget));
+			Game.getInstance().keyManager.clearKeys();
+			Game.getInstance().eventHandler.notifyLoad(Game.getInstance().getState(newTarget));
 		}
 	}
 }

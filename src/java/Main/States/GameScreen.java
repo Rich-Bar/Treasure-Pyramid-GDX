@@ -12,8 +12,8 @@ public class GameScreen extends BaseState {
 	
 	private int ID;
 	
-	public GameScreen(int ID, Game game){
-		super(game);
+	public GameScreen(int ID){
+		super();
 		this.ID = ID;
 	}
 
@@ -55,13 +55,13 @@ public class GameScreen extends BaseState {
 
 	@Override
 	public void loadState(GameState S) {
-		mainGame.eventHandler.loadedState(S);
+		Game.getInstance().eventHandler.loadedState(S);
 		
 	}
 
 	@Override
 	public void unloadState(GameState S) {
-		mainGame.eventHandler.unloadedState(S);
+		Game.getInstance().eventHandler.unloadedState(S);
 		
 	}
 

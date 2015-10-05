@@ -10,20 +10,27 @@ import org.newdawn.slick.Input;
 
 import main.states.*;
 
+
+/**
+ * 
+ * @author Marco Dittrich
+ *
+ */
 public class KeyManager {
 
 	private long[] timeIntervalls = new long[1024];
 	private List<Integer> keysPressed = new ArrayList<Integer>();
-	private Game mainGame;
 	private static int buttonSwitchSpeed = 400;
 	
-	public KeyManager(Game mainGame) {
-		this.mainGame = mainGame;
-	}
-	
+	/**
+	 * 
+	 * @param keyCode as {@link Integer}
+	 * @param gameState as {@link GameState}
+	 */
 	public void keyAction(int keyCode, GameState gs){
 		
-		if(keyCode == Input.KEY_H) mainGame.donate();
+		if(keyCode == 13) return;
+		if(keyCode == Input.KEY_H) Game.getInstance().donate();
 		
 		if(gs instanceof TitleMenu){
 			TitleMenu screen = (TitleMenu) gs;
@@ -47,6 +54,8 @@ public class KeyManager {
 				screen.setSelected(screen.getSelected() - 1);
 			}else if(keyCode == Input.KEY_DOWN || keyCode == Input.KEY_S){
 				screen.setSelected(screen.getSelected() + 1);
+			}else if(keyCode == Input.KEY_RIGHT || keyCode == Input.KEY_D || keyCode == Input.KEY_LEFT || keyCode == Input.KEY_A){
+				screen.switchCancel();
 			}else if(keyCode == Input.KEY_BACK || keyCode == Input.KEY_ESCAPE || keyCode == Input.KEY_BACKSLASH){
 				screen.pressedEscape();
 			}else if(keyCode == Input.KEY_ENTER || keyCode == Input.KEY_SPACE){
@@ -77,7 +86,11 @@ public class KeyManager {
 		} 
 
 	}
-	
+	 /**
+	  * Updates Manager
+	  * @param gameState as {@link GameState}
+	  * @param deltaTime as {@link Integer}
+	  */
 	public void update(GameState gs, int delta){
 		if(!keysPressed.isEmpty()){
 			for (int keyCode : keysPressed) {
@@ -91,17 +104,29 @@ public class KeyManager {
 		
 	}
 	
+	/**
+	 * Get's called whenever a key is Pressed
+	 * @param keyCode as {@link Integer}
+	 * @param gameState as {@link GameState} 
+	 */
 	public void keyPressed(int keyCode, GameState gs){
 		keysPressed.add(keyCode);
 		keyAction(keyCode, gs);
 	}
-	
+
+	/**
+	 * Get's called whenever a key is Released
+	 * @param keyCode as {@link Integer}
+	 */
 	public void keyReleased(int keyCode){
 		buttonSwitchSpeed = 400;
 		timeIntervalls[keyCode] = 0;
 		if(keysPressed.contains(keyCode))keysPressed.remove(keysPressed.indexOf(keyCode));
 	}	
 	
+	/**
+	 * Clears aktive keyquery
+	 */
 	public void clearKeys(){
 		keysPressed.clear();
 		timeIntervalls = new long[1024];

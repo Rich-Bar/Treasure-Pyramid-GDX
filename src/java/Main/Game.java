@@ -2,13 +2,10 @@ package main;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.DisplayMode;
-import java.awt.GraphicsEnvironment;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -16,11 +13,20 @@ import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import main.managers.*;
+import main.multiscreen.DisplayManager;
 import main.states.*;
+import main.types.Shader;
 import main.types.SheetFont;
+
+/**
+ * @author Marco Dittrich
+ * @version Day11
+ */
 
 public class Game extends StateBasedGame{
 	
+	
+	//Screen Enum Table
 	public static enum Screens{
 		LOADING(0),
 		INTRO(1),
@@ -37,57 +43,61 @@ public class Game extends StateBasedGame{
 	    public int getID() { return ID; }
 	}
 
-	
-	private static final String TITLE = "Treasure Pyramide";
-	private static final String VERSION = "Day9";
+	//Special constants
+	public static final String TITLE = "Treasure Pyramide";
+	public static final String VERSION = "Day11";
+
+	//Render settings
+	public static Dimension pixelartResolution = new Dimension(360, 240);
 	public static final int scale = 4;
+	public boolean renderInventory = false;
+	public static Dimension mainResolution;
+	
+	//Managers and Handlers
+	public DisplayManager displayManager;
+	public EventHandler eventHandler;
+	public KeyManager keyManager;
+	public ConfigManager config;
 	public SheetFont font;
 	
-	public static Dimension pixelartResolution = new Dimension(360, 240);
-	private static Dimension nativeResolution;
-	private static int offsetX = 0;
-	private static int offsetY = 0;
-
-	private Dimension internalResolution;
+	//Shaders
+	public Shader crtshader;
+	public Shader baseshader;
 	
-	public EventHandler eventHandler;
-	public KeyManager keyManager = new KeyManager(this);
-	public double factor;
-	public ConfigManager config;
+	//Instance (Singleton)
+	private static Game instance;
 	
+	/**
+	 * Class Constructor
+	 */ 
 	public Game() {
 		super(TITLE + " [" + VERSION + "]");
 		
-		eventHandler = new EventHandler(this);
-		config = new ConfigManager(this);
+		instance = this;
 		
-		this.internalResolution = new Dimension(pixelartResolution.width * scale, pixelartResolution.height * scale);
+		displayManager = new DisplayManager();
+		keyManager = new KeyManager();
+		eventHandler = new EventHandler();
+		config = new ConfigManager();
 		
-		this.addState(new IntroMenu(Screens.INTRO.getID(), this));
-		this.addState(new TitleMenu(Screens.MAIN.getID(), this));
-		this.addState(new OptionsMenu(Screens.OPTIONS.getID(), this));
-		this.addState(new CreditsMenu(Screens.CREDITS.getID(), this));
-		this.addState(new GameScreen(Screens.GAME.getID(), this));
+		this.addState(new IntroMenu(Screens.INTRO.getID()));
+		this.addState(new TitleMenu(Screens.MAIN.getID()));
+		this.addState(new OptionsMenu(Screens.OPTIONS.getID()));
+		this.addState(new CreditsMenu(Screens.CREDITS.getID()));
+		this.addState(new GameScreen(Screens.GAME.getID()));
 	}
 	
+	/**
+	 * Main method of Treasure Pyramide
+	 * @param args as {@linkplain String[]}
+	 */
 	public static void main(String[] args)
 	{
 		
 		try
 		{
-			AppGameContainer appgc;
-			appgc = new AppGameContainer(new Game());
-			appgc.setMaximumLogicUpdateInterval(240);
-			appgc.setUpdateOnlyWhenVisible(false);
-			appgc.setTitle("Treasure Pyramid");
-			appgc.setDisplayMode(pixelartResolution.width * scale, pixelartResolution.height * scale, false);
-			DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
-			appgc.setDisplayMode(dm.getWidth(), dm.getHeight(), true);
-			
-			nativeResolution = new Dimension(dm.getWidth(), dm.getHeight());
-			
-			appgc.start();
-			
+			AppGameContainer appgc = new AppGameContainer(new Game());
+			DisplayManager.init(appgc).start();
 		}
 		catch (SlickException ex)
 		{
@@ -95,57 +105,33 @@ public class Game extends StateBasedGame{
 		}
 	}
 	
-	public void resetResolution(GameContainer gc){
+	/**
+	 * Resets the resolution of the internal display
+	 * @param gameContainer as {@link GameContainer}
+	 */
+	/*public void resetResolution(GameContainer gc){
 		resetResolution(gc, internalResolution);
-	}
+	}*/
 	
-	public void resetResolution(GameContainer gc, Dimension newResolution){
+	/**
+	 * Resets the resolution of the internal display to the new resolution
+	 * @param gameContainer as {@link GameContainer}
+	 * @param newResolution as {@link Dimension}
+	 */
+	/*public void resetResolution(GameContainer gc, Dimension newResolution){
 		internalResolution = newResolution;
-		////Handle GameContainer
-		gc.setShowFPS(config.settings.isDebug());
-		gc.setTargetFrameRate(config.maxFPS -1);	//-1 Fixes the 1 more FPS bug
-		gc.setVSync(config.settings.isvSync());
-		////Handle Canvas and Bounds
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		
-		//add black columns if necessary
-		factor = 0;
-		if((double)internalResolution.width / internalResolution.height < (double)nativeResolution.width / nativeResolution.height){
-			factor = (double)nativeResolution.height / internalResolution.height;
-			offsetX = (int) ((nativeResolution.width - internalResolution.width * factor) /2);
-		}else if((double)internalResolution.width / internalResolution.height > (double)nativeResolution.width / nativeResolution.height){
-			factor = (double)nativeResolution.width / internalResolution.width;
-			offsetY = (int) ((nativeResolution.height - internalResolution.height * factor) /2);
-		}
-		System.out.println("offsetX: " + offsetX + " - offsetY: " + offsetY);
-		
-		//apply columns
-		GL11.glOrtho(-offsetX ,internalResolution.width + offsetX, internalResolution.height + offsetY, - offsetY, 100, -100);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-		 
-		gc.setMouseGrabbed(true);
-		
-		/*
-		___________________
-		|-- - SHADERS - --|
-		|_________________|
-		*/
-		
-		/*
-		_________________
-		|-- - FONTS - --|
-		|_______________|
-		*/
-		font = new SheetFont();
 		
 	}
-	
+	*/
+	/**
+	 * Initializes Managers and States
+	 * @param gameContainer as {@link GameContainer}
+	 */
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		
+		displayManager.setGameResolution(mainResolution);
+		displayManager.setMultiscreen(true);
 		eventHandler.init();
 		
 		this.getState(Screens.INTRO.getID()).init(gc, this);
@@ -158,10 +144,25 @@ public class Game extends StateBasedGame{
 		eventHandler.loadState(this.getState(Screens.INTRO.getID()));
 	}
 	
+	/**
+	 * Returns current gamestate
+	 * @return currentState as {@link GameState}
+	 */
 	public GameState getState(){
 		return this.getCurrentState();
 	}
 	
+	/**
+	 * @return the internalResolution as {@link Dimension}
+	 */
+	public Dimension getInternalResolution() {
+		return new Dimension(pixelartResolution.width * scale, pixelartResolution.height * scale);
+	}
+	
+	/**
+	 * Opens standartbrowser and redirects it to Paypal
+	 * {@link https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5RQ9AMFVA8CQL}
+	 */
 	public void donate(){
 		try {
 			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
@@ -172,5 +173,13 @@ public class Game extends StateBasedGame{
         } catch (Exception e) {
             e.printStackTrace();
         }
+	}
+
+	/**
+	 * gets current instance of game
+	 * @return instance as {@link Game}
+	 */
+	public static Game getInstance() {
+		return instance;
 	}
 }

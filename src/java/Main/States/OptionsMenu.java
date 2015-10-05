@@ -15,13 +15,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import main.managers.ConfigManager;
 import main.managers.ConfigManager.Settings;
 import main.types.Popup;
+import main.types.SheetFont;
 import main.types.Slider;
 import main.types.Toggle;
 
 public class OptionsMenu extends BaseState{
-	
-	private int ID;
-	private Game mainGame;
 	
 	private int selected = 0;
 	
@@ -34,11 +32,11 @@ public class OptionsMenu extends BaseState{
 	private Popup confirm;
 	private boolean popup;
 	
+	private SheetFont font;
 	
-	public OptionsMenu(int ID, Game game){
-		super(game);
-		this.ID = ID;
-		mainGame = game;
+	
+	public OptionsMenu(int ID){
+		super();
 	}
 
 	@Override
@@ -48,17 +46,17 @@ public class OptionsMenu extends BaseState{
 
 	@Override
 	public int getID() {
-		return ID;
+		return Game.Screens.OPTIONS.getID();
 	}
 
 	@Override
 	public void keyPressed(int arg0, char arg1) {
-		mainGame.keyManager.keyPressed(arg0, this);
+		Game.getInstance().keyManager.keyPressed(arg0, this);
 	}
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
-		mainGame.keyManager.keyReleased(arg0);
+		Game.getInstance().keyManager.keyReleased(arg0);
 		
 	}
 	
@@ -71,47 +69,54 @@ public class OptionsMenu extends BaseState{
 			keyAxisText = "Direct";
 		}
 		
-		
-		mainGame.font.drawStringAlignMiddle(160, 10, "Options",Color.white, 75);
-		mainGame.font.drawStringAlignMiddle(160, 10, "____________",Color.white, 75);
+		font.drawStringAlignMiddle(160, 10, "Options",Color.white, 75);
+		font.drawStringAlignMiddle(160, 10, "____________",Color.white, 75);
 		
 		mainVolume.draw(300 * Game.scale, 50  * Game.scale, 50, Color.decode("0x999999"));
 		musicVolume.draw(300 * Game.scale, 65  * Game.scale, 50, Color.decode("0x999999"));
 		soundVolume.draw(300 * Game.scale, 80  * Game.scale, 50, Color.decode("0x999999"));
 		vSync.draw(300 * Game.scale, 100  * Game.scale, 50, Color.decode("0x999999"));
-		mainGame.font.drawString(282, 120, keyAxisText, Color.decode("0x999999"), 35);
+		font.drawString(282, 120, keyAxisText, Color.decode("0x999999"), 35);
 		debug.draw(300 * Game.scale, 140  * Game.scale, 50, Color.decode("0x999999"));
 		
-		mainGame.font.drawString(20, 50, "Main Volume:", Color.decode("0x999999"), 35);
-		mainGame.font.drawString(30, 65, "Music Volume:", Color.decode("0x999999"), 35);
-		mainGame.font.drawString(30, 80, "Sound Volume:", Color.decode("0x999999"), 35);
-		mainGame.font.drawString(20, 100, "VSync:", Color.decode("0x999999"), 35);
-		mainGame.font.drawString(20, 120, "Key Axis:", Color.decode("0x999999"), 35);
-		mainGame.font.drawString(20, 140, "Debug:", Color.decode("0x999999"), 35);
+		font.drawString(20, 50, "Main Volume:", Color.decode("0x999999"), 35);
+		font.drawString(30, 65, "Music Volume:", Color.decode("0x999999"), 35);
+		font.drawString(30, 80, "Sound Volume:", Color.decode("0x999999"), 35);
+		font.drawString(20, 100, "VSync:", Color.decode("0x999999"), 35);
+		font.drawString(20, 120, "Key Axis:", Color.decode("0x999999"), 35);
+		font.drawString(20, 140, "Debug:", Color.decode("0x999999"), 35);
+		font.drawString(100, 170, "Save", Color.decode("0x999999"), 35);
+		font.drawString(200, 170, "Cancel", Color.decode("0x999999"), 35);
 
 		if(selected == 0){
 			mainVolume.draw(300 * Game.scale, 50  * Game.scale, 50);
-			mainGame.font.drawString(20, 50, "Main Volume:", 35);
+			font.drawString(20, 50, "Main Volume:", 35);
 		}
 		else if(selected == 1){
 			musicVolume.draw(300 * Game.scale, 65  * Game.scale, 50);
-			mainGame.font.drawString(30, 65, "Music Volume:", 35);
+			font.drawString(30, 65, "Music Volume:", 35);
 		}
 		else if(selected == 2){
 			soundVolume.draw(300 * Game.scale, 80  * Game.scale, 50);
-			mainGame.font.drawString(30, 80, "Sound Volume:", 35);
+			font.drawString(30, 80, "Sound Volume:", 35);
 		}
 		else if(selected == 3){
 			vSync.draw(300 * Game.scale, 100  * Game.scale, 50);
-			mainGame.font.drawString(20, 100, "VSync:", 35);
+			font.drawString(20, 100, "VSync:", 35);
 		}
 		else if(selected == 4){
-			mainGame.font.drawString(20, 120, "Key Axis:", 35);
-			mainGame.font.drawString(282, 120, keyAxisText, 35);
+			font.drawString(20, 120, "Key Axis:", 35);
+			font.drawString(282, 120, keyAxisText, 35);
 		}
 		else if(selected == 5){
 			debug.draw(300 * Game.scale, 140  * Game.scale, 50);
-			mainGame.font.drawString(20, 140, "Debug:", 35);
+			font.drawString(20, 140, "Debug:", 35);
+		}
+		else if(selected == 6){
+			font.drawString(100, 170, "Save", 35);
+		}
+		else if(selected == 7){
+			font.drawString(200, 170, "Cancel", 35);
 		}
 		
 		if(popup)confirm.render(new Dimension(160, 72), 100, 100);
@@ -120,7 +125,7 @@ public class OptionsMenu extends BaseState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		mainGame.keyManager.update(this, delta);
+		Game.getInstance().keyManager.update(this, delta);
 	}
 
 	public int getSelected() {
@@ -128,9 +133,15 @@ public class OptionsMenu extends BaseState{
 	}
 
 	public void setSelected(int selected) {
-		if(selected > 6) selected = 0;
+		if(this.selected - selected == 1 && this.selected == 7) selected = 5;
+		else if(selected > 6) selected = 0;
 		else if (selected < 0) selected = 6;
 		this.selected = selected;
+	}
+	
+	public void switchCancel() {
+		if(selected == 6)this.selected = 7;
+		else if(selected == 7)selected = 6;
 	}
 	
 	public void pressedEnter() {
@@ -143,8 +154,8 @@ public class OptionsMenu extends BaseState{
 		}else if(selected == 6){
 			if(popup){
 
-				ConfigManager conf = mainGame.config;
-				Settings newSet = mainGame.config.settings;
+				ConfigManager conf = Game.getInstance().config;
+				Settings newSet = Game.getInstance().config.settings;
 				newSet.setMasterVol(mainVolume.getValue());
 				newSet.setMusicVol(musicVolume.getValue());
 				newSet.setSoundVol(soundVolume.getValue());
@@ -153,20 +164,23 @@ public class OptionsMenu extends BaseState{
 				newSet.setDebug(debug.value);
 				conf.write(newSet);
 				
-				mainGame.resetResolution(mainGame.getContainer());
+				Game.getInstance().displayManager.resetResolution(Game.getInstance().getContainer());
 				popup = false;
-				mainGame.eventHandler.loadState(mainGame.getState(Screens.MAIN.getID()));
+				Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.MAIN.getID()));
 			}else{
 				popup = true;
 			}
+		}else if(selected == 7){
+			Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.MAIN.getID()));
 		}
+		
 	}
 	
 	public void pressedEscape(){
 		if(popup){
 			popup = false;
 		}else{
-			mainGame.eventHandler.loadState(mainGame.getState(Screens.MAIN.getID()));
+			Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.MAIN.getID()));
 		}
 	}
 	
@@ -183,14 +197,17 @@ public class OptionsMenu extends BaseState{
 	@Override
 	public void loadState(GameState S) {
 		if(S instanceof OptionsMenu){
-			mainVolume = new Slider((int)( mainGame.config.settings.getMasterVol()*100));
-			musicVolume = new Slider((int)( mainGame.config.settings.getMusicVol()*100));
-			soundVolume = new Slider((int)( mainGame.config.settings.getSoundVol()*100));
-			vSync = new Toggle(mainGame.config.settings.isvSync());
-			debug = new Toggle(mainGame.config.settings.isDebug());
-			keyAxis = new Toggle(mainGame.config.settings.getKeyAxis());
-			confirm = new Popup("Confirm?", "to confirm your changes press\n[ENTER] or [SPACE]\n\nTo abort press anything...", mainGame);
-			mainGame.eventHandler.loadedState(S);
+			font = Game.getInstance().font;
+			ConfigManager config = Game.getInstance().config;
+			mainVolume = new Slider((int)(config.settings.getMasterVol()*100));
+			musicVolume = new Slider((int)(config.settings.getMusicVol()*100));
+			soundVolume = new Slider((int)(config.settings.getSoundVol()*100));
+			vSync = new Toggle(config.settings.isvSync());
+			debug = new Toggle(config.settings.isDebug());
+			keyAxis = new Toggle(config.settings.getKeyAxis());
+			confirm = new Popup("Confirm?", "to confirm your changes press\n[ENTER] or [SPACE]\n\nTo abort press anything...");
+			Game.getInstance().eventHandler.loadedState(S);
+			selected = 0;
 		}
 	}
 
@@ -204,7 +221,7 @@ public class OptionsMenu extends BaseState{
 			vSync = null;
 			debug = null;
 			keyAxis = null;
-			mainGame.eventHandler.unloadedState(S);
+			Game.getInstance().eventHandler.unloadedState(S);
 		}
 	}
 }

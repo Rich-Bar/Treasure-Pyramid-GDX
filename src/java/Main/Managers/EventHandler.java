@@ -16,13 +16,11 @@ import main.states.LoadingScreen;
 @SuppressWarnings("rawtypes")
 public class EventHandler implements StateEvents, LevelEvents{
 
-	private Game mainGame;
 	boolean firstLoad = true;
 	
-	public EventHandler(Game game) {
-		mainGame = game;
+	public EventHandler() {
 		
-		mainGame.addState(new LoadingScreen(game));
+		Game.getInstance().addState(new LoadingScreen());
 	}
 	
 	public static enum Screens{
@@ -48,7 +46,7 @@ public class EventHandler implements StateEvents, LevelEvents{
 
 	@Override
 	public synchronized void loadedState(GameState S) {
-		mainGame.enterState(S.getID());
+		Game.getInstance().enterState(S.getID());
 		Iterator listeners = _listeners.iterator();
         while( listeners.hasNext() ) {
         	Event thisListener = (Event)listeners.next();
@@ -58,8 +56,8 @@ public class EventHandler implements StateEvents, LevelEvents{
 
 	@Override
 	public synchronized void loadState(GameState S) {
-		((LoadingScreen) mainGame.getState(main.Game.Screens.LOADING.getID())).setTarget(S.getID(), mainGame.getCurrentStateID());
-		mainGame.enterState(Game.Screens.LOADING.getID());
+		((LoadingScreen) Game.getInstance().getState(main.Game.Screens.LOADING.getID())).setTarget(S.getID(), Game.getInstance().getCurrentStateID());
+		Game.getInstance().enterState(Game.Screens.LOADING.getID());
 	}
 	
 	public void notifyLoad(GameState S){
@@ -116,6 +114,6 @@ public class EventHandler implements StateEvents, LevelEvents{
 	}
 
 	public void init() {
-		((LoadingScreen) mainGame.getState(Game.Screens.LOADING.getID())).init();
+		((LoadingScreen) Game.getInstance().getState(Game.Screens.LOADING.getID())).init();
 	}
 }

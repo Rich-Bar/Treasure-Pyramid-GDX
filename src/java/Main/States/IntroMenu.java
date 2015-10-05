@@ -27,14 +27,14 @@ public class IntroMenu extends BaseState {
 	private Image scroll;
 	private Image scrollOverlay;
 	
-	public IntroMenu(int ID,Game game){
-		super(game);
+	public IntroMenu(int ID){
+		super();
 		this.ID = ID;
 	}
 
 	public void switchScreen(){
 		music.stop();
-		mainGame.eventHandler.loadState(mainGame.getState(Screens.MAIN.getID()));
+		Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.MAIN.getID()));
 	}
 
 	@Override
@@ -44,12 +44,12 @@ public class IntroMenu extends BaseState {
 
 	@Override
 	public void keyPressed(int arg0, char arg1) {
-		mainGame.keyManager.keyPressed(arg0, this);
+		Game.getInstance().keyManager.keyPressed(arg0, this);
 	}
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
-		mainGame.keyManager.keyReleased(arg0);
+		Game.getInstance().keyManager.keyReleased(arg0);
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class IntroMenu extends BaseState {
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
-			mainGame.eventHandler.loadedState(this);
+			Game.getInstance().eventHandler.loadedState(this);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class IntroMenu extends BaseState {
 			skipProlog = null;
 			scroll = null;
 			scrollOverlay = null;
-			mainGame.eventHandler.unloadedState(S);
+			Game.getInstance().eventHandler.unloadedState(S);
 		}
 	}
 }

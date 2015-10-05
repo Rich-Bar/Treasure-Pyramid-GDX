@@ -14,13 +14,14 @@ public class Popup {
 	private Image whiteBorderLR;
 	private Image whiteBorderTB;
 	
-	private String title = "";
-	private String text = "";
+	protected String title = "";
+	protected String text = "";
 	
-	private Game mainGame;
+	private SheetFont font;
 	
-	public Popup(String title, String text, Game game) {
-		mainGame = game;
+	public Popup(String title, String text) {
+		
+		font = Game.getInstance().font;
 		
 		this.title = title;
 		this.text = text;
@@ -50,8 +51,8 @@ public class Popup {
 		whiteBorderLR.draw(x + 4 * Game.scale, y + 4 * Game.scale, 1 * Game.scale, size.height - 8 * Game.scale);
 		whiteBorderTB.draw(x + 4 * Game.scale, y + size.height - 4 * Game.scale, size.width - 8 * Game.scale, 1 * Game.scale);
 	
-		mainGame.font.drawString(x/ Game.scale + 12, y/ Game.scale + 4, title, 75);
-		mainGame.font.drawString(x/ Game.scale + 12, y/ Game.scale + 32, text, 25);
+		font.drawString(x/ Game.scale + 12, y/ Game.scale + 4, title, 75);
+		font.drawString(x/ Game.scale + 12, y/ Game.scale + 32, text, 25);
 	}
 	
 }

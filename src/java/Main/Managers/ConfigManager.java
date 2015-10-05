@@ -11,10 +11,8 @@ public class ConfigManager {
 	public Settings settings = new Settings();
 	private File config;
 	private String OS = (System.getProperty("os.name")).toUpperCase();
-	private Game mainGame;
 	
-	public ConfigManager(Game game) {
-		mainGame = game;
+	public ConfigManager() {
 		
 		String fileLocation;
 		if (OS.contains("WIN")){
@@ -110,7 +108,7 @@ public class ConfigManager {
 			if(!recursive)resetConfig();
 			System.err.println("Configfile is corrupted -> replaced it!");
 		}finally{
-			mainGame.resetResolution(mainGame.getContainer());
+			Game.getInstance().displayManager.resetResolution(Game.getInstance().getContainer());
 		}
 		
 	}
