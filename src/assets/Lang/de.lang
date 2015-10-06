@@ -1,0 +1,18 @@
+GERMAN LANGUAGE FILE   
+master_volume: Hauptlautstärke
+music_volume: Musiklautstärke
+sound_volume: Soundlautstärke
+new_game: Neues Spiel
+options: Optionen
+credits: Credits
+exit: Beenden
+language: Sprache
+axis: Achsen
+axis_direct: Direkt 
+axis_isometric: Isometrisch
+save: Speichern
+cancel: Abbrechen
+vsync: VSync
+debug: Debug
+confirm_title: Sicher?
+confirm_message: Wenn Ja,&ndann presse [ENTER] oder [LEER]&nsonst drücke [ESCAPE]

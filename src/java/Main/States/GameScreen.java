@@ -55,13 +55,13 @@ public class GameScreen extends BaseState {
 
 	@Override
 	public void loadState(GameState S) {
-		Game.getInstance().eventHandler.loadedState(S);
+		Game.inst().eventHandler.loadedState(S);
 		
 	}
 
 	@Override
 	public void unloadState(GameState S) {
-		Game.getInstance().eventHandler.unloadedState(S);
+		Game.inst().eventHandler.unloadedState(S);
 		
 	}
 

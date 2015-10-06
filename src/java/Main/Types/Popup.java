@@ -21,7 +21,7 @@ public class Popup {
 	
 	public Popup(String title, String text) {
 		
-		font = Game.getInstance().font;
+		font = Game.inst().font;
 		
 		this.title = title;
 		this.text = text;

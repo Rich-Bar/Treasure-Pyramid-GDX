@@ -34,7 +34,7 @@ public class IntroMenu extends BaseState {
 
 	public void switchScreen(){
 		music.stop();
-		Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.MAIN.getID()));
+		Game.inst().eventHandler.loadState(Game.inst().getState(Screens.MAIN.getID()));
 	}
 
 	@Override
@@ -44,12 +44,12 @@ public class IntroMenu extends BaseState {
 
 	@Override
 	public void keyPressed(int arg0, char arg1) {
-		Game.getInstance().keyManager.keyPressed(arg0, this);
+		Game.inst().keyManager.keyPressed(arg0, this);
 	}
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
-		Game.getInstance().keyManager.keyReleased(arg0);
+		Game.inst().keyManager.keyReleased(arg0);
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class IntroMenu extends BaseState {
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
-			Game.getInstance().eventHandler.loadedState(this);
+			Game.inst().eventHandler.loadedState(this);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class IntroMenu extends BaseState {
 			skipProlog = null;
 			scroll = null;
 			scrollOverlay = null;
-			Game.getInstance().eventHandler.unloadedState(S);
+			Game.inst().eventHandler.unloadedState(S);
 		}
 	}
 }

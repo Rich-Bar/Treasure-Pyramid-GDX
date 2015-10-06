@@ -30,7 +30,7 @@ public class KeyManager {
 	public void keyAction(int keyCode, GameState gs){
 		
 		if(keyCode == 13) return;
-		if(keyCode == Input.KEY_H) Game.getInstance().donate();
+		if(keyCode == Input.KEY_H) Game.inst().donate();
 		
 		if(gs instanceof TitleMenu){
 			TitleMenu screen = (TitleMenu) gs;
@@ -54,8 +54,6 @@ public class KeyManager {
 				screen.setSelected(screen.getSelected() - 1);
 			}else if(keyCode == Input.KEY_DOWN || keyCode == Input.KEY_S){
 				screen.setSelected(screen.getSelected() + 1);
-			}else if(keyCode == Input.KEY_RIGHT || keyCode == Input.KEY_D || keyCode == Input.KEY_LEFT || keyCode == Input.KEY_A){
-				screen.switchCancel();
 			}else if(keyCode == Input.KEY_BACK || keyCode == Input.KEY_ESCAPE || keyCode == Input.KEY_BACKSLASH){
 				screen.pressedEscape();
 			}else if(keyCode == Input.KEY_ENTER || keyCode == Input.KEY_SPACE){
@@ -63,9 +61,11 @@ public class KeyManager {
 			}else if(keyCode == Input.KEY_A || keyCode == Input.KEY_LEFT || keyCode == Input.KEY_MINUS){
 				buttonSwitchSpeed = 250;
 				screen.changeSlider(-10);
+				screen.switchCancel();
 			}else if(keyCode == Input.KEY_D || keyCode == Input.KEY_RIGHT || keyCode == Input.KEY_ADD){
 				buttonSwitchSpeed = 250;
 				screen.changeSlider(+10);
+				screen.switchCancel();
 			}
 			
 			

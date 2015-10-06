@@ -12,6 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import main.language.Localisation;
 import main.managers.*;
 import main.multiscreen.DisplayManager;
 import main.states.*;
@@ -59,6 +60,7 @@ public class Game extends StateBasedGame{
 	public KeyManager keyManager;
 	public ConfigManager config;
 	public SheetFont font;
+	public Localisation lang;
 	
 	//Shaders
 	public Shader crtshader;
@@ -67,7 +69,7 @@ public class Game extends StateBasedGame{
 	//Instance (Singleton)
 	private static Game instance;
 	
-	/**
+	/** 
 	 * Class Constructor
 	 */ 
 	public Game() {
@@ -93,7 +95,6 @@ public class Game extends StateBasedGame{
 	 */
 	public static void main(String[] args)
 	{
-		
 		try
 		{
 			AppGameContainer appgc = new AppGameContainer(new Game());
@@ -141,6 +142,7 @@ public class Game extends StateBasedGame{
 		this.getState(Screens.OPTIONS.getID()).init(gc, this);
 		
 		config.read();
+		lang = new Localisation();
 		eventHandler.loadState(this.getState(Screens.INTRO.getID()));
 	}
 	
@@ -179,7 +181,7 @@ public class Game extends StateBasedGame{
 	 * gets current instance of game
 	 * @return instance as {@link Game}
 	 */
-	public static Game getInstance() {
+	public static Game inst() {
 		return instance;
 	}
 }

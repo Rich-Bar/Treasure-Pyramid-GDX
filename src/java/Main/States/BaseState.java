@@ -16,7 +16,7 @@ public abstract class BaseState implements GameState, StateEvents{
 	protected boolean unloadRequest = false;
 	
 	public BaseState() {
-		Game.getInstance().eventHandler.addListener(this);
+		Game.inst().eventHandler.addListener(this);
 	}
 	
 	@Override

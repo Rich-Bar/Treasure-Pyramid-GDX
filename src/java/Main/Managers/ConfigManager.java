@@ -4,6 +4,7 @@ import java.io.*;
 import java.awt.GraphicsDevice;
 
 import main.Game;
+import main.language.LANGUAGES;
 
 public class ConfigManager {
 
@@ -45,6 +46,7 @@ public class ConfigManager {
 		settings.setMasterVol(1f);
 		settings.setMusicVol(1f);
 		settings.setSoundVol(1f);
+		settings.setLanguage(LANGUAGES.ENGLISH_EN);
 		write(settings);
 		read(true); //prevent recursive resetting of the config - this would be recursive if the standart values couldn't be read!
 	}
@@ -52,7 +54,7 @@ public class ConfigManager {
 	public void write(Settings settings){
 		//if(this.settings. == settings) return;
 		this.settings = settings; 
-		String settingscomp = settings.masterVol+ "\n" + settings.musicVol+ "\n" + settings.soundVol+ "\n" + settings.keyAxis+ "\n" + settings.vSync+ "\n" + settings.debug;
+		String settingscomp = settings.masterVol+ "\n" + settings.musicVol+ "\n" + settings.soundVol+ "\n" + settings.keyAxis+ "\n" + settings.vSync+ "\n" + settings.debug+ "\n" + settings.language;
 		
 		try {
             FileWriter f2 = new FileWriter(config, false);
@@ -100,6 +102,11 @@ public class ConfigManager {
 		            	settings.debug = Boolean.parseBoolean(line);
 		            	break;
 		            }
+		            case 6:{
+		            	settings.language = LANGUAGES.valueOf(line);
+		            	System.out.println(settings.language);
+		            	break;
+		            }
 		            
 	            }
 	        	i++;
@@ -108,12 +115,13 @@ public class ConfigManager {
 			if(!recursive)resetConfig();
 			System.err.println("Configfile is corrupted -> replaced it!");
 		}finally{
-			Game.getInstance().displayManager.resetResolution(Game.getInstance().getContainer());
+			Game.inst().displayManager.resetResolution(Game.inst().getContainer());
 		}
 		
 	}
 
 	public class Settings {
+		private LANGUAGES language;
 		private float masterVol = 1f;
 		private float musicVol = 1f;
 		private float soundVol = 1f;
@@ -131,6 +139,10 @@ public class ConfigManager {
 			return a;
 		}
 		
+		public void setLanguage(LANGUAGES lang) {
+			language = lang;
+		}
+
 		public float getMasterVol() {
 			return masterVol;
 		}
@@ -185,6 +197,10 @@ public class ConfigManager {
 		
 		public void setDebug(boolean debug) {
 			this.debug = debug;
+		}
+
+		public LANGUAGES getLanguage() {
+			return language;
 		}
 	}
 }	

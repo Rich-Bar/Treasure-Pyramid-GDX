@@ -150,8 +150,8 @@ public class LoadingScreen implements GameState, StateEvents{
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)throws SlickException {
 		if(rendered && !notified){
 			notified = true;
-			Game.getInstance().keyManager.clearKeys();
-			Game.getInstance().eventHandler.notifyLoad(Game.getInstance().getState(newTarget));
+			Game.inst().keyManager.clearKeys();
+			Game.inst().eventHandler.notifyLoad(Game.inst().getState(newTarget));
 		}
 	}
 }

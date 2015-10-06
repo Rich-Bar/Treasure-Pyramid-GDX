@@ -80,7 +80,7 @@ public class DisplayManager {
 			isMultiscreen = isMulti;
 			if(isMulti){
 				if(devices.size() + 1 < inventoryScreen) inventoryScreen = 0;
-				if(inventoryScreen <= 0) Game.getInstance().renderInventory = true;
+				if(inventoryScreen <= 0) Game.inst().renderInventory = true;
 				for(GraphicsDevice device : devices){
 					if(devices.indexOf(device) + 1 == inventoryScreen){
 						inventoryContainer = new AppGameContainer(new InventoryScreen());
@@ -110,11 +110,11 @@ public class DisplayManager {
 	}
 
 	public void resetResolution(GameContainer container) {
-		internalResolution = Game.getInstance().getInternalResolution();
+		internalResolution = Game.inst().getInternalResolution();
 		////Handle GameContainer
-		container.setShowFPS(Game.getInstance().config.settings.isDebug());
-		container.setTargetFrameRate(Game.getInstance().config.maxFPS -1);	//-1 Fixes the 1 more FPS bug
-		container.setVSync(Game.getInstance().config.settings.isvSync());
+		container.setShowFPS(Game.inst().config.settings.isDebug());
+		container.setTargetFrameRate(Game.inst().config.maxFPS -1);	//-1 Fixes the 1 more FPS bug
+		container.setVSync(Game.inst().config.settings.isvSync());
 		////Handle Canvas and Bounds
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -174,7 +174,7 @@ public class DisplayManager {
 		|-- - FONTS - --|
 		|_______________|
 		*/
-		Game.getInstance().font = new SheetFont();
+		Game.inst().font = new SheetFont();
 		
 		
 	}

@@ -48,24 +48,25 @@ public class TitleMenu extends BaseState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
-		Game.getInstance().keyManager.update(this, delta);
+		Game.inst().keyManager.update(this, delta);
 	}
 
 	public void pressedEnter(){
 		switch(selectedButton){
 			case 4:{
-				Game.getInstance().getContainer().exit();
+				Game.inst().getContainer().exit();
 				break;
 			}
 			case 3:{
-				Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.CREDITS.getID()));
+				Game.inst().eventHandler.loadState(Game.inst().getState(Screens.CREDITS.getID()));
 				break;
 			}
 			case 2:{
-				Game.getInstance().eventHandler.loadState(Game.getInstance().getState(Screens.OPTIONS.getID()));
+				Game.inst().eventHandler.loadState(Game.inst().getState(Screens.OPTIONS.getID()));
 				break;
 			}
 			default:{
+				Game.inst().eventHandler.loadState(Game.inst().getState(Screens.GAME.getID()));
 				break;
 			}
 		}
@@ -119,13 +120,13 @@ public class TitleMenu extends BaseState{
 
 	@Override
 	public void keyPressed(int arg0, char arg1) {
-		Game.getInstance().keyManager.keyPressed(arg0, this);
+		Game.inst().keyManager.keyPressed(arg0, this);
 	}
 
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
-		Game.getInstance().keyManager.keyReleased(arg0);
+		Game.inst().keyManager.keyReleased(arg0);
 	}
 
 
@@ -140,7 +141,7 @@ public class TitleMenu extends BaseState{
 		
 				background = new Image("src/assets/Textures/TitleScreen.png");
 				background.setFilter(Image.FILTER_NEAREST);		
-				Game.getInstance().eventHandler.loadedState(State);
+				Game.inst().eventHandler.loadedState(State);
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
@@ -158,7 +159,7 @@ public class TitleMenu extends BaseState{
 			CreditsButton = null;
 			ExitButton = null;
 			background = null;
-			Game.getInstance().eventHandler.unloadedState(State);
+			Game.inst().eventHandler.unloadedState(State);
 		}
 	}
 }
