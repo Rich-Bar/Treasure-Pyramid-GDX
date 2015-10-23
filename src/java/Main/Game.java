@@ -105,25 +105,6 @@ public class Game extends StateBasedGame{
 			Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	
-	/**
-	 * Resets the resolution of the internal display
-	 * @param gameContainer as {@link GameContainer}
-	 */
-	/*public void resetResolution(GameContainer gc){
-		resetResolution(gc, internalResolution);
-	}*/
-	
-	/**
-	 * Resets the resolution of the internal display to the new resolution
-	 * @param gameContainer as {@link GameContainer}
-	 * @param newResolution as {@link Dimension}
-	 */
-	/*public void resetResolution(GameContainer gc, Dimension newResolution){
-		internalResolution = newResolution;
-		
-	}
-	*/
 	/**
 	 * Initializes Managers and States
 	 * @param gameContainer as {@link GameContainer}

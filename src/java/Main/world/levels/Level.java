@@ -1,9 +1,9 @@
-package main.elements.levels;
+package main.world.levels;
 
 import main.Game;
-import main.elements.blocks.Block;
 import main.events.LevelEvents;
 import main.types.Location;
+import main.world.blocks.Block;
 
 public abstract class Level implements LevelEvents {
 

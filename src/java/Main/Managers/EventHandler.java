@@ -7,11 +7,11 @@ import java.util.List;
 import org.newdawn.slick.state.GameState;
 
 import main.Game;
-import main.elements.levels.Level;
 import main.events.Event;
 import main.events.LevelEvents;
 import main.events.StateEvents;
 import main.states.LoadingScreen;
+import main.world.levels.Level;
 
 @SuppressWarnings("rawtypes")
 public class EventHandler implements StateEvents, LevelEvents{

@@ -1,6 +1,6 @@
 package main.events;
 
-import main.elements.levels.Level;
+import main.world.levels.Level;
 
 public interface LevelEvents extends Event{
 

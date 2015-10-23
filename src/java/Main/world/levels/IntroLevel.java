@@ -1,8 +1,8 @@
-package main.elements.levels;
+package main.world.levels;
 
 import main.Game;
-import main.elements.blocks.Block;
 import main.types.Location;
+import main.world.blocks.Block;
 
 public class IntroLevel extends Level{
 
