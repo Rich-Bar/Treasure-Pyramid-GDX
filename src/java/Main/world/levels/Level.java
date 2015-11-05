@@ -2,7 +2,7 @@ package main.world.levels;
 
 import main.Game;
 import main.events.LevelEvents;
-import main.types.Location;
+import main.types.Point3D;
 import main.world.blocks.Block;
 
 public abstract class Level implements LevelEvents {
@@ -13,7 +13,7 @@ public abstract class Level implements LevelEvents {
 		mainGame = game;
 		mainGame.eventHandler.addListener(this);
 	}
-	abstract Location getGoal();
+	abstract Point3D getGoal();
 	
 	abstract Block[][] getLevel();
 }

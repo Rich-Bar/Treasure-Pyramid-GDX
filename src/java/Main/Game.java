@@ -2,6 +2,8 @@ package main;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.io.File;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,8 +18,8 @@ import main.language.Localisation;
 import main.managers.*;
 import main.multiscreen.DisplayManager;
 import main.states.*;
-import main.types.Shader;
 import main.types.SheetFont;
+import main.world.entitys.Player;
 
 /**
  * @author Marco Dittrich
@@ -25,7 +27,6 @@ import main.types.SheetFont;
  */
 
 public class Game extends StateBasedGame{
-	
 	
 	//Screen Enum Table
 	public static enum Screens{
@@ -47,7 +48,8 @@ public class Game extends StateBasedGame{
 	//Special constants
 	public static final String TITLE = "Treasure Pyramide";
 	public static final String VERSION = "Day11";
-
+	public static String GAMEDIR;
+	
 	//Render settings
 	public static Dimension pixelartResolution = new Dimension(360, 240);
 	public static final int scale = 4;
@@ -55,6 +57,7 @@ public class Game extends StateBasedGame{
 	public static Dimension mainResolution;
 	
 	//Managers and Handlers
+	public static Logger LOG;
 	public DisplayManager displayManager;
 	public EventHandler eventHandler;
 	public KeyManager keyManager;
@@ -62,9 +65,8 @@ public class Game extends StateBasedGame{
 	public SheetFont font;
 	public Localisation lang;
 	
-	//Shaders
-	public Shader crtshader;
-	public Shader baseshader;
+	//Game 'Universals'
+	public Player player = new Player();
 	
 	//Instance (Singleton)
 	private static Game instance;
@@ -92,9 +94,13 @@ public class Game extends StateBasedGame{
 	/**
 	 * Main method of Treasure Pyramide
 	 * @param args as {@linkplain String[]}
+	 * @throws Exception 
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
+		GAMEDIR = new File(".").getCanonicalPath();
+		LOG = Logger.getLogger(Game.class.getName());
+		setLibraryPath(GAMEDIR + "/src/natives/");
 		try
 		{
 			AppGameContainer appgc = new AppGameContainer(new Game());
@@ -105,6 +111,24 @@ public class Game extends StateBasedGame{
 			Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+	
+	/**
+	 * Required for starting the game without '-Djava.library.path' argument!
+	 * Using the private field "sys_paths" in {@linkplain ClassLoader}
+	 * @see http://fahdshariff.blogspot.be/2011/08/changing-java-library-path-at-runtime.html
+	 * @param path
+	 * @throws Exception
+	 */
+	public static void setLibraryPath(String path) throws Exception {
+		LOG.log(Level.ALL, "Loading Natives and changing 'java.library.path'");
+	    System.setProperty("java.library.path", path);
+
+	    //set sys_paths to null so that java.library.path will be reevalueted next time it is needed
+	    final Field sysPathsField = ClassLoader.class.getDeclaredField("sys_paths");
+	    sysPathsField.setAccessible(true);
+	    sysPathsField.set(null, null);
+	}
+	
 	/**
 	 * Initializes Managers and States
 	 * @param gameContainer as {@link GameContainer}

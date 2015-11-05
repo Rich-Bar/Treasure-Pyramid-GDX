@@ -1,5 +1,5 @@
 package main.world.effects;
 
-public class AlkoholEffect implements Effect {
+public class AlkoholEffect extends Effect {
 
 }

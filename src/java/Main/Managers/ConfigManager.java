@@ -11,19 +11,10 @@ public class ConfigManager {
 	public final int maxFPS = 120;
 	public Settings settings = new Settings();
 	private File config;
-	private String OS = (System.getProperty("os.name")).toUpperCase();
 	
 	public ConfigManager() {
 		
-		String fileLocation;
-		if (OS.contains("WIN")){
-			fileLocation = System.getenv("AppData") + "/TreasurePyramid/conf.ig";
-		}else{
-			fileLocation = System.getProperty("user.home");
-			fileLocation += "/Library/Application Support/TreasurePyramid/conf.ig";
-		}
-		
-		config = new File(fileLocation);
+		config = new File(OSManagement.getAppdataPath() + "conf.ig");
 		
 		if(!config.exists() || config.length() == 0){
 			config.getParentFile().mkdirs();

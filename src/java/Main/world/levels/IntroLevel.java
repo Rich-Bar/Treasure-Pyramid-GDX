@@ -1,7 +1,7 @@
 package main.world.levels;
 
 import main.Game;
-import main.types.Location;
+import main.types.Point3D;
 import main.world.blocks.Block;
 
 public class IntroLevel extends Level{
@@ -34,7 +34,7 @@ public class IntroLevel extends Level{
 	}
 
 	@Override
-	Location getGoal() {
+	Point3D getGoal() {
 		return null;
 	}
 

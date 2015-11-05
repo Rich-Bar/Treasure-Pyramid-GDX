@@ -15,7 +15,6 @@ import main.types.Sound;
 
 public class IntroMenu extends BaseState {
 	
-	private int ID;
 	private Sound music;
 	private Image logo;
 	private MenuButton skipProlog;
@@ -69,15 +68,10 @@ public class IntroMenu extends BaseState {
 	}
 	
 	@Override
-	public int getID() {
-		return ID;
-	}
-	
-	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
 		
-		if(music.getSound().getPosition() > 2f){
+		if(music.getSound().getPosition() > 2f && music.getSound().getPosition() < 198){
 			if(scrollPos < scroll.getHeight() + 100){
 				scrollPos = (float)((Math.pow((double)music.getSound().getPosition() * 0.05, 2.301029995665)) / musicLength * scroll.getHeight());
 			}

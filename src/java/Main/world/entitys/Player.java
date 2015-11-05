@@ -1,21 +1,21 @@
 package main.world.entitys;
 
+import main.world.World;
+import main.world.items.Inventory;
+
 import org.lwjgl.util.vector.Vector3f;
 
-public class Player implements Entity{
+public final class Player extends Entity{
 
-	private Vector3f velocity;
-	private Vector3f location;
 	public Vector3f escapePointOffset;
 	
-	@Override
-	public Vector3f getVelocity() {
-		return velocity;
-	}
-
-	@Override
-	public Vector3f getLocation() {
-		return location;
+	private Inventory inv = new Inventory();
+	
+	public void consume(World w){
+		if(inv.getCurrentItem().count > 1){
+			inv.getCurrentItem().count -= 1;
+			w.setEffect(inv.getCurrentItem().getEffect());
+		}
 	}
 	
 	public void move(Vector3f dir){
@@ -26,5 +26,4 @@ public class Player implements Entity{
 		location = location.translate(velocity.x,velocity.y, velocity.z);
 		velocity.set(velocity.x * 0.98f, velocity.x * 0.98f, velocity.x * 0.98f);
 	}
-
 }

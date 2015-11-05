@@ -14,7 +14,6 @@ import main.types.Sound;
 
 public class CreditsMenu extends BaseState{
 	
-	private int ID;
 	private boolean isPaused;
 	private Image credits;
 	private Image creditsOverlay;
@@ -30,11 +29,6 @@ public class CreditsMenu extends BaseState{
 	@Override
 	public boolean isAcceptingInput() {
 		return true;
-	}
-
-	@Override
-	public int getID() {
-		return ID;
 	}
 
 	@Override

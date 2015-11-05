@@ -15,7 +15,6 @@ import main.types.MenuButton;
 public class TitleMenu extends BaseState{
 
 	public int selectedButton = 1;
-	private int ID;
 	private Image background;
 	private MenuButton newGameButton;
 	private MenuButton OptionsButton;
@@ -27,12 +26,6 @@ public class TitleMenu extends BaseState{
 	public TitleMenu(int ID){
 		super();
 		this.ID = ID;
-	}
-	
-
-	@Override
-	public int getID() {
-		return ID;
 	}
 
 	@Override

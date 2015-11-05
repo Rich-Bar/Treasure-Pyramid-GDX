@@ -39,19 +39,14 @@ public class OptionsMenu extends BaseState{
 	
 	private SheetFont font;
 	
-	
 	public OptionsMenu(int ID){
 		super();
+		this.ID = ID;
 	}
 
 	@Override
 	public boolean isAcceptingInput() {
 		return true;
-	}
-
-	@Override
-	public int getID() {
-		return Game.Screens.OPTIONS.getID();
 	}
 
 	@Override

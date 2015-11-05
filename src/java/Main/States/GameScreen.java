@@ -10,7 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameScreen extends BaseState {
 	
-	private int ID;
+	//private World world = new World();
 	
 	public GameScreen(int ID){
 		super();
@@ -23,27 +23,20 @@ public class GameScreen extends BaseState {
 	}
 
 	@Override
-	public int getID() {
-		return ID;
-	}
-
-	@Override
 	public void keyPressed(int arg0, char arg1) {
-		// TODO Auto-generated method stub
-		
+		Game.inst().keyManager.keyPressed(arg0, this);
 	}
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
-		// TODO Auto-generated method stub
+		Game.inst().keyManager.keyReleased(arg0);
 		
 	}
 
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		//world.render(gc, sbg, g);
 	}
 
 	@Override
