@@ -14,14 +14,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import main.components.Popup;
+import main.components.Settings;
+import main.components.SheetFont;
+import main.components.Slider;
+import main.components.Toggle;
 import main.language.LANGUAGES;
 import main.language.Localisation;
 import main.managers.ConfigManager;
-import main.managers.ConfigManager.Settings;
-import main.types.Popup;
-import main.types.SheetFont;
-import main.types.Slider;
-import main.types.Toggle;
 
 public class OptionsMenu extends BaseState{
 	
@@ -33,7 +33,6 @@ public class OptionsMenu extends BaseState{
 	private LANGUAGES selectedLang;
 	private Toggle vSync;
 	private Toggle debug;
-	private Toggle keyAxis;
 	private Popup confirm;
 	private boolean popup;
 	
@@ -64,11 +63,6 @@ public class OptionsMenu extends BaseState{
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
 		
-		String keyAxisText = Game.inst().lang.IsometricAxis.getTranslation();
-		if(keyAxis.value){
-			keyAxisText = Game.inst().lang.DirectAxis.getTranslation();
-		}
-		
 		font.drawStringAlignMiddle(160, 10, Game.inst().lang.Options.getTranslation(),Color.white, 75);
 		font.drawStringAlignMiddle(160, 10, "____________",Color.white, 75);
 		
@@ -77,16 +71,14 @@ public class OptionsMenu extends BaseState{
 		musicVolume.draw(300 * Game.scale, 85  * Game.scale, 50, Color.decode("0x999999"));
 		soundVolume.draw(300 * Game.scale, 100  * Game.scale, 50, Color.decode("0x999999"));
 		vSync.draw(300 * Game.scale, 120  * Game.scale, 50, Color.decode("0x999999"));
-		font.drawString(282, 140, keyAxisText, Color.decode("0x999999"), 35);
-		debug.draw(300 * Game.scale, 160  * Game.scale, 50, Color.decode("0x999999"));
+		debug.draw(300 * Game.scale, 140  * Game.scale, 50, Color.decode("0x999999"));
 		
 		font.drawString(20, 50, Game.inst().lang.Language.getTranslation() + ":", Color.decode("0x999999"), 35);
 		font.drawString(20, 70, Game.inst().lang.MasterVol.getTranslation() + ":", Color.decode("0x999999"), 35);
 		font.drawString(30, 85, Game.inst().lang.MusicVol.getTranslation() + ":", Color.decode("0x999999"), 35);
 		font.drawString(30, 100, Game.inst().lang.SoundVol.getTranslation() + ":", Color.decode("0x999999"), 35);
 		font.drawString(20, 120, Game.inst().lang.VSync.getTranslation() + ":", Color.decode("0x999999"), 35);
-		font.drawString(20, 140, Game.inst().lang.Axis.getTranslation() + ":", Color.decode("0x999999"), 35);
-		font.drawString(20, 160, Game.inst().lang.Debug.getTranslation() + ":", Color.decode("0x999999"), 35);
+		font.drawString(20, 140, Game.inst().lang.Debug.getTranslation() + ":", Color.decode("0x999999"), 35);
 		font.drawString(100, 210, Game.inst().lang.Save.getTranslation(), Color.decode("0x999999"), 35);
 		font.drawString(200, 210, Game.inst().lang.Cancel.getTranslation(), Color.decode("0x999999"), 35);
 		
@@ -111,17 +103,12 @@ public class OptionsMenu extends BaseState{
 			font.drawString(20, 120, Game.inst().lang.VSync.getTranslation() + ":", 35);
 		}
 		else if(selected == 5){
-			font.drawString(20, 140, Game.inst().lang.Axis.getTranslation() + ":", 35);
-			font.drawString(282, 140, keyAxisText, 35);
+			debug.draw(300 * Game.scale, 140  * Game.scale, 50);
 		}
 		else if(selected == 6){
-			debug.draw(300 * Game.scale, 160  * Game.scale, 50);
-			font.drawString(20, 160, Game.inst().lang.Debug.getTranslation() + ":", 35);
-		}
-		else if(selected == 7){
 			font.drawString(100, 210, Game.inst().lang.Save.getTranslation(), 35);
 		}
-		else if(selected == 8){
+		else if(selected == 7){
 			font.drawString(200, 210, Game.inst().lang.Cancel.getTranslation(), 35);
 		}
 		
@@ -139,46 +126,42 @@ public class OptionsMenu extends BaseState{
 	}
 
 	public void setSelected(int selected) {
-		if(this.selected - selected == 1 && this.selected == 8) selected = 5;
-		else if(selected > 7) selected = 0;
-		else if (selected < 0) selected = 7;
+		if(this.selected - selected == 1 && this.selected == 7) selected = 5;
+		else if(selected > 6) selected = 0;
+		else if (selected < 0) selected = 6;
 		this.selected = selected;
 	}
 	
 	public void switchCancel() {
-		if(selected == 7)this.selected = 8;
-		else if(selected == 8)selected = 7;
+		if(selected == 6)this.selected = 7;
+		else if(selected == 7)selected = 6;
 	}
 	
 	public void pressedEnter() {
 		if(selected == 4){
 			vSync.value =! vSync.value;
 		}else if(selected == 5){
-			keyAxis.value =! keyAxis.value;
-		}else if(selected == 6){
 			debug.value =! debug.value;
-		}else if(selected == 7){
+		}else if(selected == 6){
 			if(popup){
 
 				ConfigManager conf = Game.inst().config;
 				Settings newSet = Game.inst().config.settings;
-				newSet.setMasterVol(mainVolume.getValue());
-				newSet.setMusicVol(musicVolume.getValue());
-				newSet.setSoundVol(soundVolume.getValue());
-				newSet.setvSync(vSync.value);
-				newSet.setKeyAxis(keyAxis.value);
-				newSet.setDebug(debug.value);
-				newSet.setLanguage(selectedLang);
+				newSet.masterVol = (mainVolume.getValue());
+				newSet.musicVol  = (musicVolume.getValue());
+				newSet.soundVol = (soundVolume.getValue());
+				newSet.vSync = (vSync.value);
+				newSet.debug = (debug.value);
+				newSet.language = (selectedLang);
 				conf.write(newSet);
 				
-				Game.inst().displayManager.resetResolution(Game.inst().getContainer());
 				Game.inst().lang = new Localisation();
 				popup = false;
 				Game.inst().eventHandler.loadState(Game.inst().getState(Screens.MAIN.getID()));
 			}else{
 				popup = true;
 			}
-		}else if(selected == 8){
+		}else if(selected == 7){
 			Game.inst().eventHandler.loadState(Game.inst().getState(Screens.MAIN.getID()));
 		}
 		
@@ -214,13 +197,12 @@ public class OptionsMenu extends BaseState{
 		if(S instanceof OptionsMenu){
 			font = Game.inst().font;
 			ConfigManager config = Game.inst().config;
-			selectedLang = config.settings.getLanguage();
-			mainVolume = new Slider((int)(config.settings.getMasterVol()*100));
-			musicVolume = new Slider((int)(config.settings.getMusicVol()*100));
-			soundVolume = new Slider((int)(config.settings.getSoundVol()*100));
-			vSync = new Toggle(config.settings.isvSync());
-			debug = new Toggle(config.settings.isDebug());
-			keyAxis = new Toggle(config.settings.getKeyAxis());
+			selectedLang = config.settings.language;
+			mainVolume = new Slider((int)(config.settings.masterVol*100));
+			musicVolume = new Slider((int)(config.settings.musicVol*100));
+			soundVolume = new Slider((int)(config.settings.soundVol*100));
+			vSync = new Toggle(config.settings.vSync);
+			debug = new Toggle(config.settings.debug);
 			confirm = new Popup(Game.inst().lang.ConfirmTitle.getTranslation(), Game.inst().lang.ConfirmMessage.getTranslation());
 			Game.inst().eventHandler.loadedState(S);
 			selected = 0;
@@ -236,7 +218,6 @@ public class OptionsMenu extends BaseState{
 			soundVolume = null;
 			vSync = null;
 			debug = null;
-			keyAxis = null;
 			Game.inst().eventHandler.unloadedState(S);
 		}
 	}

@@ -3,6 +3,8 @@ package main;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.logging.Level;
@@ -13,12 +15,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.DefaultLogSystem;
 
+import main.components.SheetFont;
 import main.language.Localisation;
 import main.managers.*;
 import main.multiscreen.DisplayManager;
 import main.states.*;
-import main.types.SheetFont;
+import main.types.TreasureOut;
 import main.world.entitys.Player;
 
 /**
@@ -53,8 +57,6 @@ public class Game extends StateBasedGame{
 	//Render settings
 	public static Dimension pixelartResolution = new Dimension(360, 240);
 	public static final int scale = 4;
-	public boolean renderInventory = false;
-	public static Dimension mainResolution;
 	
 	//Managers and Handlers
 	public static Logger LOG;
@@ -70,6 +72,7 @@ public class Game extends StateBasedGame{
 	
 	//Instance (Singleton)
 	private static Game instance;
+	private static AppGameContainer appgc;
 	
 	/** 
 	 * Class Constructor
@@ -79,7 +82,7 @@ public class Game extends StateBasedGame{
 		
 		instance = this;
 		
-		displayManager = new DisplayManager();
+		displayManager = new DisplayManager(appgc);
 		keyManager = new KeyManager();
 		eventHandler = new EventHandler();
 		config = new ConfigManager();
@@ -99,12 +102,15 @@ public class Game extends StateBasedGame{
 	public static void main(String[] args) throws Exception
 	{
 		GAMEDIR = new File(".").getCanonicalPath();
-		LOG = Logger.getLogger(Game.class.getName());
+		
+		TreasureOut out = new TreasureOut(System.out ,new PrintStream(new FileOutputStream(OSManagement.getAppdataPath() + "last.log")));
+		System.setOut(out);
+		DefaultLogSystem.out = out;
+		
 		setLibraryPath(GAMEDIR + "/src/natives/");
 		try
 		{
-			AppGameContainer appgc = new AppGameContainer(new Game());
-			DisplayManager.init(appgc).start();
+			appgc = new AppGameContainer(new Game());
 		}
 		catch (SlickException ex)
 		{
@@ -136,8 +142,6 @@ public class Game extends StateBasedGame{
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		
-		displayManager.setGameResolution(mainResolution);
-		displayManager.setMultiscreen(true);
 		eventHandler.init();
 		
 		this.getState(Screens.INTRO.getID()).init(gc, this);
@@ -148,7 +152,7 @@ public class Game extends StateBasedGame{
 		
 		config.read();
 		lang = new Localisation();
-		eventHandler.loadState(this.getState(Screens.INTRO.getID()));
+		eventHandler.loadState(this.getState(Screens.GAME.getID()));
 	}
 	
 	/**

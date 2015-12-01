@@ -10,7 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import main.types.MenuButton;
+import main.components.MenuButton;
 import main.types.Sound;
 
 public class IntroMenu extends BaseState {

@@ -1,17 +1,16 @@
 package main.world;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.lwjgl.util.Point;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import main.Game;
-import main.types.Point3D;
 import main.world.blocks.Block;
 import main.world.effects.Effect;
 import main.world.entitys.Entity;
@@ -23,28 +22,15 @@ public final class World {
 
 	private Effect activeEffect = new Effect();
 	
-	private Map<Point3D, List<Block>> solids = new HashMap<>();
+	private Map<Point, List<Block>> solids = new HashMap<>();
 	private List<Entity> entitys = new ArrayList<>();	
 	
-	public Block[] getBlocks(){
-		@SuppressWarnings("unchecked")
-		List<Block>[] tmp = (List<Block>[]) solids.values().toArray();
-		List<Block> res = new ArrayList<>();
-		for(List<Block> list : Arrays.asList(tmp)){
-			for(Block block : list){
-				res.add(block);
-			}
-		}
-		return (Block[]) res.toArray();
+	public List<List<Block>> getBlocks(){
+		return new ArrayList<List<Block>>(solids.values());
 	}
 	
-	public Block getBlockAt(int x, int y, int z){
-		return solids.get(new Point3D(x, y, z)).get(0);
-	}
-	
-	public Block[] getBlocksAt(int x, int y, int z){
-		List<Block> list = solids.get(new Point3D(x, y, z)); 
-		return (Block[]) list.toArray(new Block[list.size()]);
+	public List<Block> getBlockAt(int x, int y){
+		return solids.get(new Point(x, y));
 	}
 	
 	public List<Entity> getEntitys(){
@@ -90,6 +76,14 @@ public final class World {
 
 	public void setEffect(Effect activeEffect) {
 		this.activeEffect = activeEffect;
+	}
+	
+	public void load(){
+		for(int i = 3; i < 13; i++){
+			for(int j = 3; j < 10; j++){
+			//	solids.put(new Point(i, j), new FloorBlock(new Point(i, j)));
+			}	
+		}
 	}
 	
 }

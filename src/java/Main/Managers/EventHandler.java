@@ -8,13 +8,11 @@ import org.newdawn.slick.state.GameState;
 
 import main.Game;
 import main.events.Event;
-import main.events.LevelEvents;
 import main.events.StateEvents;
 import main.states.LoadingScreen;
-import main.world.levels.Level;
 
 @SuppressWarnings("rawtypes")
-public class EventHandler implements StateEvents, LevelEvents{
+public class EventHandler implements StateEvents{
 
 	boolean firstLoad = true;
 	
@@ -83,33 +81,6 @@ public class EventHandler implements StateEvents, LevelEvents{
         while( listeners.hasNext() ) {
         	Event thisListener = (Event)listeners.next();
         	if(thisListener instanceof StateEvents)((StateEvents) thisListener).unloadState(S);
-        }
-	}
-
-	@Override
-	public void loadedLevel(Level L) {
-		Iterator listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-        	Event thisListener = (Event)listeners.next();
-        	if(thisListener instanceof LevelEvents)((LevelEvents) thisListener).loadedLevel(L);
-        }
-	}
-
-	@Override
-	public void loadLevel(Level L) {
-		Iterator listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-        	Event thisListener = (Event)listeners.next();
-        	if(thisListener instanceof LevelEvents)((LevelEvents) thisListener).loadLevel(L);
-        }
-	}
-
-	@Override
-	public void unloadLevel(Level L) {
-		Iterator listeners = _listeners.iterator();
-        while( listeners.hasNext() ) {
-        	Event thisListener = (Event)listeners.next();
-        	if(thisListener instanceof LevelEvents)((LevelEvents) thisListener).unloadLevel(L);
         }
 	}
 

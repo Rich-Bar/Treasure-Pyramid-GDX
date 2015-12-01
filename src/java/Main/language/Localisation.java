@@ -45,7 +45,7 @@ public final class Localisation{
 	 */
 	@SuppressWarnings("resource")
 	public String translate(String text){ 
-		LANGUAGES standart = Game.inst().config.settings.getLanguage();
+		LANGUAGES standart = Game.inst().config.settings.language;
 		try {
 			BufferedReader br;
 			br = new BufferedReader(new FileReader(standart.getFile()));

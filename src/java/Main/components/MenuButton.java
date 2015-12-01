@@ -1,4 +1,4 @@
-package main.types;
+package main.components;
 
 import main.Game;
 
