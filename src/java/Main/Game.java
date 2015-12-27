@@ -7,8 +7,6 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -59,7 +57,6 @@ public class Game extends StateBasedGame{
 	public static final int scale = 4;
 	
 	//Managers and Handlers
-	public static Logger LOG;
 	public DisplayManager displayManager;
 	public EventHandler eventHandler;
 	public KeyManager keyManager;
@@ -101,7 +98,7 @@ public class Game extends StateBasedGame{
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		GAMEDIR = new File(".").getCanonicalPath();
+		GAMEDIR = new File(".").getCanonicalPath().replaceAll("\\\\", "/");
 		
 		TreasureOut out = new TreasureOut(System.out ,new PrintStream(new FileOutputStream(OSManagement.getAppdataPath() + "last.log")));
 		System.setOut(out);
@@ -112,10 +109,12 @@ public class Game extends StateBasedGame{
 		{
 			appgc = new AppGameContainer(new Game());
 		}
-		catch (SlickException ex)
-		{
-			Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+		catch (SlickException ex){
+			ex.printStackTrace(out);
+		}finally{
+			out.println("Terminated - Thx for playing!");
 		}
+		
 	}
 	
 	/**
@@ -126,9 +125,10 @@ public class Game extends StateBasedGame{
 	 * @throws Exception
 	 */
 	public static void setLibraryPath(String path) throws Exception {
-		LOG.log(Level.ALL, "Loading Natives and changing 'java.library.path'");
+		System.out.println("Loading Natives and changing 'java.library.path'");
 	    System.setProperty("java.library.path", path);
 
+	    
 	    //set sys_paths to null so that java.library.path will be reevalueted next time it is needed
 	    final Field sysPathsField = ClassLoader.class.getDeclaredField("sys_paths");
 	    sysPathsField.setAccessible(true);
@@ -152,6 +152,7 @@ public class Game extends StateBasedGame{
 		
 		config.read();
 		lang = new Localisation();
+		
 		eventHandler.loadState(this.getState(Screens.GAME.getID()));
 	}
 	

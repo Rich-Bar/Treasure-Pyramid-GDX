@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.opengl.renderer.ImmediateModeOGLRenderer;
+import org.newdawn.slick.util.Log;
 
 import main.Game;
 import main.components.SheetFont;
 import main.multiscreen.Device.SerialDevice;
 
-public class DisplayManager {
+public class DisplayManager extends ImmediateModeOGLRenderer{
 	
 	private List<Device> devices = new ArrayList<>();
 	
@@ -54,5 +56,11 @@ public class DisplayManager {
 		|_______________|
 		*/
 		Game.inst().font = new SheetFont();		
+	}
+	
+	@Override
+	public void initDisplay(int width, int height) {
+		System.out.println("OVERRIDEN DISPLAY INITIATION");
+		Log.info("OVERRIDEN DISPLAY INITIATION2");
 	}
 }

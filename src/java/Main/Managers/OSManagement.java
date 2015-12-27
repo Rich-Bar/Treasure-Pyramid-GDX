@@ -30,7 +30,7 @@ public class OSManagement {
 	
 	public static boolean is64Bit(){
 		boolean is64bit = false;
-		if (System.getProperty("os.name").contains("Windows")) {
+		if (isWindows()) {
 		    is64bit = (System.getenv("ProgramFiles(x86)") != null);
 		} else {
 		    is64bit = (System.getProperty("os.arch").indexOf("64") != -1);

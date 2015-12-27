@@ -9,9 +9,9 @@ import java.io.PrintStream;
 public class TreasureOut extends PrintStream {
         private final PrintStream secondary;
 
-        public TreasureOut(OutputStream main, PrintStream second) {
+        public TreasureOut(OutputStream main, java.io.PrintStream printStream) {
             super(main);
-            this.secondary = second;
+            this.secondary = printStream;
         }
 
         @Override
