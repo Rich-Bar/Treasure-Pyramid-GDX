@@ -37,7 +37,7 @@ public class GameScreen extends BaseState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		world.render(gc, sbg, g);
+		//world.render(gc, sbg, g);
 	}
 
 	@Override

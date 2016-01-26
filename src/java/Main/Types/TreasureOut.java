@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 
-
 public class TreasureOut extends PrintStream {
         private final PrintStream secondary;
 
@@ -19,7 +18,7 @@ public class TreasureOut extends PrintStream {
             super.flush();
             secondary.flush();
         }
-
+        
         @Override
         public void write(byte[] buf, int off, int len) {
             super.write(buf, off, len);

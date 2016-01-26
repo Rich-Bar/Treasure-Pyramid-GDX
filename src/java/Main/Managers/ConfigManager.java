@@ -2,7 +2,6 @@ package main.managers;
 
 import java.io.*;
 
-import main.Game;
 import main.components.Settings;
 import main.language.LANGUAGES;
 
@@ -37,9 +36,20 @@ public class ConfigManager {
 		settings.musicVol = (1f);
 		settings.soundVol = (1f);
 		settings.language = (LANGUAGES.ENGLISH_EN);
-		settings.sDevice = Game.inst().displayManager.getSerialDevices();
+		//settings.sDevice = Game.inst().displayManager.getSerialDevices();
 		write(settings);
 		read(); //prevent recursive resetting of the config - this would be recursive if the standart values couldn't be read!
+	}
+	
+	private void resetConfigOnError(){
+		Settings settings = new Settings();
+		settings.debug = (false);
+		settings.vSync = (false);
+		settings.masterVol = (1f);
+		settings.musicVol = (1f);
+		settings.soundVol = (1f);
+		settings.language = (LANGUAGES.ENGLISH_EN);
+		//settings.sDevice = Game.inst().displayManager.getSerialDevices();
 	}
 	
 	public void write(Settings settings){
@@ -66,9 +76,10 @@ public class ConfigManager {
 	         settings = (Settings) in.readObject();
 	         in.close();
 	         fileIn.close();
-	      }catch(IOException | ClassNotFoundException i)
+	      }catch(IOException | ClassNotFoundException io)
 	      {
-	    	  i.printStackTrace();
+	    	  System.out.println("Error couldn't load Config!!!");
+	    	  resetConfigOnError();
 	      }
 	}
 }	

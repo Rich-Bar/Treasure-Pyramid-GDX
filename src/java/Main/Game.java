@@ -2,25 +2,18 @@ package main;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.lang.reflect.Field;
 import java.net.URL;
 
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.DefaultLogSystem;
 
 import main.components.SheetFont;
 import main.language.Localisation;
 import main.managers.*;
 import main.multiscreen.DisplayManager;
 import main.states.*;
-import main.types.TreasureOut;
 import main.world.entitys.Player;
 
 /**
@@ -50,7 +43,6 @@ public class Game extends StateBasedGame{
 	//Special constants
 	public static final String TITLE = "Treasure Pyramide";
 	public static final String VERSION = "Day11";
-	public static String GAMEDIR;
 	
 	//Render settings
 	public static Dimension pixelartResolution = new Dimension(360, 240);
@@ -69,17 +61,17 @@ public class Game extends StateBasedGame{
 	
 	//Instance (Singleton)
 	private static Game instance;
-	private static AppGameContainer appgc;
 	
 	/** 
 	 * Class Constructor
 	 */ 
-	public Game() {
+	public Game(DisplayManager displayManager) {
 		super(TITLE + " [" + VERSION + "]");
-		
+
 		instance = this;
 		
-		displayManager = new DisplayManager(appgc);
+		this.displayManager = displayManager;
+		
 		keyManager = new KeyManager();
 		eventHandler = new EventHandler();
 		config = new ConfigManager();
@@ -89,50 +81,7 @@ public class Game extends StateBasedGame{
 		this.addState(new OptionsMenu(Screens.OPTIONS.getID()));
 		this.addState(new CreditsMenu(Screens.CREDITS.getID()));
 		this.addState(new GameScreen(Screens.GAME.getID()));
-	}
-	
-	/**
-	 * Main method of Treasure Pyramide
-	 * @param args as {@linkplain String[]}
-	 * @throws Exception 
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		GAMEDIR = new File(".").getCanonicalPath().replaceAll("\\\\", "/");
 		
-		TreasureOut out = new TreasureOut(System.out ,new PrintStream(new FileOutputStream(OSManagement.getAppdataPath() + "last.log")));
-		System.setOut(out);
-		DefaultLogSystem.out = out;
-		
-		setLibraryPath(GAMEDIR + "/src/natives/");
-		try
-		{
-			appgc = new AppGameContainer(new Game());
-		}
-		catch (SlickException ex){
-			ex.printStackTrace(out);
-		}finally{
-			out.println("Terminated - Thx for playing!");
-		}
-		
-	}
-	
-	/**
-	 * Required for starting the game without '-Djava.library.path' argument!
-	 * Using the private field "sys_paths" in {@linkplain ClassLoader}
-	 * @see http://fahdshariff.blogspot.be/2011/08/changing-java-library-path-at-runtime.html
-	 * @param path
-	 * @throws Exception
-	 */
-	public static void setLibraryPath(String path) throws Exception {
-		System.out.println("Loading Natives and changing 'java.library.path'");
-	    System.setProperty("java.library.path", path);
-
-	    
-	    //set sys_paths to null so that java.library.path will be reevalueted next time it is needed
-	    final Field sysPathsField = ClassLoader.class.getDeclaredField("sys_paths");
-	    sysPathsField.setAccessible(true);
-	    sysPathsField.set(null, null);
 	}
 	
 	/**
@@ -143,6 +92,8 @@ public class Game extends StateBasedGame{
 	public void initStatesList(GameContainer gc) throws SlickException {
 		
 		eventHandler.init();
+		font = new SheetFont();	
+		displayManager.gameResize();
 		
 		this.getState(Screens.INTRO.getID()).init(gc, this);
 		this.getState(Screens.CREDITS.getID()).init(gc, this);
