@@ -62,6 +62,7 @@ public class OptionsMenu extends BaseState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
+		super.render(arg0, arg1, arg2);
 		
 		font.drawStringAlignMiddle(160, 10, Game.inst().lang.Options.getTranslation(),Color.white, 75);
 		font.drawStringAlignMiddle(160, 10, "____________",Color.white, 75);

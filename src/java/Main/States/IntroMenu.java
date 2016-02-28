@@ -70,6 +70,7 @@ public class IntroMenu extends BaseState {
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
+		super.render(arg0, arg1, arg2);
 		
 		if(music.getSound().getPosition() > 2f && music.getSound().getPosition() < 198){
 			if(scrollPos < scroll.getHeight() + 100){

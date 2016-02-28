@@ -1,16 +1,19 @@
-package main.multiscreen;
+package launch.multiscreen;
 
-import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
+
+import javax.swing.JFrame;
 
 import main.Game;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
-import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.CanvasGameContainer;
 
 public class Device implements Runnable{
 
@@ -18,13 +21,11 @@ public class Device implements Runnable{
 	private DisplayManager dm;
 	private GraphicsDevice gd;
 	
-	private AppGameContainer appgc;
+	private CanvasGameContainer appgc;
+	private JFrame gFrame;
 	private org.newdawn.slick.Game sbg;
 	private boolean isGame = false;
 	private Window type;
-	
-	private int interval = 0;
-	private boolean updateInvisible = false;
 	private String title = "";
 		
 	private float offset;
@@ -39,10 +40,6 @@ public class Device implements Runnable{
 
 	public void dial(){
 		System.out.println("Dialing Screen["+ type.name() +"]: " + title);
-		////Handle GameContainer
-		appgc.setShowFPS(Game.inst().config.settings.debug);
-		appgc.setTargetFrameRate(Game.inst().config.maxFPS -1);	//-1 Fixes the 1 more FPS bug
-		appgc.setVSync(Game.inst().config.settings.vSync);
 		////Handle Canvas and Bounds
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -70,7 +67,7 @@ public class Device implements Runnable{
 		
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		 
-		appgc.setMouseGrabbed(true);
+		gFrame.setCursor(gFrame.getToolkit().createCustomCursor(new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "null"));
 		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 	}
@@ -79,36 +76,34 @@ public class Device implements Runnable{
 		try{
 			if(type == Window.GameScreen){
 				sbg = new Game(dm);
-				appgc = new AppGameContainer(sbg);
+				appgc = new CanvasGameContainer(sbg);
 				isGame = true;
-				interval = 240;
 				title = "Treasure Pyramid - Game";
 			}
 			else if(type == Window.InventoryScreen){
 				sbg = new InventoryScreen();
-				appgc = new AppGameContainer(sbg);
-				updateInvisible = true;
-				interval = 240;
+				appgc = new CanvasGameContainer(sbg);
 				title = "Treasure Pyramid - Inventory";
 			}
 			else if(type == Window.BlackScreen){
 				sbg = new BlackScreen();
 				title = "Treasure Pyramid - Black";
-				appgc = new AppGameContainer(sbg);
+				appgc = new CanvasGameContainer(sbg);
 				Display.setLocation(1920, 1080);
-				interval = 240;
 			}
 			
 			System.out.println("Initializing Screen["+ type.name() +"]: " + title);
 			
-			appgc.setMaximumLogicUpdateInterval(interval);
-			appgc.setUpdateOnlyWhenVisible(updateInvisible);
-			appgc.setTitle(title);
-			appgc.setDisplayMode(Game.pixelartResolution.width * Game.scale, Game.pixelartResolution.height * Game.scale, false);
-			DisplayMode dm = gd.getDisplayMode();
-			System.out.println(gd.getDefaultConfiguration().getBounds().x + " x " + gd.getDefaultConfiguration().getBounds().y);
-			appgc.setDisplayMode(dm.getWidth(), dm.getHeight(), true);
-			
+			gFrame = new JFrame(title);
+			gFrame.setUndecorated(true);
+			Rectangle bounds = gd.getDefaultConfiguration().getBounds();
+			System.out.println(bounds);
+			appgc.setSize(bounds.width, bounds.height);
+			gFrame.setLocation(bounds.x, bounds.y);
+			gFrame.setSize(bounds.width, bounds.height);
+			gFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			gFrame.add(appgc);
+			gFrame.setVisible(true);
 	
 			System.out.println("Starting Screen["+ type.name() +"]: " + title);
 			appgc.start();
@@ -134,7 +129,7 @@ public class Device implements Runnable{
 	/**
 	 * @return the appgc
 	 */
-	public AppGameContainer getAppgc() {
+	public CanvasGameContainer getAppgc() {
 		return appgc;
 	}
 

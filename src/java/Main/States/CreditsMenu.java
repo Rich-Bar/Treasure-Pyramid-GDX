@@ -44,6 +44,8 @@ public class CreditsMenu extends BaseState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
+		super.render(arg0, arg1, arg2);
+		
 		if(creditsPos < credits.getHeight() - 240){
 			creditsPos = music.getSound().getPosition() * 10; // 10px/s
 		}

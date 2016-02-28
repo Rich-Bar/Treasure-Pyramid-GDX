@@ -2,6 +2,8 @@ package main.states;
 
 import main.Game;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -107,7 +109,11 @@ public abstract class BaseState implements GameState, StateEvents{
 
 	public abstract void keyReleased(int arg0, char arg1);
 	
-	public abstract void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException;
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+		try {
+			Display.makeCurrent();
+		} catch (LWJGLException e) {}
+	}
 
 	public abstract void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException;
 }

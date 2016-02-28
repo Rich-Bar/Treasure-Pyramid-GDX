@@ -31,6 +31,8 @@ public class TitleMenu extends BaseState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr)
 			throws SlickException {
+		super.render(gc, sbg, gr);
+		
 			background.draw(0, 0, Game.scale);
 			newGameButton.draw(newGameButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 100 * Game.scale);
 			OptionsButton.draw(OptionsButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 120 * Game.scale);

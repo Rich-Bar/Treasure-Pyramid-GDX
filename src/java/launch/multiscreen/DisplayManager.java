@@ -1,13 +1,12 @@
-package main.multiscreen;
+package launch.multiscreen;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import launch.multiscreen.Device.SerialDevice;
 import main.Game;
-import main.multiscreen.Device.SerialDevice;
 
 public class DisplayManager{
 	
@@ -24,6 +23,7 @@ public class DisplayManager{
 		for(GraphicsDevice gDevice : systemDevices){
 			if(gDevice.isFullScreenSupported()){
 				if(first){
+					gDevice.getIDstring();
 					devices.add(new Device(this, gDevice, Window.GameScreen));
 					first = false;
 				}else{
@@ -35,13 +35,22 @@ public class DisplayManager{
 		for(Device d : devices){
 			Thread dThread = new Thread(d);
 			threads.add(dThread);
-			dThread.start();
-			
+		}
+		start();
+	}
+	
+	private void start(){
+		for(Thread thread : threads){
+			thread.start();
 		}
 	}
 
 	public List<Device> getDevices(){
 		return devices;
+	}
+	
+	public List<Thread> getThreads(){
+		return threads;
 	}
 	
 	public SerialDevice[] getSerialDevices(){

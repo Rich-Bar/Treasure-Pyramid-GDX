@@ -1,15 +1,14 @@
-package main.multiscreen;
+package launch.multiscreen;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class BlackScreen extends BasicGame{
+public class InventoryScreen extends BasicGame{
 
-	public BlackScreen() {
-		super("Blackness");
-		// TODO Auto-generated constructor stub
+	public InventoryScreen() {
+		super("Inventory");
 	}
 
 	@Override

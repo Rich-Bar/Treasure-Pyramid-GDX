@@ -3,6 +3,8 @@ package main.states;
 import main.Game;
 import main.events.StateEvents;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -140,6 +142,10 @@ public class LoadingScreen implements GameState, StateEvents{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
+		try {
+			Display.makeCurrent();
+		} catch (LWJGLException e) {}
+		
 		screen.draw(0,0, Game.scale);
 		if(rendered == false){
 			rendered = true;

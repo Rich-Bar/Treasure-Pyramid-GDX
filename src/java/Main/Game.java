@@ -9,10 +9,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import launch.multiscreen.DisplayManager;
 import main.components.SheetFont;
 import main.language.Localisation;
 import main.managers.*;
-import main.multiscreen.DisplayManager;
 import main.states.*;
 import main.world.entitys.Player;
 
@@ -93,7 +93,6 @@ public class Game extends StateBasedGame{
 		
 		eventHandler.init();
 		font = new SheetFont();	
-		displayManager.gameResize();
 		
 		this.getState(Screens.INTRO.getID()).init(gc, this);
 		this.getState(Screens.CREDITS.getID()).init(gc, this);

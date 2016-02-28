@@ -7,8 +7,8 @@ import java.lang.reflect.Field;
 
 import org.newdawn.slick.util.DefaultLogSystem;
 
+import launch.multiscreen.DisplayManager;
 import main.managers.OSManagement;
-import main.multiscreen.DisplayManager;
 import main.types.TreasureOut;
 
 public class Launcher {
@@ -18,7 +18,13 @@ public class Launcher {
 	
 	public Launcher() {
 		dispMan = new DisplayManager();
-		while(true){}
+		boolean running = true;
+		while(running){
+			running = false;
+			for(Thread thread : dispMan.getThreads()){
+				if(thread.isAlive()) running = true;
+			}
+		}
 	}
 	
 	
@@ -40,7 +46,7 @@ public class Launcher {
 		setLibraryPath(GAMEDIR + "/src/natives/");
 		@SuppressWarnings("unused")
 		Launcher launch = new Launcher();
-		out.println("Terminated - Thx for playing!");
+		out.println("Terminated Launcher - Start might have been successful?!");
 		
 	}
 	
