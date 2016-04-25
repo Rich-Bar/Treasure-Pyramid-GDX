@@ -10,12 +10,12 @@ public class ConfigManager {
 	public final int maxFPS = 120;
 	public Settings settings = new Settings();
 	private File config;
-	private String OS = (System.getProperty("os.name")).toUpperCase();
+	private String os = System.getProperty("os.name").toUpperCase();
 	
 	public ConfigManager() {
 		
 		String fileLocation;
-		if (OS.contains("WIN")){
+		if (os.contains("WIN")){
 			fileLocation = System.getenv("AppData") + "/TreasurePyramid/conf.ig";
 		}else{
 			fileLocation = System.getProperty("user.home");
@@ -50,7 +50,6 @@ public class ConfigManager {
 	}
 	
 	public void write(Settings settings){
-		//if(this.settings. == settings) return;
 		this.settings = settings; 
 		String settingscomp = settings.masterVol+ "\n" + settings.musicVol+ "\n" + settings.soundVol+ "\n" + settings.vSync+ "\n" + settings.debug+ "\n" + settings.language;
 		
@@ -98,7 +97,6 @@ public class ConfigManager {
 		            }
 		            case 5:{
 		            	settings.language = LANGUAGES.valueOf(line);
-		            	System.out.println(settings.language);
 		            	break;
 		            }
 		            
@@ -109,6 +107,5 @@ public class ConfigManager {
 			if(!recursive)resetConfig();
 			System.err.println("Configfile is corrupted -> replaced it!");
 		}
-		
 	}
 }	

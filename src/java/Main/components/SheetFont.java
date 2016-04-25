@@ -16,7 +16,7 @@ public class SheetFont{
 	private SpriteSheet fontSheetSmall;
 	private int tilesX = 0;
 	
-	private char[] charList = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-()[]{}^°\"§$%&/=?!.:,;_<>|#äÄüÜöÖ\\~‘�µ™®©@¶ðΨ¿æß").toCharArray();
+	private char[] charList = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-()[]{}^°\"§$%&/=?!.:,;_<>|#äÄüÜöÖ\\~‘�µ™®©@¶ðΨ¿æß".toCharArray();
 	private List<Character> charSet = new ArrayList<Character>();
 	
 	public SheetFont() {
@@ -47,15 +47,15 @@ public class SheetFont{
 	public void drawString(float x, float y, String text, Color col, float size) {
 if(fontSheetHuge == null || fontSheetSmall == null) return;
 		
-		x *= Game.scale;
-		y *= Game.scale;
+		x *= Game.inst().scale;
+		y *= Game.inst().scale;
 		
 		SpriteSheet font = null;
 		
 		if(size < 50) font = fontSheetSmall;
 		else font = fontSheetHuge;
 		
-		float scale = Game.scale * (size / 100f);
+		float scale = Game.inst().scale * (size / 100f);
 		
 		float startX = x;
 
@@ -63,13 +63,13 @@ if(fontSheetHuge == null || fontSheetSmall == null) return;
 		
 		for(char c : charText){
 			if(c == '\n'){
-				y += (34 * (size / 100f)) * Game.scale;
+				y += (34 * (size / 100f)) * Game.inst().scale;
 				startX = x;
 			}else{
 				if(charSet.contains(c)){
 					int index = charSet.indexOf(c);
-					int posX = (index % tilesX);
-					int posY = (index / tilesX);
+					int posX = index % tilesX;
+					int posY = index / tilesX;
 					font.getSprite(posX, posY).draw(startX , y, scale, col);
 				}
 				startX += 18 * scale;
@@ -80,15 +80,15 @@ if(fontSheetHuge == null || fontSheetSmall == null) return;
 	public void drawStringAlignMiddle(float x, float y, String text, Color col, float size) {
 		if(fontSheetHuge == null || fontSheetSmall == null) return;
 		
-		x *= Game.scale;
-		y *= Game.scale;
+		x *= Game.inst().scale;
+		y *= Game.inst().scale;
 		
 		SpriteSheet font = null;
 		
 		if(size < 50) font = fontSheetSmall;
 		else font = fontSheetHuge;
 		
-		float scale = Game.scale * (size / 100f);
+		float scale = Game.inst().scale * (size / 100f);
 		
 		float startX = x - text.length() * 18 * scale / 2;
 
@@ -97,8 +97,8 @@ if(fontSheetHuge == null || fontSheetSmall == null) return;
 		for(char c : charText){
 			if(charSet.contains(c)){
 				int index = charSet.indexOf(c);
-				int posX = (index % tilesX);
-				int posY = (index / tilesX);
+				int posX = index % tilesX;
+				int posY = index / tilesX;
 				font.getSprite(posX, posY).draw(startX , y, scale, col);
 			}
 			startX += 18 * scale;

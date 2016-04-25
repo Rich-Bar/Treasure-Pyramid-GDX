@@ -40,8 +40,8 @@ import org.newdawn.slick.SlickException;
 		}
 		
 		public void draw(float x, float y, float scale, Color col){
-			frame.draw(x, y, Game.scale * (scale/100), col);
-			if(value) dot.draw(x, y, Game.scale * (scale/100), col);
+			frame.draw(x, y, Game.inst().scale * (scale/100), col);
+			if(value) dot.draw(x, y, Game.inst().scale * (scale/100), col);
 		}
 		
 	}

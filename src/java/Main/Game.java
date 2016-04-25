@@ -2,14 +2,19 @@ package main;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.net.URL;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import launch.multiscreen.DisplayManager;
+import launch.multiscreen.Device;
 import main.components.SheetFont;
 import main.language.Localisation;
 import main.managers.*;
@@ -32,12 +37,12 @@ public class Game extends StateBasedGame{
 		CREDITS(4),
 		GAME(5);
 		
-		private int ID;   
-	    Screens(int ID) {
-	        this.ID = ID;
+		private int id;   
+	    Screens(int id) {
+	        this.id = id;
 	    }
 
-	    public int getID() { return ID; }
+	    public int getID() { return id; }
 	}
 
 	//Special constants
@@ -46,10 +51,10 @@ public class Game extends StateBasedGame{
 	
 	//Render settings
 	public static Dimension pixelartResolution = new Dimension(360, 240);
-	public static final int scale = 4;
+	public float scale = 1;
+	private Device device;
 	
 	//Managers and Handlers
-	public DisplayManager displayManager;
 	public EventHandler eventHandler;
 	public KeyManager keyManager;
 	public ConfigManager config;
@@ -65,15 +70,15 @@ public class Game extends StateBasedGame{
 	/** 
 	 * Class Constructor
 	 */ 
-	public Game(DisplayManager displayManager) {
+	public Game(Device device) {
 		super(TITLE + " [" + VERSION + "]");
 
 		instance = this;
-		
-		this.displayManager = displayManager;
+
+		this.device = device;
 		
 		keyManager = new KeyManager();
-		eventHandler = new EventHandler();
+		eventHandler = new EventHandler(device);
 		config = new ConfigManager();
 		
 		this.addState(new IntroMenu(Screens.INTRO.getID()));
@@ -103,7 +108,10 @@ public class Game extends StateBasedGame{
 		config.read();
 		lang = new Localisation();
 		
-		eventHandler.loadState(this.getState(Screens.GAME.getID()));
+		dial();
+		
+		eventHandler.loadState(this.getState(Screens.INTRO.getID()));
+		
 	}
 	
 	/**
@@ -115,10 +123,20 @@ public class Game extends StateBasedGame{
 	}
 	
 	/**
+	 * Returns current Device the game is running on
+	 * @return Device as {@link Device}
+	 */
+	public Device getDevice(){
+		return device;
+	}
+	
+	/**
 	 * @return the internalResolution as {@link Dimension}
 	 */
 	public Dimension getInternalResolution() {
-		return new Dimension(pixelartResolution.width * scale, pixelartResolution.height * scale);
+		int width = (int) (pixelartResolution.width * scale);
+		int height = (int) (pixelartResolution.height * scale);
+		return new Dimension(width, height);
 	}
 	
 	/**
@@ -143,5 +161,43 @@ public class Game extends StateBasedGame{
 	 */
 	public static Game inst() {
 		return instance;
+	}
+	
+	public void dial(){
+		System.out.println("Dialing Screen["+ device.type.name() +"]: " + device.title);
+		
+		////Handle Canvas and Bounds
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		GL11.glLoadIdentity();
+		
+		Rectangle internalResolution = device.getDevice().getDefaultConfiguration().getBounds();
+		
+		//add black columns if necessary
+		device.factor = 0;
+		if(internalResolution.getWidth() * 1.0 / internalResolution.getHeight() >= Game.pixelartResolution.getWidth() * 1.0 / Game.pixelartResolution.getHeight()){
+			device.factor = (double)internalResolution.getHeight() / Game.pixelartResolution.getHeight();
+			device.offset = (int) ((Game.pixelartResolution.getWidth() * device.factor - internalResolution.getWidth()) /2);
+			device.lrColumns = true;
+		}else if(internalResolution.getWidth() * 1.0 / internalResolution.getHeight() < Game.pixelartResolution.getWidth() * 1.0 / Game.pixelartResolution.getHeight()){
+			device.factor = (double)internalResolution.getWidth() / Game.pixelartResolution.getWidth();
+			device.offset = (int) ((Game.pixelartResolution.getHeight() * device.factor - internalResolution.getHeight()) /2);
+			device.lrColumns = false;
+		}
+		scale = (float) device.factor;
+		
+		//apply columns
+		GL11.glOrtho(	device.lrColumns ? device.offset : 0 ,
+						internalResolution.getWidth() + (device.lrColumns ? device.offset : 0),
+						internalResolution.getHeight() + (device.lrColumns ? 0 : device.offset),
+						device.lrColumns ? 0 : device.offset,
+							100, -100);
+
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+		 
+		device.gFrame.setCursor(device.gFrame.getToolkit().createCustomCursor(new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "null"));
+		
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 	}
 }

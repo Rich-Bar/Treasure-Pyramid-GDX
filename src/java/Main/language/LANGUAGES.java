@@ -8,7 +8,7 @@ import java.io.File;
 		PIRATE_PI(new File("src/assets/Lang/pi.lang"));
 		
 		private File file;
-		private boolean notified = false;
+		private boolean notified;
 		private LANGUAGES(File loc) {
 			file = loc;
 		}

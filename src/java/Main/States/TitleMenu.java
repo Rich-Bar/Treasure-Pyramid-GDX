@@ -17,15 +17,15 @@ public class TitleMenu extends BaseState{
 	public int selectedButton = 1;
 	private Image background;
 	private MenuButton newGameButton;
-	private MenuButton OptionsButton;
-	private MenuButton ExitButton;
-	private MenuButton CreditsButton;
+	private MenuButton optionsButton;
+	private MenuButton exitButton;
+	private MenuButton creditsButton;
 	protected int totalDelta = 0;
 	
 	
-	public TitleMenu(int ID){
+	public TitleMenu(int id){
 		super();
-		this.ID = ID;
+		this.id = id;
 	}
 
 	@Override
@@ -33,11 +33,11 @@ public class TitleMenu extends BaseState{
 			throws SlickException {
 		super.render(gc, sbg, gr);
 		
-			background.draw(0, 0, Game.scale);
-			newGameButton.draw(newGameButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 100 * Game.scale);
-			OptionsButton.draw(OptionsButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 120 * Game.scale);
-			CreditsButton.draw(CreditsButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 140 * Game.scale);
-			ExitButton.draw(ExitButton.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 160 * Game.scale);
+			background.draw(0, 0, Game.inst().scale);
+			newGameButton.draw(newGameButton.getMiddle(Game.pixelartResolution.width, true) * Game.inst().scale, 100 * Game.inst().scale);
+			optionsButton.draw(optionsButton.getMiddle(Game.pixelartResolution.width, true) * Game.inst().scale, 120 * Game.inst().scale);
+			creditsButton.draw(creditsButton.getMiddle(Game.pixelartResolution.width, true) * Game.inst().scale, 140 * Game.inst().scale);
+			exitButton.draw(exitButton.getMiddle(Game.pixelartResolution.width, true) * Game.inst().scale, 160 * Game.inst().scale);
 	}
 
 	@Override
@@ -72,37 +72,37 @@ public class TitleMenu extends BaseState{
 		switch(option){
 			case 1:{
 				newGameButton.setState(1);
-				OptionsButton.setState(2);
-				CreditsButton.setState(2);
-				ExitButton.setState(2);
+				optionsButton.setState(2);
+				creditsButton.setState(2);
+				exitButton.setState(2);
 				break;	
 			}
 			case 2:{
 				newGameButton.setState(2);
-				OptionsButton.setState(1);
-				CreditsButton.setState(2);
-				ExitButton.setState(2);
+				optionsButton.setState(1);
+				creditsButton.setState(2);
+				exitButton.setState(2);
 				break;	
 			}
 			case 3:{
 				newGameButton.setState(2);
-				OptionsButton.setState(2);
-				CreditsButton.setState(1);
-				ExitButton.setState(2);
+				optionsButton.setState(2);
+				creditsButton.setState(1);
+				exitButton.setState(2);
 				break;	
 			}
 			case 4:{
 				newGameButton.setState(2);
-				OptionsButton.setState(2);
-				CreditsButton.setState(2);
-				ExitButton.setState(1);
+				optionsButton.setState(2);
+				creditsButton.setState(2);
+				exitButton.setState(1);
 				break;	
 			}
 			default:{
 				newGameButton.setState(2);
-				OptionsButton.setState(2);
-				CreditsButton.setState(2);
-				ExitButton.setState(2);
+				optionsButton.setState(2);
+				creditsButton.setState(2);
+				exitButton.setState(2);
 				break;	
 			}
 		}
@@ -126,17 +126,17 @@ public class TitleMenu extends BaseState{
 
 
 	@Override
-	public void loadState(GameState State) {
-		if(State instanceof TitleMenu){
+	public void loadState(GameState state) {
+		if(state instanceof TitleMenu){
 			try {
 				newGameButton = new MenuButton("src/assets/Textures/NewGameButton.png", 2, 1); 
-				OptionsButton = new MenuButton("src/assets/Textures/OptionsButton.png", 2, 2); 
-				CreditsButton = new MenuButton("src/assets/Textures/CreditsButton.png", 2, 2); 
-				ExitButton = new MenuButton("src/assets/Textures/ExitButton.png", 2, 2); 
+				optionsButton = new MenuButton("src/assets/Textures/OptionsButton.png", 2, 2); 
+				creditsButton = new MenuButton("src/assets/Textures/CreditsButton.png", 2, 2); 
+				exitButton = new MenuButton("src/assets/Textures/ExitButton.png", 2, 2); 
 		
 				background = new Image("src/assets/Textures/TitleScreen.png");
 				background.setFilter(Image.FILTER_NEAREST);		
-				Game.inst().eventHandler.loadedState(State);
+				Game.inst().eventHandler.loadedState(state);
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
@@ -146,15 +146,15 @@ public class TitleMenu extends BaseState{
 
 
 	@Override
-	public void unloadState(GameState State) {
-		if(State instanceof TitleMenu){		
+	public void unloadState(GameState state) {
+		if(state instanceof TitleMenu){		
 			unloadRequest = true;
 			newGameButton = null;
-			OptionsButton = null;
-			CreditsButton = null;
-			ExitButton = null;
+			optionsButton = null;
+			creditsButton = null;
+			exitButton = null;
 			background = null;
-			Game.inst().eventHandler.unloadedState(State);
+			Game.inst().eventHandler.unloadedState(state);
 		}
 	}
 }

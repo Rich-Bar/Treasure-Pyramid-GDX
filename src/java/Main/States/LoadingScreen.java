@@ -93,16 +93,16 @@ public class LoadingScreen implements GameState, StateEvents{
 	public void controllerUpReleased(int arg0) {}
 
 	@Override
-	public void loadedState(GameState S) {}
+	public void loadedState(GameState s) {}
 
 	@Override
-	public void loadState(GameState S) {}
+	public void loadState(GameState s) {}
 
 	@Override
-	public void unloadedState(GameState S) {}
+	public void unloadedState(GameState s) {}
 
 	@Override
-	public void unloadState(GameState S) {}
+	public void unloadState(GameState s) {}
 
 	public void setTarget(int newID, int oldID){
 		newTarget = newID;
@@ -146,7 +146,7 @@ public class LoadingScreen implements GameState, StateEvents{
 			Display.makeCurrent();
 		} catch (LWJGLException e) {}
 		
-		screen.draw(0,0, Game.scale);
+		screen.draw(0,0, Game.inst().scale);
 		if(rendered == false){
 			rendered = true;
 		}

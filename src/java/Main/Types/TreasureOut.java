@@ -8,7 +8,7 @@ import java.io.PrintStream;
 public class TreasureOut extends PrintStream {
         private final PrintStream secondary;
 
-        public TreasureOut(OutputStream main, java.io.PrintStream printStream) {
+        public TreasureOut(OutputStream main, PrintStream printStream) {
             super(main);
             this.secondary = printStream;
         }
@@ -32,7 +32,7 @@ public class TreasureOut extends PrintStream {
         }
 
         @Override
-        public void write(byte[] b) throws IOException {
+        public void write(byte[] b) throws IOException { // NOPMD by Marco on 25.04.16 15:40
             super.write(b);
             secondary.write(b);
         }

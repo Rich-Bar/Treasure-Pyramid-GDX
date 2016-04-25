@@ -15,7 +15,7 @@ import main.events.StateEvents;
 
 public abstract class BaseState implements GameState, StateEvents{
 
-	protected int ID;
+	protected int id;
 	protected boolean unloadRequest = false;
 	
 	public BaseState() {
@@ -24,7 +24,7 @@ public abstract class BaseState implements GameState, StateEvents{
 	
 	@Override
 	public int getID() {
-		return ID;
+		return id;
 	}
 	
 	@Override
@@ -92,10 +92,10 @@ public abstract class BaseState implements GameState, StateEvents{
 	public void leave(GameContainer arg0, StateBasedGame arg1) throws SlickException {}
 	
 	@Override
-	public void loadedState(GameState S) {}
+	public void loadedState(GameState state) {}
 	
 	@Override
-	public void unloadedState(GameState S) {}
+	public void unloadedState(GameState state) {}
 	
 	public void pause() {}
 	

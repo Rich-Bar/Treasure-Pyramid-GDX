@@ -1,5 +1,6 @@
 package launch;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -7,7 +8,9 @@ import java.lang.reflect.Field;
 
 import org.newdawn.slick.util.DefaultLogSystem;
 
+import launch.multiscreen.Device;
 import launch.multiscreen.DisplayManager;
+import launch.multiscreen.Window;
 import main.managers.OSManagement;
 import main.types.TreasureOut;
 
@@ -16,14 +19,19 @@ public class Launcher {
 	public DisplayManager dispMan;
 	
 	
-	public Launcher() {
-		dispMan = new DisplayManager();
-		boolean running = true;
-		while(running){
-			running = false;
-			for(Thread thread : dispMan.getThreads()){
-				if(thread.isAlive()) running = true;
+	public Launcher(boolean multiscreen) {
+		if(multiscreen){
+			dispMan = new DisplayManager();
+			boolean running = true;
+			while(running){
+				running = false;
+				for(Thread thread : dispMan.getThreads()){
+					if(thread.isAlive()) running = true;
+				}
 			}
+		}else{
+			Device game = new Device(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(), Window.GameScreen);
+			game.run();
 		}
 	}
 	
@@ -34,18 +42,18 @@ public class Launcher {
 	 * @param args as {@linkplain String[]}
 	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws Exception
+	public static void main(String... args) throws Exception
 	{
 		
 		
-		String GAMEDIR = new File(".").getCanonicalPath().replaceAll("\\\\", "/");
+		String gameDir = new File(".").getCanonicalPath().replaceAll("\\\\", "/");
 		
 		TreasureOut out = new TreasureOut(System.out ,new PrintStream(new FileOutputStream(OSManagement.getAppdataPath() + "last.log")));
 		System.setOut(out);
 		DefaultLogSystem.out = out;
-		setLibraryPath(GAMEDIR + "/src/natives/");
+		setLibraryPath(gameDir + "/src/natives/");
 		@SuppressWarnings("unused")
-		Launcher launch = new Launcher();
+		Launcher launch = new Launcher(false); /// Use true to start in multiscreen mode - currently not working
 		out.println("Terminated Launcher - Start might have been successful?!");
 		
 	}

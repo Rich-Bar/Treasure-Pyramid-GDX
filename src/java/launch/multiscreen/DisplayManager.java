@@ -24,10 +24,10 @@ public class DisplayManager{
 			if(gDevice.isFullScreenSupported()){
 				if(first){
 					gDevice.getIDstring();
-					devices.add(new Device(this, gDevice, Window.GameScreen));
+					devices.add(new Device(gDevice, Window.GameScreen));
 					first = false;
 				}else{
-					devices.add(new Device(this, gDevice,  Window.BlackScreen));
+					devices.add(new Device(gDevice,  Window.BlackScreen));
 				}
 				System.out.println(" - Device " + gDevice.getIDstring());
 			}
@@ -69,11 +69,5 @@ public class DisplayManager{
 			if(d.isGame()) game = (Game) d.getGame();
 		}
 		return game;
-	}
-	
-	public void gameResize(){
-		for(Device d : devices){
-			if(d.isGame()) d.dial();
-		}
 	}
 }
