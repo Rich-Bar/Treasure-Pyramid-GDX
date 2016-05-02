@@ -1,8 +1,12 @@
 package launch.multiscreen;
 
 import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 
@@ -11,27 +15,53 @@ import main.Game;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.CanvasGameContainer;
 
-public class Device implements Runnable{
+import launch.Launcher;
 
-	private GraphicsDevice gd;
+public class Device{
+
+	private static GraphicsDevice gd;
+	public static Window type;
 	
 	private CanvasGameContainer appgc;
 	private org.newdawn.slick.Game sbg;
 	public JFrame gFrame;
 	public boolean isGame = false;
-	public Window type;
 	public String title = "";
 		
 	public float offset;
 	public double factor;
 	public boolean lrColumns = true;
 	
-	public Device(GraphicsDevice gDevice, Window type) {
-		this.gd = gDevice;
-		this.type = type;
+	public static void main(String[] args) throws IOException, Exception {
+		System.out.println("Started Device with " + args.length + " args: " + Arrays.toString(args));
+		Launcher.setLibraryPath(new File(".").getCanonicalPath().replaceAll("\\\\", "/") + "/src/natives/");
+		
+		if(args.length != 2 || 
+				!(args[0].toLowerCase().startsWith("-gdevice:") || args[0].toLowerCase().startsWith("-type:")) ||
+				!(args[1].toLowerCase().startsWith("-gdevice:") || args[1].toLowerCase().startsWith("-type:"))) return;
+		
+		int k = 1;
+		if(args[0].toLowerCase().startsWith("-type:")) k = 0;
+		
+		type = Window.valueOf(args[k].replace("-type:", "").trim());
+		k = k == 1? 0 : 1;
+		String gdString = args[k].replace("-gdevice:", "").trim().replaceAll("\\\\", "/");
+		Launcher.setDeviceLog(gdString);
+		
+		GraphicsDevice[] systemDevices = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
+		for(GraphicsDevice gDevice : systemDevices){
+			String cDeviceID = gDevice.getIDstring().replaceAll("\\\\", "/");
+			if(cDeviceID.equals(gdString)){
+				System.out.println("Found Corresponding gDevice!");
+				gd = gDevice;
+			}
+		}
+		
+		Device d = new Device();
+		d.run();
 	}
-
-	public void run(){
+	
+	public void run() throws IOException, Exception{
 		try{
 			if(type == Window.GameScreen){
 				sbg = new Game(this);
@@ -68,6 +98,7 @@ public class Device implements Runnable{
 			appgc.start();
 		}catch(Exception e){
 			System.out.println("Unable to start screen!!");
+			e.printStackTrace();
 		}
 		
 	}

@@ -1,38 +1,33 @@
 package launch;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import org.newdawn.slick.util.DefaultLogSystem;
 
-import launch.multiscreen.Device;
 import launch.multiscreen.DisplayManager;
-import launch.multiscreen.Window;
 import main.managers.OSManagement;
 import main.types.TreasureOut;
 
 public class Launcher {
 	
 	public DisplayManager dispMan;
+	public static String gameDir = "";
 	
-	
-	public Launcher(boolean multiscreen) {
+	public Launcher(boolean multiscreen) throws UnsupportedEncodingException {
 		if(multiscreen){
 			dispMan = new DisplayManager();
-			boolean running = true;
-			while(running){
-				running = false;
-				for(Thread thread : dispMan.getThreads()){
-					if(thread.isAlive()) running = true;
-				}
-			}
 		}else{
-			Device game = new Device(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(), Window.GameScreen);
-			game.run();
 		}
+		while(!dispMan.init){}
+		dispMan.waitForIt();
 	}
 	
 	
@@ -45,15 +40,14 @@ public class Launcher {
 	public static void main(String... args) throws Exception
 	{
 		
-		
-		String gameDir = new File(".").getCanonicalPath().replaceAll("\\\\", "/");
+		gameDir = new File(".").getCanonicalPath().replaceAll("\\\\", "/");
 		
 		TreasureOut out = new TreasureOut(System.out ,new PrintStream(new FileOutputStream(OSManagement.getAppdataPath() + "last.log")));
 		System.setOut(out);
 		DefaultLogSystem.out = out;
 		setLibraryPath(gameDir + "/src/natives/");
 		@SuppressWarnings("unused")
-		Launcher launch = new Launcher(false); /// Use true to start in multiscreen mode - currently not working
+		Launcher launch = new Launcher(true); /// Use true to start in multiscreen mode - currently not working
 		out.println("Terminated Launcher - Start might have been successful?!");
 		
 	}
@@ -75,6 +69,19 @@ public class Launcher {
 	    final Field sysPathsField = ClassLoader.class.getDeclaredField("sys_paths");
 	    sysPathsField.setAccessible(true);
 	    sysPathsField.set(null, null);
+	}	
+
+	public static void setDeviceLog(String deviceName) throws IOException{
+		TreasureOut out;
+		try {
+			out = new TreasureOut(System.out ,new PrintStream(new FileOutputStream(OSManagement.getAppdataPath() + deviceName + "-last.log")));
+
+		System.setOut(out);
+		DefaultLogSystem.out = out;	
+		} catch (FileNotFoundException e) {
+			new File(OSManagement.getAppdataPath() + deviceName + "-last.log").createNewFile();
+			setDeviceLog(deviceName);
+		}
 	}
-	
+
 }
