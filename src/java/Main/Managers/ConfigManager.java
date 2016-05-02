@@ -14,13 +14,7 @@ public class ConfigManager {
 	
 	public ConfigManager() {
 		
-		String fileLocation;
-		if (os.contains("WIN")){
-			fileLocation = System.getenv("AppData") + "/TreasurePyramid/conf.ig";
-		}else{
-			fileLocation = System.getProperty("user.home");
-			fileLocation += "/Library/Application Support/TreasurePyramid/conf.ig";
-		}
+		String fileLocation = OSManagement.getAppdataPath() + "conf.ig";
 		
 		config = new File(fileLocation);
 		

@@ -24,8 +24,8 @@ public class SheetFont{
 			charSet.add(c);
 	    }
 		try {
-			fontSheetHuge = new SpriteSheet("src/assets/Textures/spriteSheetFont.png", 32, 32);
-			fontSheetSmall = new SpriteSheet("src/assets/Textures/spriteSheetFontSmall.png", 32, 32);
+			fontSheetHuge = new SpriteSheet("Textures/spriteSheetFont.png", 32, 32);
+			fontSheetSmall = new SpriteSheet("Textures/spriteSheetFontSmall.png", 32, 32);
 			tilesX = fontSheetHuge.getHorizontalCount();
 		} catch (SlickException e) {
 			e.printStackTrace();

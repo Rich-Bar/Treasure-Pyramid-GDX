@@ -130,7 +130,7 @@ public class LoadingScreen implements GameState, StateEvents{
 	
 	public void init(){
 		try {
-			screen = new Image("src/assets/Textures/Overlays/Loading.png");
+			screen = new Image("Textures/Overlays/Loading.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

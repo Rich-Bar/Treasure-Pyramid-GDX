@@ -164,7 +164,7 @@ public class Game extends StateBasedGame{
 	}
 	
 	public void dial(){
-		System.out.println("Dialing Screen["+ device.type.name() +"]: " + device.title);
+		System.out.println("Dialing Screen["+ Device.type.name() +"]: " + device.title);
 		
 		////Handle Canvas and Bounds
 		GL11.glMatrixMode(GL11.GL_PROJECTION);

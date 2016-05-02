@@ -26,9 +26,9 @@ public class Popup {
 		this.title = title;
 		this.text = text;
 		try {
-			background = new Image("src/assets/Textures/Controlls/popup_bg.png");
-			whiteBorderLR = new Image("src/assets/Textures/Controlls/popup_LR.png");
-			whiteBorderTB = new Image("src/assets/Textures/Controlls/popup_TB.png");
+			background = new Image("Textures/Controlls/popup_bg.png");
+			whiteBorderLR = new Image("Textures/Controlls/popup_LR.png");
+			whiteBorderTB = new Image("Textures/Controlls/popup_TB.png");
 			background.setFilter(Image.FILTER_NEAREST);
 			whiteBorderLR.setFilter(Image.FILTER_NEAREST);
 			whiteBorderTB.setFilter(Image.FILTER_NEAREST);

@@ -122,17 +122,17 @@ public class IntroMenu extends BaseState {
 	public void loadState(GameState state) {
 		if(state instanceof IntroMenu){	
 			try {
-				logo = new Image("src/assets/Textures/RichyEntertainment_LowRes.png");
-				skipProlog = new MenuButton("src/assets/Textures/PrologSkip.png", 1);
-				scroll = new Image("src/assets/Textures/PrologScroll.png");
-				scrollOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
+				logo = new Image("Textures/RichyEntertainment_LowRes.png");
+				skipProlog = new MenuButton("Textures/PrologSkip.png", 1);
+				scroll = new Image("Textures/PrologScroll.png");
+				scrollOverlay = new Image("Textures/Overlays/Credits.png");
 				
 				logo.setAlpha(0f);
 				
 				logo.setFilter(Image.FILTER_NEAREST);
 				scroll.setFilter(Image.FILTER_NEAREST);
 				
-				music = new Sound("src/assets/Sound/SeminararbeitProlog-Intro.ogg");
+				music = new Sound("Sound/SeminararbeitProlog-Intro.ogg");
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}

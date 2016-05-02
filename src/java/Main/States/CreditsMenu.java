@@ -97,9 +97,9 @@ public class CreditsMenu extends BaseState{
 	public void loadState(GameState state) {
 		if(state instanceof CreditsMenu){			
 			try {
-				music = new Sound("src/assets/Sound/This Will Destroy You - The Mighty Rio Grande.ogg");
-				credits = new Image("src/assets/Textures/Credits.png");
-				creditsOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
+				music = new Sound("Sound/This Will Destroy You - The Mighty Rio Grande.ogg");
+				credits = new Image("Textures/Credits.png");
+				creditsOverlay = new Image("Textures/Overlays/Credits.png");
 				credits.setFilter(Image.FILTER_NEAREST);
 				creditsPos = 0;
 				musicPos = 0;

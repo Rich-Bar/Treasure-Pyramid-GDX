@@ -129,12 +129,12 @@ public class TitleMenu extends BaseState{
 	public void loadState(GameState state) {
 		if(state instanceof TitleMenu){
 			try {
-				newGameButton = new MenuButton("src/assets/Textures/NewGameButton.png", 2, 1); 
-				optionsButton = new MenuButton("src/assets/Textures/OptionsButton.png", 2, 2); 
-				creditsButton = new MenuButton("src/assets/Textures/CreditsButton.png", 2, 2); 
-				exitButton = new MenuButton("src/assets/Textures/ExitButton.png", 2, 2); 
+				newGameButton = new MenuButton("Textures/NewGameButton.png", 2, 1); 
+				optionsButton = new MenuButton("Textures/OptionsButton.png", 2, 2); 
+				creditsButton = new MenuButton("Textures/CreditsButton.png", 2, 2); 
+				exitButton = new MenuButton("Textures/ExitButton.png", 2, 2); 
 		
-				background = new Image("src/assets/Textures/TitleScreen.png");
+				background = new Image("Textures/TitleScreen.png");
 				background.setFilter(Image.FILTER_NEAREST);		
 				Game.inst().eventHandler.loadedState(state);
 			} catch (SlickException e) {

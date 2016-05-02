@@ -15,8 +15,8 @@ import org.newdawn.slick.SlickException;
 		public Slider(int value) {
 			this.value = value;
 			try {
-				frame = new Image("src/assets/Textures/Controlls/slider_frame.png");
-				fill = new Image("src/assets/Textures/Controlls/slider_fill.png");
+				frame = new Image("Textures/Controlls/slider_frame.png");
+				fill = new Image("Textures/Controlls/slider_fill.png");
 				frame.setFilter(Image.FILTER_NEAREST);
 				fill.setFilter(Image.FILTER_NEAREST);
 			} catch (SlickException e) {

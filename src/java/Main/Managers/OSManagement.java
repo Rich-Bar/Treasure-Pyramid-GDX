@@ -46,6 +46,7 @@ public class OSManagement {
 			fileLocation = System.getProperty("user.home");
 			fileLocation += "/Library/Application Support/TreasurePyramid/";
 		}
+		fileLocation = fileLocation.replaceAll("\\\\", "/");
 		return fileLocation;
 	}
 	

@@ -3,9 +3,9 @@ package main.language;
 import java.io.File;
 
 	public enum LANGUAGES{
-		GERMAN_DE(new File("src/assets/Lang/de.lang")),
-		ENGLISH_EN(new File("src/assets/Lang/en.lang")),
-		PIRATE_PI(new File("src/assets/Lang/pi.lang"));
+		GERMAN_DE(new File("Lang/de.lang")),
+		ENGLISH_EN(new File("Lang/en.lang")),
+		PIRATE_PI(new File("Lang/pi.lang"));
 		
 		private File file;
 		private boolean notified;

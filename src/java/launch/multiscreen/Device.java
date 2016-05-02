@@ -21,6 +21,7 @@ public class Device{
 
 	private static GraphicsDevice gd;
 	public static Window type;
+	public static String gameDir;
 	
 	private CanvasGameContainer appgc;
 	private org.newdawn.slick.Game sbg;
@@ -33,12 +34,9 @@ public class Device{
 	public boolean lrColumns = true;
 	
 	public static void main(String[] args) throws IOException, Exception {
-		System.out.println("Started Device with " + args.length + " args: " + Arrays.toString(args));
-		Launcher.setLibraryPath(new File(".").getCanonicalPath().replaceAll("\\\\", "/") + "/src/natives/");
-		
-		if(args.length != 2 || 
-				!(args[0].toLowerCase().startsWith("-gdevice:") || args[0].toLowerCase().startsWith("-type:")) ||
-				!(args[1].toLowerCase().startsWith("-gdevice:") || args[1].toLowerCase().startsWith("-type:"))) return;
+		if(args.length != 2) return;
+		if(	!(args[0].toLowerCase().startsWith("-gdevice:") || args[0].toLowerCase().startsWith("-type:")) ||
+			!(args[1].toLowerCase().startsWith("-gdevice:") || args[1].toLowerCase().startsWith("-type:"))) return;
 		
 		int k = 1;
 		if(args[0].toLowerCase().startsWith("-type:")) k = 0;
@@ -46,15 +44,28 @@ public class Device{
 		type = Window.valueOf(args[k].replace("-type:", "").trim());
 		k = k == 1? 0 : 1;
 		String gdString = args[k].replace("-gdevice:", "").trim().replaceAll("\\\\", "/");
+		
 		Launcher.setDeviceLog(gdString);
 		
+		System.out.println("Started Device with " + args.length + " args: " + Arrays.toString(args));
+		gameDir = new File(".").getCanonicalPath().replaceAll("\\\\", "/");
+		System.out.println("In gameDir: " + gameDir);
+		
+		Launcher.setLibraryPath();
+		
+		boolean foundDevice = false;
 		GraphicsDevice[] systemDevices = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
 		for(GraphicsDevice gDevice : systemDevices){
 			String cDeviceID = gDevice.getIDstring().replaceAll("\\\\", "/");
 			if(cDeviceID.equals(gdString)){
 				System.out.println("Found Corresponding gDevice!");
+				foundDevice = true;
 				gd = gDevice;
 			}
+		}
+		if(!foundDevice){
+			System.out.println("Unable to find corresponding gDevice to gID: " + gdString);
+			gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		}
 		
 		Device d = new Device();

@@ -4,7 +4,6 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,16 +14,10 @@ public class DisplayManager{
 	private List<Process> processes = new ArrayList<>();
 	private List<ProcessBuilder> processBuilders = new ArrayList<>();
 	
-	private String path;
-	public boolean init;
+	public boolean running;
 	
 	public DisplayManager() throws UnsupportedEncodingException {
-		String abstPath = Launcher.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		path = URLDecoder.decode(abstPath, "UTF-8");
-		//path = path.substring(1, path.length());
-		
-		System.out.println(path);
-		
+
 		boolean first = true;
 		System.out.println("Current Devices:");
 		GraphicsDevice[] systemDevices = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
@@ -33,11 +26,11 @@ public class DisplayManager{
 				String gName = gDevice.getIDstring().replaceAll("\\\\", "/");
 				System.out.println(gName);
 				if(first){
-					String[] pbArgs =  {"java", "-cp", path, Device.class.getCanonicalName(), '"' + "-gdevice:" + gName + " -type:" + Window.GameScreen + '"'}; 
+					String[] pbArgs = {"java", "-cp", '"' + Launcher.getNativePath() + Launcher.getPath() + '"', "launch.multiscreen.Device", "-gdevice:" + gName , "-type:" + Window.GameScreen};
 					processBuilders.add(new ProcessBuilder(pbArgs));
 					first = false;
 				}else{
-					String[] pbArgs = {"java", "-cp", path, Device.class.getCanonicalName(), '"' + "-gdevice:" + gName + " -type:" + Window.BlackScreen + '"'}; 
+					String[] pbArgs = {"java", "-cp", '"' + Launcher.getNativePath() + Launcher.getPath() + '"', "launch.multiscreen.Device", "-gdevice:" + gName, "-type:" + Window.BlackScreen}; 
 					processBuilders.add(new ProcessBuilder(pbArgs));
 				}
 			}
@@ -55,7 +48,7 @@ public class DisplayManager{
 			Process p = pb.start();
 			processes.add(p);
 		}
-		init = true;
+		running = true;
 	}
 	
 	public void waitForIt(){

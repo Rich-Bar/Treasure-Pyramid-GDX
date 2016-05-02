@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 public class Mushroom extends Item{
 
 	public Mushroom() throws SlickException {
-		super("Schroom", 2, new Image("src/assets/Textures/Cursor.png"), new GanjaEffect());
+		super("Schroom", 2, new Image("Textures/Cursor.png"), new GanjaEffect());
 	}
 	
 	@Override
