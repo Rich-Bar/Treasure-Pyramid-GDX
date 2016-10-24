@@ -26,9 +26,9 @@ public class IntroMenu extends BaseState {
 	private Image scroll;
 	private Image scrollOverlay;
 	
-	public IntroMenu(int ID){
+	public IntroMenu(int id){
 		super();
-		this.ID = ID;
+		this.id = id;
 	}
 
 	public void switchScreen(){
@@ -70,18 +70,19 @@ public class IntroMenu extends BaseState {
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
+		super.render(arg0, arg1, arg2);
 		
 		if(music.getSound().getPosition() > 2f && music.getSound().getPosition() < 198){
 			if(scrollPos < scroll.getHeight() + 100){
 				scrollPos = (float)((Math.pow((double)music.getSound().getPosition() * 0.05, 2.301029995665)) / musicLength * scroll.getHeight());
 			}
-			scroll.draw(0, 0, 360 * Game.scale, 240 * Game.scale, 0, scrollPos, 360, scrollPos + 240);
-			scrollOverlay.draw(0, 0, Game.scale);
-			skipProlog.draw(skipProlog.getMiddle(Game.pixelartResolution.width, true) * Game.scale, 200 * Game.scale);
+			scroll.draw(0, 0, 360 * Game.inst().scale, 240 * Game.inst().scale, 0, scrollPos, 360, scrollPos + 240);
+			scrollOverlay.draw(0, 0, Game.inst().scale);
+			skipProlog.draw(skipProlog.getMiddle(Game.pixelartResolution.width, true) * Game.inst().scale, 200 * Game.inst().scale);
 		}else if(music.getSound().getPosition() > 198){
 			switchScreen();
 		}
-		logo.draw(0, 0, Game.scale * 2);
+		logo.draw(0, 0, Game.inst().scale * 2);
 	}
 
 	@Override
@@ -89,7 +90,7 @@ public class IntroMenu extends BaseState {
 			throws SlickException {
 		float musicPos =  music.getSound().getPosition();
 		if(musicPos > 0.3f && musicPos < 4f){
-			logo.setAlpha((music.getSound().getPosition()-0.3f));
+			logo.setAlpha(music.getSound().getPosition()-0.3f);
 		}else if(musicPos >= 4f && musicPos < 8f){
 			if(!skipable) skipable = true;
 			logo.setAlpha((8f-music.getSound().getPosition()) * 0.65f );
@@ -118,20 +119,20 @@ public class IntroMenu extends BaseState {
 	}
 
 	@Override
-	public void loadState(GameState S) {
-		if(S instanceof IntroMenu){	
+	public void loadState(GameState state) {
+		if(state instanceof IntroMenu){	
 			try {
-				logo = new Image("src/assets/Textures/RichyEntertainment_LowRes.png");
-				skipProlog = new MenuButton("src/assets/Textures/PrologSkip.png", 1);
-				scroll = new Image("src/assets/Textures/PrologScroll.png");
-				scrollOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
+				logo = new Image("Textures/RichyEntertainment_LowRes.png");
+				skipProlog = new MenuButton("Textures/PrologSkip.png", 1);
+				scroll = new Image("Textures/PrologScroll.png");
+				scrollOverlay = new Image("Textures/Overlays/Credits.png");
 				
 				logo.setAlpha(0f);
 				
 				logo.setFilter(Image.FILTER_NEAREST);
 				scroll.setFilter(Image.FILTER_NEAREST);
 				
-				music = new Sound("src/assets/Sound/SeminararbeitProlog-Intro.ogg");
+				music = new Sound("Sound/SeminararbeitProlog-Intro.ogg");
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
@@ -140,15 +141,15 @@ public class IntroMenu extends BaseState {
 	}
 
 	@Override
-	public void unloadState(GameState S) {
-		if(S instanceof IntroMenu){		
+	public void unloadState(GameState state) {
+		if(state instanceof IntroMenu){		
 			unloadRequest = true;
 			music = null;
 			logo = null;
 			skipProlog = null;
 			scroll = null;
 			scrollOverlay = null;
-			Game.inst().eventHandler.unloadedState(S);
+			Game.inst().eventHandler.unloadedState(state);
 		}
 	}
 }

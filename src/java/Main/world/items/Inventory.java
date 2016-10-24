@@ -25,8 +25,7 @@ public final class Inventory{
 	}
 	
 	public Item getCurrentItem(){
-		if(items.size()-1 < selection) return null;
-		return items.get(selection);
+		return items.size() - 1 < selection ? null : items.get(selection);
 	}
 	
 }

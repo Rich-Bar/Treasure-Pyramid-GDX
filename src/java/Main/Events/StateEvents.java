@@ -4,11 +4,11 @@ import org.newdawn.slick.state.GameState;
 
 public interface StateEvents extends Event{
 
-	void loadedState(GameState S);
+	void loadedState(GameState state);
 
-	void loadState(GameState S);
+	void loadState(GameState state);
 	
-	void unloadedState(GameState S);
+	void unloadedState(GameState state);
 	
-	void unloadState(GameState S);
+	void unloadState(GameState state);
 }

@@ -16,19 +16,19 @@ public class IntroLevel extends Level{
 	}
 	
 	@Override
-	public void loadedLevel(Level L) {
+	public void loadedLevel(Level level) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void loadLevel(Level L) {
+	public void loadLevel(Level level) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void unloadLevel(Level L) {
+	public void unloadLevel(Level level) {
 		// TODO Auto-generated method stub
 		
 	}

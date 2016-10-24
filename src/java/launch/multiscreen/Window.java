@@ -1,4 +1,4 @@
-package main.multiscreen;
+package launch.multiscreen;
 
 import main.Game;
 

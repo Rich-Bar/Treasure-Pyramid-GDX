@@ -2,8 +2,8 @@ package main.components;
 
 import java.io.Serializable;
 
+import launch.multiscreen.Device.SerialDevice;
 import main.language.LANGUAGES;
-import main.multiscreen.Device.SerialDevice;
 
 @SuppressWarnings("serial")
 public class Settings implements Serializable {

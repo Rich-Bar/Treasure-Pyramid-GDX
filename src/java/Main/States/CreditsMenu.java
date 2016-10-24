@@ -21,9 +21,9 @@ public class CreditsMenu extends BaseState{
 	private Sound music;
 	private float creditsPos;
 	
-	public CreditsMenu(int ID){
+	public CreditsMenu(int id){
 		super();
-		this.ID = ID;
+		this.id = id;
 	}
 
 	@Override
@@ -44,11 +44,13 @@ public class CreditsMenu extends BaseState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
+		super.render(arg0, arg1, arg2);
+		
 		if(creditsPos < credits.getHeight() - 240){
 			creditsPos = music.getSound().getPosition() * 10; // 10px/s
 		}
-		credits.draw(0, 0, 360 * Game.scale, 240 * Game.scale, 0, creditsPos, 360, creditsPos + 240);
-		creditsOverlay.draw(0, 0, Game.scale);
+		credits.draw(0, 0, 360 * Game.inst().scale, 240 * Game.inst().scale, 0, creditsPos, 360, creditsPos + 240);
+		creditsOverlay.draw(0, 0, Game.inst().scale);
 	}
 
 	@Override
@@ -92,30 +94,30 @@ public class CreditsMenu extends BaseState{
 	}
 
 	@Override
-	public void loadState(GameState S) {
-		if(S instanceof CreditsMenu){			
+	public void loadState(GameState state) {
+		if(state instanceof CreditsMenu){			
 			try {
-				music = new Sound("src/assets/Sound/This Will Destroy You - The Mighty Rio Grande.ogg");
-				credits = new Image("src/assets/Textures/Credits.png");
-				creditsOverlay = new Image("src/assets/Textures/Overlays/Credits.png");
+				music = new Sound("Sound/This Will Destroy You - The Mighty Rio Grande.ogg");
+				credits = new Image("Textures/Credits.png");
+				creditsOverlay = new Image("Textures/Overlays/Credits.png");
 				credits.setFilter(Image.FILTER_NEAREST);
 				creditsPos = 0;
 				musicPos = 0;
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
-			Game.inst().eventHandler.loadedState(S);
+			Game.inst().eventHandler.loadedState(state);
 		}
 	}
 
 	@Override
-	public void unloadState(GameState S) {
-		if(S instanceof CreditsMenu){			
+	public void unloadState(GameState state) {
+		if(state instanceof CreditsMenu){			
 			unloadRequest = true;	
 			music = null;
 			credits = null;
 			creditsOverlay = null;
-			Game.inst().eventHandler.unloadedState(S);
+			Game.inst().eventHandler.unloadedState(state);
 		}
 	}
 }

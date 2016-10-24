@@ -12,7 +12,7 @@ public class FloorBlock extends Block{
 	public FloorBlock(Point coord) {
 		super(coord);
 		try{
-			String basePath = "src/assets/Textures/Blocks/";
+			String basePath = "Textures/Blocks/";
 			img = new Image(basePath + "sandstone_top.png");
 		}catch(Exception e){
 		}

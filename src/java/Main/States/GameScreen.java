@@ -1,7 +1,7 @@
 package main.states;
 
 import main.Game;
-import main.world.World;
+//import main.world.World;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -11,11 +11,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameScreen extends BaseState {
 	
-	private World world = new World();
+	//private World world = new World();
 	
-	public GameScreen(int ID){
+	public GameScreen(int id){
 		super();
-		this.ID = ID;
+		this.id = id;
 	}
 
 	@Override
@@ -37,7 +37,8 @@ public class GameScreen extends BaseState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-		world.render(gc, sbg, g);
+		super.render(gc, sbg, g);
+		
 	}
 
 	@Override
@@ -48,17 +49,17 @@ public class GameScreen extends BaseState {
 	}
 
 	@Override
-	public void loadState(GameState S) {
-		if(S instanceof GameScreen){
-			world.load();
-			Game.inst().eventHandler.loadedState(S);
+	public void loadState(GameState state) {
+		if(state instanceof GameScreen){
+			//world.load();
+			Game.inst().eventHandler.loadedState(state);
 		}
 		
 	}
 
 	@Override
-	public void unloadState(GameState S) {
-		Game.inst().eventHandler.unloadedState(S);
+	public void unloadState(GameState state) {
+		Game.inst().eventHandler.unloadedState(state);
 		
 	}
 
