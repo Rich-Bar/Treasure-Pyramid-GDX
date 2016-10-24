@@ -33,7 +33,7 @@ public class Device{
 	public double factor;
 	public boolean lrColumns = true;
 	
-	public static void main(String[] args) throws IOException, Exception {
+	public static void main(String[] args) throws Exception {
 		if(args.length != 2) return;
 		if(	!(args[0].toLowerCase().startsWith("-gdevice:") || args[0].toLowerCase().startsWith("-type:")) ||
 			!(args[1].toLowerCase().startsWith("-gdevice:") || args[1].toLowerCase().startsWith("-type:"))) return;
@@ -72,7 +72,7 @@ public class Device{
 		d.run();
 	}
 	
-	public void run() throws IOException, Exception{
+	public void run() throws Exception{
 		try{
 			if(type == Window.GameScreen){
 				sbg = new Game(this);
@@ -97,7 +97,6 @@ public class Device{
 			gFrame = new JFrame(title);
 			gFrame.setUndecorated(true);
 			Rectangle bounds = gd.getDefaultConfiguration().getBounds();
-			System.out.println(bounds);
 			appgc.setSize(bounds.width, bounds.height);
 			gFrame.setLocation(bounds.x, bounds.y);
 			gFrame.setSize(bounds.width, bounds.height);

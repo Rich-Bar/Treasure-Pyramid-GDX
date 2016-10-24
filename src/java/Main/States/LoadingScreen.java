@@ -148,6 +148,7 @@ public class LoadingScreen implements GameState, StateEvents{
 		
 		screen.draw(0,0, Game.inst().scale);
 		if(rendered == false){
+			Game.inst().dial();
 			rendered = true;
 		}
 	}

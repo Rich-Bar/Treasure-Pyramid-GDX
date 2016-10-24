@@ -44,7 +44,7 @@ public class TreasureOut extends PrintStream {
         }
 
         @Override
-        public void write(byte[] b) throws IOException { // NOPMD by Marco on 25.04.16 15:40
+        public void write(byte[] b) throws IOException { 
             super.write(b);
             for(PrintStream stream : streams)
             	stream.write(b);

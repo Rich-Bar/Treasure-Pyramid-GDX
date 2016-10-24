@@ -10,7 +10,6 @@ public class ConfigManager {
 	public final int maxFPS = 120;
 	public Settings settings = new Settings();
 	private File config;
-	private String os = System.getProperty("os.name").toUpperCase();
 	
 	public ConfigManager() {
 		

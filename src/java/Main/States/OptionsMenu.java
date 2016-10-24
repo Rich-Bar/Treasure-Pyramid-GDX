@@ -64,53 +64,53 @@ public class OptionsMenu extends BaseState{
 			throws SlickException {
 		super.render(arg0, arg1, arg2);
 		
-		font.drawStringAlignMiddle(160, 10, Game.inst().lang.Options.getTranslation(),Color.white, 75);
+		font.drawStringAlignMiddle(160, 10, Game.inst().lang.options.getTranslation(),Color.white, 75);
 		font.drawStringAlignMiddle(160, 10, "____________",Color.white, 75);
 		
-		font.drawString(282, 50, (selectedLang + "").substring(0, (selectedLang + "").length() - 3), Color.decode("0x999999"), 35); // NOPMD by Marco on 25.04.16 15:46
+		font.drawString(282, 50, (selectedLang + "").substring(0, (selectedLang + "").length() - 3), Color.decode("0x999999"), 35); 
 		mainVolume.draw(300 * Game.inst().scale, 70  * Game.inst().scale, 50, Color.decode("0x999999"));
 		musicVolume.draw(300 * Game.inst().scale, 85  * Game.inst().scale, 50, Color.decode("0x999999"));
 		soundVolume.draw(300 * Game.inst().scale, 100  * Game.inst().scale, 50, Color.decode("0x999999"));
 		vSync.draw(300 * Game.inst().scale, 120  * Game.inst().scale, 50, Color.decode("0x999999"));
 		debug.draw(300 * Game.inst().scale, 140  * Game.inst().scale, 50, Color.decode("0x999999"));
 		
-		font.drawString(20, 50, Game.inst().lang.Language.getTranslation() + ":", Color.decode("0x999999"), 35);
-		font.drawString(20, 70, Game.inst().lang.MasterVol.getTranslation() + ":", Color.decode("0x999999"), 35);
-		font.drawString(30, 85, Game.inst().lang.MusicVol.getTranslation() + ":", Color.decode("0x999999"), 35);
-		font.drawString(30, 100, Game.inst().lang.SoundVol.getTranslation() + ":", Color.decode("0x999999"), 35);
-		font.drawString(20, 120, Game.inst().lang.VSync.getTranslation() + ":", Color.decode("0x999999"), 35);
-		font.drawString(20, 140, Game.inst().lang.Debug.getTranslation() + ":", Color.decode("0x999999"), 35);
-		font.drawString(100, 210, Game.inst().lang.Save.getTranslation(), Color.decode("0x999999"), 35);
-		font.drawString(200, 210, Game.inst().lang.Cancel.getTranslation(), Color.decode("0x999999"), 35);
+		font.drawString(20, 50, Game.inst().lang.language.getTranslation() + ":", Color.decode("0x999999"), 35);
+		font.drawString(20, 70, Game.inst().lang.masterVol.getTranslation() + ":", Color.decode("0x999999"), 35);
+		font.drawString(30, 85, Game.inst().lang.musicVol.getTranslation() + ":", Color.decode("0x999999"), 35);
+		font.drawString(30, 100, Game.inst().lang.soundVol.getTranslation() + ":", Color.decode("0x999999"), 35);
+		font.drawString(20, 120, Game.inst().lang.vSync.getTranslation() + ":", Color.decode("0x999999"), 35);
+		font.drawString(20, 140, Game.inst().lang.debug.getTranslation() + ":", Color.decode("0x999999"), 35);
+		font.drawString(100, 210, Game.inst().lang.save.getTranslation(), Color.decode("0x999999"), 35);
+		font.drawString(200, 210, Game.inst().lang.cancel.getTranslation(), Color.decode("0x999999"), 35);
 		
 		if(selected == 0){
-			font.drawString(282, 50, (selectedLang + "").substring(0, (selectedLang + "").length() - 3), 35); // NOPMD by Marco on 25.04.16 15:46
-			font.drawString(20, 50, Game.inst().lang.Language.getTranslation() + ":",  35);
+			font.drawString(282, 50, (selectedLang + "").substring(0, (selectedLang + "").length() - 3), 35); 
+			font.drawString(20, 50, Game.inst().lang.language.getTranslation() + ":",  35);
 		}
 		else if(selected == 1){
 			mainVolume.draw(300 * Game.inst().scale, 70  * Game.inst().scale, 50);
-			font.drawString(20, 70, Game.inst().lang.MasterVol.getTranslation() + ":", 35);
+			font.drawString(20, 70, Game.inst().lang.masterVol.getTranslation() + ":", 35);
 		}
 		else if(selected == 2){
 			musicVolume.draw(300 * Game.inst().scale, 85  * Game.inst().scale, 50);
-			font.drawString(30, 85, Game.inst().lang.MusicVol.getTranslation() + ":", 35);
+			font.drawString(30, 85, Game.inst().lang.musicVol.getTranslation() + ":", 35);
 		}
 		else if(selected == 3){
 			soundVolume.draw(300 * Game.inst().scale, 100  * Game.inst().scale, 50);
-			font.drawString(30, 100, Game.inst().lang.SoundVol.getTranslation() + ":", 35);
+			font.drawString(30, 100, Game.inst().lang.soundVol.getTranslation() + ":", 35);
 		}
 		else if(selected == 4){
 			vSync.draw(300 * Game.inst().scale, 120  * Game.inst().scale, 50);
-			font.drawString(20, 120, Game.inst().lang.VSync.getTranslation() + ":", 35);
+			font.drawString(20, 120, Game.inst().lang.vSync.getTranslation() + ":", 35);
 		}
 		else if(selected == 5){
 			debug.draw(300 * Game.inst().scale, 140  * Game.inst().scale, 50);
 		}
 		else if(selected == 6){
-			font.drawString(100, 210, Game.inst().lang.Save.getTranslation(), 35);
+			font.drawString(100, 210, Game.inst().lang.save.getTranslation(), 35);
 		}
 		else if(selected == 7){
-			font.drawString(200, 210, Game.inst().lang.Cancel.getTranslation(), 35);
+			font.drawString(200, 210, Game.inst().lang.cancel.getTranslation(), 35);
 		}
 		
 		if(popup)confirm.render(new Dimension(160, 72), 100, 100);
@@ -204,7 +204,7 @@ public class OptionsMenu extends BaseState{
 			soundVolume = new Slider((int)(config.settings.soundVol*100));
 			vSync = new Toggle(config.settings.vSync);
 			debug = new Toggle(config.settings.debug);
-			confirm = new Popup(Game.inst().lang.ConfirmTitle.getTranslation(), Game.inst().lang.ConfirmMessage.getTranslation());
+			confirm = new Popup(Game.inst().lang.confirmTitle.getTranslation(), Game.inst().lang.confirmMessage.getTranslation());
 			Game.inst().eventHandler.loadedState(state);
 			selected = 0;
 		}

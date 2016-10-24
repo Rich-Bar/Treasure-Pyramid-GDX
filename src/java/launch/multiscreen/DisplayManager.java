@@ -26,11 +26,11 @@ public class DisplayManager{
 				String gName = gDevice.getIDstring().replaceAll("\\\\", "/");
 				System.out.println(gName);
 				if(first){
-					String[] pbArgs = {"java", "-cp", '"' + Launcher.getNativePath() + Launcher.getPath() + '"', "launch.multiscreen.Device", "-gdevice:" + gName , "-type:" + Window.GameScreen};
+					String[] pbArgs = {"java", "-Xms128M", "-Xmx1G", "-cp", '"' + Launcher.getNativePath() + Launcher.getPath() + '"', "launch.multiscreen.Device", "-gdevice:" + gName , "-type:GameScreen"};
 					processBuilders.add(new ProcessBuilder(pbArgs));
 					first = false;
 				}else{
-					String[] pbArgs = {"java", "-cp", '"' + Launcher.getNativePath() + Launcher.getPath() + '"', "launch.multiscreen.Device", "-gdevice:" + gName, "-type:" + Window.BlackScreen}; 
+					String[] pbArgs = {"java", "-Xms128M", "-Xmx1G", "-cp", '"' + Launcher.getNativePath() + Launcher.getPath() + '"', "launch.multiscreen.Device", "-gdevice:" + gName, "-type:BlackScreen"};
 					processBuilders.add(new ProcessBuilder(pbArgs));
 				}
 			}
@@ -58,6 +58,7 @@ public class DisplayManager{
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			waitForIt();
 		}
 	}
 }
