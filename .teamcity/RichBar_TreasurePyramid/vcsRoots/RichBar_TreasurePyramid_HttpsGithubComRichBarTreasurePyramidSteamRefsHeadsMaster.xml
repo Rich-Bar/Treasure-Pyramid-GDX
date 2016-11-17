@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vcs-root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="cd976211-1501-40b1-836c-2cd1b452974f" type="jetbrains.git" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
+  <name>Richy Local</name>
+  <param name="agentCleanFilesPolicy" value="ALL_UNTRACKED" />
+  <param name="agentCleanPolicy" value="ON_BRANCH_CHANGE" />
+  <param name="authMethod" value="PASSWORD" />
+  <param name="branch" value="refs/heads/master" />
+  <param name="ignoreKnownHosts" value="true" />
+  <param name="secure:password" value="zxx2857c3467ab0d269779565be15c85df1a460d4090aa13f253ad8a008d05e90ea605db1edfb24c6af775d03cbe80d301b" />
+  <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="url" value="F:\Structure\Projects\Rich-Bar\Treasure-Pyramid-Steam" />
+  <param name="useAlternates" value="true" />
+  <param name="username" value="Mariomarco" />
+  <param name="usernameStyle" value="USERID" />
+</vcs-root>
+
