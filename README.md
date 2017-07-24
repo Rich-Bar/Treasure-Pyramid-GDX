@@ -3,7 +3,7 @@
 <H3 align="center">The project I'm working on at school.</H3>
 
 ---
-
+</br></br>
 Anmeldung und Vorgeschichte --- [\[Download\]](https://github.com/Mariomarco/Treasure-Pyramide-Seminararbeit/blob/master/art/Anmeldugn%20Seminararbeit.docx?raw=true)
 ------------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ Anmeldung und Vorgeschichte --- [\[Download\]](https://github.com/Mariomarco/Tre
 > It is the prophet Richy - one of the founders of this religious belief.
 > 
 > One day something unexpected happened. Midway whilest drinking his tea
-> and saw the prophacy. He was deemed to save the world from chaos.
+> he saw the prophacy. He was deemed to save the world from chaos.
 > There was only one way to achieve this goal, because god created together
 > with all the plants a secret recepie wich can cause peace in every human on earth.
 > [cmpr. Genisis/1, Chap. 1, Vers 12.5] This recepie once caused trouble amongst the rich.
@@ -69,6 +69,10 @@ Anmeldung und Vorgeschichte --- [\[Download\]](https://github.com/Mariomarco/Tre
 > Was jetzt geschieht geht in die Geschichtsbücher ein.
 > 
 > Versetzten wir uns doch in seine Situation….
+
+</br>
+<H3>OLD / ALT (Seminararbeit 2015)*
+
 
 ***
 Gliederungsentwurf --- [\[Download\]](https://github.com/Mariomarco/Treasure-Pyramide-Seminararbeit/blob/master/art/Gliederungsentwurf.docx?raw=true)
