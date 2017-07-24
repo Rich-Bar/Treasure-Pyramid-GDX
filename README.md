@@ -10,15 +10,42 @@ Anmeldung und Vorgeschichte --- [\[Download\]](https://github.com/Mariomarco/Tre
 > **GRUNDGEDANKE**
 > 
 >  Treasure Pyramid ist ein Puzzlespiel aus einer
-> isometrischen Ansicht, welche innovative Gameplaymethoden mit einer
-> guten Geschichte und dem Spielspaß verknüpft. 
+> fluchtpunktperspektivischen Ansicht, 
+> welche innovative Gameplaymethoden mit einer
+> guten Geschichte und Spielspaß verknüpft. 
 > ***
 > **PROLOG**
 > 
-> „Dann sprach Gott: Hiermit übergebe ich euch alle Pflanzen auf der
-> ganzen Erde, die Samen tragen, und alle Bäume mit samenhaltigen
-> Früchten. Euch sollen sie zur Nahrung dienen.“  [Genesis/1. Mose, Kap
-> 1, Vers 29]
+>
+> Engl.
+>
+> „And God said, Behold, I have given you every plant yielding seed
+> that is on the face of all the earth, and every tree with seed in its fruit.
+> You shall have them for food.“  
+> [Genesis/1. Mose, Chap. 1, Vers 29]
+> 
+> This part of Genisis is one of the main roots in the modern tea-religion.
+> Many of wich are very strong believers and could be considered teaophile
+> but there is one who is said to have talked to the mighty teagod himself.
+> It is the prophet Richy - one of the founders of this religious belief.
+> 
+> One day something unexpected happened. Midway whilest drinking his tea
+> and saw the prophacy. He was deemed to save the world from chaos.
+> There was only one way to achieve this goal, because god created together
+> with all the plants a secret recepie wich can cause peace in every human on earth.
+> [cmpr. Genisis/1, Chap. 1, Vers 12.5] This recepie once caused trouble amongst the rich.
+> This is the reason why the egypts had it hidden in a secure place of what once was an empire.
+> Hidden inside the the pyramid of Tutenchamun (also known as Tripmeister Eder).
+> It is his task to resurrect this long lost recepie and publish it so that war and climate change will end.
+> Then mankind can live on it's planet in peace with nature supported with it's technology.
+> 
+>
+> Deu.
+>
+> "Dann sprach Gott: Hiermit übergebe ich euch alle Pflanzen
+> auf der ganzen Erde, die Samen tragen, und alle Bäume 
+> mit samenhaltigen Früchten. Euch sollen sie zur Nahrung dienen."
+> [Genesis/1. Mose, Kap. 1, Vers 29]
 > 
 > Dieser Ausschnitt aus der 1. Schöpfungserzählung ist einer der
 > Grundsteine zum modernen Teeglauben. Viele seiner Anhänger sind sehr
