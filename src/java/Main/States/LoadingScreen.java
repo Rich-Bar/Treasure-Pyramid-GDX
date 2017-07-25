@@ -3,6 +3,8 @@ package main.states;
 import main.Game;
 import main.events.StateEvents;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -91,16 +93,16 @@ public class LoadingScreen implements GameState, StateEvents{
 	public void controllerUpReleased(int arg0) {}
 
 	@Override
-	public void loadedState(GameState S) {}
+	public void loadedState(GameState s) {}
 
 	@Override
-	public void loadState(GameState S) {}
+	public void loadState(GameState s) {}
 
 	@Override
-	public void unloadedState(GameState S) {}
+	public void unloadedState(GameState s) {}
 
 	@Override
-	public void unloadState(GameState S) {}
+	public void unloadState(GameState s) {}
 
 	public void setTarget(int newID, int oldID){
 		newTarget = newID;
@@ -128,7 +130,7 @@ public class LoadingScreen implements GameState, StateEvents{
 	
 	public void init(){
 		try {
-			screen = new Image("src/assets/Textures/Overlays/Loading.png");
+			screen = new Image("Textures/Overlays/Loading.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -140,8 +142,13 @@ public class LoadingScreen implements GameState, StateEvents{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
 			throws SlickException {
-		screen.draw(0,0, Game.scale);
+		try {
+			Display.makeCurrent();
+		} catch (LWJGLException e) {}
+		
+		screen.draw(0,0, Game.inst().scale);
 		if(rendered == false){
+			Game.inst().dial();
 			rendered = true;
 		}
 	}

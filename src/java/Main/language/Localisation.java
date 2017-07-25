@@ -8,23 +8,23 @@ import main.Game;
 
 public final class Localisation{
 
-	public Translation NewGame = new Translation(translate("new_game"));
-	public Translation Options = new Translation(translate("options"));
-	public Translation Credits = new Translation(translate("credits"));
-	public Translation Exit = new Translation(translate("exit"));
-	public Translation Language = new Translation(translate("language"));
-	public Translation MasterVol = new Translation(translate("master_volume"));
-	public Translation MusicVol = new Translation(translate("music_volume"));
-	public Translation SoundVol = new Translation(translate("sound_volume"));
-	public Translation Axis = new Translation(translate("axis"));
-	public Translation DirectAxis = new Translation(translate("axis_direct"));
-	public Translation IsometricAxis = new Translation(translate("axis_isometric"));
-	public Translation Save = new Translation(translate("save"));
-	public Translation Cancel = new Translation(translate("cancel"));
-	public Translation VSync = new Translation(translate("vsync"));
-	public Translation Debug = new Translation(translate("debug"));
-	public Translation ConfirmTitle = new Translation(translate("confirm_title"));
-	public Translation ConfirmMessage = new Translation(translate("confirm_message"));
+	public Translation newGame = new Translation(translate("new_game"));
+	public Translation options = new Translation(translate("options"));
+	public Translation credits = new Translation(translate("credits"));
+	public Translation exit = new Translation(translate("exit"));
+	public Translation language = new Translation(translate("language"));
+	public Translation masterVol = new Translation(translate("master_volume"));
+	public Translation musicVol = new Translation(translate("music_volume"));
+	public Translation soundVol = new Translation(translate("sound_volume"));
+	public Translation axis = new Translation(translate("axis"));
+	public Translation directAxis = new Translation(translate("axis_direct"));
+	public Translation isometricAxis = new Translation(translate("axis_isometric"));
+	public Translation save = new Translation(translate("save"));
+	public Translation cancel = new Translation(translate("cancel"));
+	public Translation vSync = new Translation(translate("vsync"));
+	public Translation debug = new Translation(translate("debug"));
+	public Translation confirmTitle = new Translation(translate("confirm_title"));
+	public Translation confirmMessage = new Translation(translate("confirm_message"));
 	
 	public class Translation{
 		

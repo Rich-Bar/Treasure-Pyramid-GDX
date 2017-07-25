@@ -39,6 +39,6 @@ public class MenuButton extends Image{
 	public void draw(float x, float y) {
 		float finWidth = 0;
 		finWidth = width / states;
-		super.draw(x, y, x + finWidth * Game.scale, y + height * Game.scale, (state -1) * finWidth, 0, finWidth * state, height);
+		super.draw(x, y, x + finWidth * Game.inst().scale, y + height * Game.inst().scale, (state -1) * finWidth, 0, finWidth * state, height);
 	}
 }

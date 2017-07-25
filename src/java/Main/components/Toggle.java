@@ -14,8 +14,8 @@ import org.newdawn.slick.SlickException;
 		
 		public Toggle() {
 			try {
-				frame = new Image("src/assets/Textures/Controlls/toggle_frame.png");
-				dot = new Image("src/assets/Textures/Controlls/toggle_dot.png");
+				frame = new Image("Textures/Controlls/toggle_frame.png");
+				dot = new Image("Textures/Controlls/toggle_dot.png");
 				frame.setFilter(Image.FILTER_NEAREST);
 				dot.setFilter(Image.FILTER_NEAREST);
 			} catch (SlickException e) {
@@ -26,8 +26,8 @@ import org.newdawn.slick.SlickException;
 		public Toggle(boolean value){
 			this.value = value;
 			try {
-				frame = new Image("src/assets/Textures/Controlls/toggle_frame.png");
-				dot = new Image("src/assets/Textures/Controlls/toggle_dot.png");
+				frame = new Image("Textures/Controlls/toggle_frame.png");
+				dot = new Image("Textures/Controlls/toggle_dot.png");
 				frame.setFilter(Image.FILTER_NEAREST);
 				dot.setFilter(Image.FILTER_NEAREST);
 			} catch (SlickException e) {
@@ -40,8 +40,8 @@ import org.newdawn.slick.SlickException;
 		}
 		
 		public void draw(float x, float y, float scale, Color col){
-			frame.draw(x, y, Game.scale * (scale/100), col);
-			if(value) dot.draw(x, y, Game.scale * (scale/100), col);
+			frame.draw(x, y, Game.inst().scale * (scale/100), col);
+			if(value) dot.draw(x, y, Game.inst().scale * (scale/100), col);
 		}
 		
 	}

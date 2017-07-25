@@ -2,6 +2,8 @@ package main.states;
 
 import main.Game;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -13,7 +15,7 @@ import main.events.StateEvents;
 
 public abstract class BaseState implements GameState, StateEvents{
 
-	protected int ID;
+	protected int id;
 	protected boolean unloadRequest = false;
 	
 	public BaseState() {
@@ -22,7 +24,7 @@ public abstract class BaseState implements GameState, StateEvents{
 	
 	@Override
 	public int getID() {
-		return ID;
+		return id;
 	}
 	
 	@Override
@@ -90,10 +92,10 @@ public abstract class BaseState implements GameState, StateEvents{
 	public void leave(GameContainer arg0, StateBasedGame arg1) throws SlickException {}
 	
 	@Override
-	public void loadedState(GameState S) {}
+	public void loadedState(GameState state) {}
 	
 	@Override
-	public void unloadedState(GameState S) {}
+	public void unloadedState(GameState state) {}
 	
 	public void pause() {}
 	
@@ -107,7 +109,11 @@ public abstract class BaseState implements GameState, StateEvents{
 
 	public abstract void keyReleased(int arg0, char arg1);
 	
-	public abstract void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException;
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+		try {
+			Display.makeCurrent();
+		} catch (LWJGLException e) {}
+	}
 
 	public abstract void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException;
 }

@@ -4,9 +4,9 @@ import main.world.levels.Level;
 
 public interface LevelEvents extends Event{
 
-	void loadedLevel(Level L);
+	void loadedLevel(Level level);
 
-	void loadLevel(Level L);
+	void loadLevel(Level level);
 	
-	void unloadLevel(Level L);
+	void unloadLevel(Level level);
 }
