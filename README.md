@@ -25,7 +25,7 @@ Anmeldung und Vorgeschichte --- [\[Download\]](https://github.com/Mariomarco/Tre
 > [Genesis/1. Mose, Chap. 1, Vers 29]
 > 
 > This part of Genisis is one of the main roots in the modern tea-religion.
-> Many of wich are very strong believers and could be considered teaophile
+> Many are very strong believers and could be considered teaophile
 > but there is one who is said to have talked to the mighty teagod himself.
 > It is the prophet Richy - one of the founders of this religious belief.
 > 
@@ -37,7 +37,7 @@ Anmeldung und Vorgeschichte --- [\[Download\]](https://github.com/Mariomarco/Tre
 > This is the reason why the egypts had it hidden in a secure place of what once was an empire.
 > Hidden inside the the pyramid of Tutenchamun (also known as Tripmeister Eder).
 > It is his task to resurrect this long lost recepie and publish it so that war and climate change will end.
-> Then mankind can live on it's planet in peace with nature supported with it's technology.
+> Then mankind can live on it's planet in peace with nature and supported with it's technology.
 > 
 >
 > Deu.
