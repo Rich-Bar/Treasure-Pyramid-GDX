@@ -1,0 +1,18 @@
+ENGLISH LANGUAGE FILE   
+master_volume: Main Volume
+music_volume: Music Volume
+sound_volume: Sound Volume
+new_game: New Game
+options: Options
+credits: Credits
+exit: Exit
+language: Language
+axis: Key axis
+axis_direct: Direct 
+axis_isometric: Isometric
+save: Save
+cancel: Cancel
+vsync: VSync
+debug: Debug
+confirm_title: Sure?
+confirm_message: to confirm your changes press&n[ENTER] or [SPACE]&n&nTo abort press [ESC]...
