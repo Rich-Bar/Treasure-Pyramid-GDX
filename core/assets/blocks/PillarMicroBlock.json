@@ -1,0 +1,6 @@
+{
+  "name":"Pillar Block",
+  "texture": "textures/blocks/sandstone_top.png",
+  "model": "PillarMicroModel",
+  "xrotation":[0,180,90,270]
+}
